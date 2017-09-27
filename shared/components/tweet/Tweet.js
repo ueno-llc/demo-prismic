@@ -11,6 +11,12 @@ export default class Tweet extends PureComponent {
     tweet: PropTypes.string,
   }
 
+  componentDidMount() {
+    if (window.twttr) {
+      window.twttr.widgets.load();
+    }
+  }
+
   render() {
     const { tweet, authorName, url } = this.props;
     return (
