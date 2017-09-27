@@ -12,6 +12,57 @@ import appRootDir from 'app-root-dir';
 import * as EnvVars from './utils/envVars';
 import CliVar from './utils/cliVar';
 
+/**
+ * Construct the fully qualified URL to our local API.
+ * Assumes we're using HTTP in dev and HTTPS when not
+ */
+function defaultLocalApiUrl(envValue = '') {
+
+  // Hack, since Heroku doesn't allow for disabling env inheritance unless you
+  // specify a non-empty string value. So, in app.json we give LOCAL_API_URL a
+  // value of " " and check that here ¯\_(ツ)_/¯
+  if (envValue.trim() !== '') {
+    return envValue.trim();
+  }
+
+  const herokuAppName = EnvVars.string('HEROKU_APP_NAME', '');
+  // If running on Heroku and app name is available (defined in app.json), use that
+  if (herokuAppName !== '') {
+    return `https://${herokuAppName}.herokuapp.com/api`;
+  }
+
+  const port = EnvVars.number('PORT', 3000);
+
+  return EnvVars.string('API_URL', `http://localhost:${port}/api`);
+}
+
+function defaultClientLocalApiUrl(envValue = '', localApiUrl = '') {
+  if (envValue && envValue !== '') {
+    return envValue;
+  }
+
+  const isClientDevProxy = EnvVars.bool('CLIENT_DEV_PROXY', false);
+
+  if (isClientDevProxy) {
+    return '/api';
+  }
+
+  if (localApiUrl && localApiUrl !== '') {
+    return localApiUrl;
+  }
+
+  return '/api';
+}
+
+const localApiUrl = defaultLocalApiUrl(EnvVars.string('LOCAL_API_URL'));
+const clientLocalApiUrl = defaultClientLocalApiUrl(EnvVars.string('CLIENT_LOCAL_API_URL'), localApiUrl);
+
+console.info('Local API served from %s', localApiUrl);
+
+if (localApiUrl !== clientLocalApiUrl) {
+  console.info('Client API served from %s', clientLocalApiUrl);
+}
+
 const values = {
   // The configuration values that should be exposed to our client bundle.
   // This value gets passed through the /shared/utils/objects/filterWithRules
@@ -33,7 +84,12 @@ const values = {
     gaId: true,
     // Expose heroku devtools flag
     herokuDevtools: true,
+
+    clientLocalApiUrl: true,
   },
+
+  localApiUrl,
+  clientLocalApiUrl,
 
   // The public facing url of the app
   publicUrl: EnvVars.string('PUBLIC_URL'),
@@ -173,6 +229,11 @@ const values = {
       '*.facebook.com',
       '*.google-analytics.com',
       't.co',
+      '*.amazonaws.com',
+      'syndication.twitter.com',
+      'abs.twimg.com',
+      'pbs.twimg.com',
+      'platform.twitter.com',
     ],
     mediaSrc: [],
     manifestSrc: [],
@@ -186,11 +247,19 @@ const values = {
       'connect.facebook.net',
       'static.ads-twitter.com',
       'analytics.twitter.com',
+      'platform.twitter.com',
+      'syndication.twitter.com',
+      'cdn.syndication.twimg.com',
+    ],
+    frameSrc: [
+      'platform.twitter.com',
+      'syndication.twitter.com',
     ],
     styleSrc: [
       "'self' 'unsafe-inline'",
       'fonts.googleapis.com',
       'blob:',
+      'platform.twitter.com',
     ],
   },
 

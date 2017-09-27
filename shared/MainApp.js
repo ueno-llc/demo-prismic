@@ -12,9 +12,7 @@ import Analytics from 'components/analytics';
 
 // Routes
 import Home from './routes/home';
-import Grid from './routes/grid';
-import About from './routes/about';
-import Planets from './routes/planets';
+import Articles from './routes/articles';
 import NotFound from './routes/not-found';
 
 export default function App() {
@@ -24,18 +22,14 @@ export default function App() {
       <Header>
         <Navigation>
           <Link to="/">Home</Link>
-          <Link to="/grid">Grid</Link>
-          <Link to="/planets">Planets</Link>
-          <Link to="/about">About</Link>
+          <Link to="/articles">Articles</Link>
         </Navigation>
       </Header>
       <Content>
         <Route component={Analytics} />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/grid" component={Grid} />
-          <Route exact path="/about" component={About} />
-          <Route path="/planets" component={Planets} />
+          <Route path="/articles" component={Articles} />
           <Route component={NotFound} />
         </Switch>
         <DevTools />

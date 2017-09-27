@@ -1,9 +1,9 @@
 import Network from './Network';
-import Planets from './Planets';
+import Prismic from './Prismic';
 
 export default class Store {
   constructor(state = {}) {
     this.network = new Network(state);
-    this.planets = new Planets(state, this.network);
+    this.prismic = new Prismic(state, this.network);
   }
 }

@@ -1,26 +1,56 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import config from 'utils/config';
+import { Link } from 'react-router-dom';
+import { inject } from 'mobx-react';
+import { withJob } from 'react-jobs';
 
 import Segment from 'components/segment';
-import Button from 'components/button';
+import Heading from 'components/heading';
 
-export default class Home extends Component {
+import { getField, linkResolver } from 'utils/prismic';
+
+class Home extends PureComponent {
+
+  static propTypes = {
+    jobResult: PropTypes.shape({
+      data: PropTypes.shape({
+        content: PropTypes.array,
+        title: PropTypes.array,
+        featured_article: PropTypes.object,
+      }),
+    }),
+  };
+
   render() {
+    const { jobResult: homepage } = this.props;
+
+    const title = getField(homepage.data.title, 'title');
+    const content = getField(homepage.data.content, 'richtext');
+
+    const article = getField(homepage.data.featured_article, 'link');
+    const articleLink = linkResolver(article);
+    const articleTitle = getField(article.data.title, 'title');
+
     return (
       <div>
         <Helmet title="Home" />
 
         <Segment>
-          <h1>{config('welcomeMessage')}</h1>
+          <Heading>{title}</Heading>
+          {content}
+
+          <h3>Featured article</h3>
+          <Link to={articleLink}>{articleTitle}</Link>
         </Segment>
 
-        <Segment>
-          <Button>Button</Button>
-          <Button href="http://ueno.co">Ueno.co</Button>
-          <Button to="/about">About</Button>
-        </Segment>
       </div>
     );
   }
 }
+
+const homeWithJob = withJob({
+  work: ({ prismic }) => prismic.homepage(),
+})(Home);
+
+export default inject('prismic')(homeWithJob);

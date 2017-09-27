@@ -1,22 +1,7 @@
 
-# Hi! I’m Ueno’s starter-kit.
+# Prismic demo
 
-## New projects
-
-This repo has all upcoming releases in the `development` base branch. All [releases](https://github.com/ueno-llc/starter-kit-universally/releases) are made from the `master` branch.
-
-Clone this repo and switch to `master`, rename origin to upstream for updates and add your own origin:
-
-```bash
-git clone https://github.com/ueno-llc/starter-kit-universally.git my-project
-cd my-project
-git checkout master
-git remote rename origin upstream
-git remote set-url --push upstream no_push # disable push to upstream
-git remote add origin <my-origin>
-```
-
-Change values in `app.json` and `config/values.js`. Delete this part of the readme.
+Demo app connected to Prismic.
 
 ## Development
 

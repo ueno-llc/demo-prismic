@@ -1,0 +1,7 @@
+@import '~styles/config';
+
+.author {
+  &__container {
+    @include container;
+  }
+}

@@ -19,8 +19,7 @@ export default function App() {
       <Header>
         <Navigation>
           <Link to="/">Home</Link>
-          <Link to="/planets">Planets</Link>
-          <Link to="/about">About</Link>
+          <Link to="/articles">Articles</Link>
         </Navigation>
       </Header>
       <Content>

@@ -1,13 +1,12 @@
 {
-  "name": "Starter kit",
+  "name": "Prismic demo",
   "description": "",
   "keywords": [
-    "starter kit",
     "www"
   ],
   "scripts": {},
-  "website": "https://github.com/ueno-llc/starter-kit-universally#readme",
-  "repository": "https://github.com/ueno-llc/starter-kit-universally.git",
+  "website": "https://github.com/ueno-llc/demo-prismic#readme",
+  "repository": "https://github.com/ueno-llc/demo-prismic.git",
   "env": {
     "NODE_ENV": {
       "description": "Environment to build",

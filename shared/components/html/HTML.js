@@ -28,6 +28,7 @@ function HTML(props) {
     <html {...htmlAttributes}>
       <head>
         { headerElements }
+        <script async src="//platform.twitter.com/widgets.js" charSet="utf-8" />
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: appBodyString }} />

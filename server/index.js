@@ -12,6 +12,7 @@ import errorHandlers from './middleware/errorHandlers';
 import enforceHttps from './middleware/enforceHttps';
 import basicAuth from './middleware/basicAuth';
 import config from '../config';
+import api from './api';
 
 // the webpack config aliases the SSR-appropriate react app in the
 // reactApplication directory
@@ -60,6 +61,8 @@ app.use(express.static(pathResolve(appRootDir.get(), config('publicAssetsPath'))
 if (config('passwordProtect') !== '') {
   app.use(basicAuth);
 }
+
+app.use('/api', api);
 
 // The React application middleware.
 app.get('*', reactApplication);

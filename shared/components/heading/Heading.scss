@@ -1,0 +1,7 @@
+@import '~styles/config';
+
+.heading {
+  &__container {
+    @include container;
+  }
+}
