@@ -24,6 +24,10 @@ export default class Header extends Component {
             <div className={s.header__navigation}>
               {this.props.children}
             </div>
+
+            <div className={s.header__cta}>
+              <button className={s.header__button}>Contact</button>
+            </div>
           </div>
         </div>
       </header>
