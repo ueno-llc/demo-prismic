@@ -13,8 +13,17 @@
   }
 
   &__col {
-    @include grid-col(6);
-    @include grid-offset-left(3);
+    @include grid-col;
+
+    @media (min-width: $min-tablet) {
+      @include grid-col(8);
+      @include grid-offset-left(2);
+    }
+
+    @media (min-width: $min-desktop) {
+      @include grid-col(6);
+      @include grid-offset-left(3);
+    }
   }
 
   p {
@@ -28,10 +37,22 @@
     font-family: $font-family-heading;
     font-weight: 200;
     line-height: 1.2;
+
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
   h2 {
     @include responsive-font(26, 42);
+  }
+
+  &:first-child h2:first-child {
+    @include responsive-font(32, 54);
+    line-height: 1.2;
+    letter-spacing: -0.048em;
+    color: $color-light;
+    font-weight: 100;
   }
 
   h3 {
@@ -59,7 +80,7 @@
     display: inline-block;
     text-decoration: none;
     color: inherit;
-    line-height: 0.7;
+    line-height: 0.75;
 
     text-shadow:
       1px 1px #fff,

@@ -10,8 +10,17 @@
   }
 
   &__col {
-    @include grid-col(6);
-    @include grid-offset-left(3);
+    @include grid-col;
+
+    @media (min-width: $min-tablet) {
+      @include grid-col(8);
+      @include grid-offset-left(2);
+    }
+
+    @media (min-width: $min-desktop) {
+      @include grid-col(6);
+      @include grid-offset-left(3);
+    }
   }
 
   &__block {
@@ -20,6 +29,8 @@
   }
 
   &__image {
+    flex: 0 0 auto;
+
     margin-right: 1em;
     width: 60px;
     height: 60px;

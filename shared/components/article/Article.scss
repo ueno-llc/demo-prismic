@@ -1,6 +1,8 @@
 @import '~styles/config';
 
 .article {
+  @include segment($padding-top: 0, $padding-top-mobile: 0);
+
   &__slices {
     display: flex;
     flex-direction: column;
