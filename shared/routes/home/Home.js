@@ -6,7 +6,7 @@ import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 
 import Segment from 'components/segment';
-import Heading from 'components/heading';
+import Hero from './components/hero';
 
 import { getField, linkResolver } from 'utils/prismic';
 
@@ -25,9 +25,6 @@ class Home extends PureComponent {
   render() {
     const { jobResult: homepage } = this.props;
 
-    const title = getField(homepage.data.title, 'title');
-    const content = getField(homepage.data.content, 'richtext');
-
     const article = getField(homepage.data.featured_article, 'link');
     const articleLink = linkResolver(article);
     const articleTitle = getField(article.data.title, 'title');
@@ -39,14 +36,26 @@ class Home extends PureComponent {
           meta={[{ name: 'description', content: getField(homepage.data.description_seo, 'title').trim() }]}
         />
 
+        <Hero
+          title={getField(homepage.data.title, 'title')}
+          text={getField(homepage.data.content, 'richtext')}
+        />
+
         <Segment>
-          <Heading>{title}</Heading>
-          {content}
+          3 column text thingy
         </Segment>
 
         <Segment>
-          <h3>Featured article</h3>
+          Image split
+        </Segment>
+
+        <Segment>
+          <h2>Featured article</h2>
           <Link to={articleLink}>{articleTitle}</Link>
+        </Segment>
+
+        <Segment>
+          CTA for contact-us form ?
         </Segment>
 
       </div>

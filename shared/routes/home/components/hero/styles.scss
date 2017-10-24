@@ -1,0 +1,51 @@
+@import '~styles/config';
+
+.hero {
+  display: block;
+
+  background: #93cfe3;
+  background: #fe5830;
+
+  &__container {
+    @include container;
+
+    display: flex;
+    align-items: center;
+
+    min-height: 600px;
+  }
+
+  &__row {
+    @include make-row;
+
+    width: 100%;
+  }
+
+  &__content {
+    @include make-col((100% / 12) * 6);
+
+    color: $color-default;
+    color: #fff;
+  }
+
+  &__title {
+    @include reset-heading;
+    @include responsive-font(16, 46);
+    font-family: $font-family-tisa;
+    font-weight: 400;
+  }
+
+  &__text {
+    @include responsive-font(16, 20);
+
+    p {
+      @include reset-all;
+    }
+
+    a {
+      @include reset-anchor;
+
+      font-weight: bold;
+    }
+  }
+}
