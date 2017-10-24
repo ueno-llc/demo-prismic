@@ -17,14 +17,16 @@
 
     padding: $gutter 0;
 
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ddd;
   }
 
   &__logo {
     @include reset-anchor;
+    max-width: 63px;
 
     &Svg {
       display: block;
+      max-width: 100%;
     }
   }
 
