@@ -10,8 +10,17 @@
   }
 
   &__col {
-    @include grid-col(6);
-    @include grid-offset-left(3);
+    @include grid-col;
+
+    @media (min-width: $min-tablet) {
+      @include grid-col(8);
+      @include grid-offset-left(2);
+    }
+
+    @media (min-width: $min-desktop) {
+      @include grid-col(6);
+      @include grid-offset-left(3);
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {

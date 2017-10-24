@@ -13,8 +13,17 @@
   }
 
   &__col {
-    @include grid-col(6);
-    @include grid-offset-left(3);
+    @include grid-col;
+
+    @media (min-width: $min-tablet) {
+      @include grid-col(8);
+      @include grid-offset-left(2);
+    }
+
+    @media (min-width: $min-desktop) {
+      @include grid-col(6);
+      @include grid-offset-left(3);
+    }
   }
 
   p {
@@ -59,7 +68,7 @@
     display: inline-block;
     text-decoration: none;
     color: inherit;
-    line-height: 0.7;
+    line-height: 0.75;
 
     text-shadow:
       1px 1px #fff,
