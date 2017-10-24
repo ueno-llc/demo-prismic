@@ -34,12 +34,17 @@ class Home extends PureComponent {
 
     return (
       <div>
-        <Helmet title="Home" />
+        <Helmet
+          title={getField(homepage.data.title_seo, 'title').trim()}
+          meta={[{ name: 'description', content: getField(homepage.data.description_seo, 'title').trim() }]}
+        />
 
         <Segment>
           <Heading>{title}</Heading>
           {content}
+        </Segment>
 
+        <Segment>
           <h3>Featured article</h3>
           <Link to={articleLink}>{articleTitle}</Link>
         </Segment>

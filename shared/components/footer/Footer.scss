@@ -1,0 +1,53 @@
+@import '~styles/config';
+
+.footer {
+  display: block;
+
+  margin: 0;
+  padding: $gutter * 3 0 $gutter * 6;
+
+  background-color: #fafafa;
+
+  &__container {
+    @include container;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+
+    padding: $gutter 0;
+  }
+
+  &__svg {
+    // path {
+    //   fill: #fff;
+    // }
+  }
+
+  &__row {
+    @include make-row;
+  }
+
+  &__logo {
+    @include make-col((100% / 12) * 8);
+  }
+
+  &__navigation {
+    @include make-col((100% / 12) * 2);
+  }
+
+  &__social {
+    @include make-col((100% / 12) * 2);
+  }
+
+  &__list {
+    @include reset-list;
+  }
+
+  &__link {
+    @include reset-anchor;
+
+    // color: #fff;
+  }
+}

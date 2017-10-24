@@ -6,6 +6,7 @@ import config from 'utils/config';
 // Layout
 import AppLayout, { Content } from 'components/app-layout';
 import Header from 'components/header';
+import Footer from 'components/footer';
 import Navigation from 'components/navigation';
 import DevTools from 'components/devtools';
 import Analytics from 'components/analytics';
@@ -16,15 +17,22 @@ import Articles from './routes/articles';
 import NotFound from './routes/not-found';
 
 export default function App() {
+  const links = [
+    <Link key="home" to="/">Home</Link>,
+    <Link key="articles" to="/articles">Articles</Link>,
+    <Link key="about" to="/about">About</Link>,
+  ];
+
   return (
     <AppLayout>
       <Helmet {...config('helmet')} />
+
       <Header>
         <Navigation>
-          <Link to="/">Home</Link>
-          <Link to="/articles">Articles</Link>
+          {links}
         </Navigation>
       </Header>
+
       <Content>
         <Route component={Analytics} />
         <Switch>
@@ -34,6 +42,10 @@ export default function App() {
         </Switch>
         <DevTools />
       </Content>
+
+      <Footer>
+        {links}
+      </Footer>
     </AppLayout>
   );
 }
