@@ -24,5 +24,28 @@
     font-family: $font-family-heading;
     font-weight: normal;
     text-align: center;
+
+    a {
+      display: inline-block;
+      text-decoration: none;
+      color: inherit;
+      line-height: 0.95em;
+
+      text-shadow:
+        1px 1px #fff,
+        -1px -1px #fff,
+        -1px 1px #fff,
+        1px -1px #fff,
+        2px 2px #fff,
+        -2px -2px #fff,
+        -2px 2px #fff,
+        2px -2px #fff;
+
+      border-bottom: 1px solid $color-light;
+
+      &:hover {
+        border-bottom: 1px solid $color-default;
+      }
+    }
   }
 }
