@@ -4,4 +4,25 @@
   &__container {
     @include container;
   }
+
+  &__figure {
+    @include reset-all;
+    margin: $gutter 0;
+  }
+
+  &__img {
+    margin: 0 auto;
+  }
+
+  &__caption {
+    margin: 1em 0;
+  }
+
+  &__caption * {
+    @include reset-all;
+    @include responsive-font(16, 18);
+    font-family: $font-family-heading;
+    font-weight: normal;
+    text-align: center;
+  }
 }

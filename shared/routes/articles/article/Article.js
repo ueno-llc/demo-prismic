@@ -37,13 +37,13 @@ class Articles extends Component {
         <Helmet title={title} />
 
         <Article>
-          <Heading key="heading">{title}</Heading>
           {author && (<Author
             key="author"
             name={getField(author.data.name, 'title')}
             bio={getField(author.data.bio, 'title')}
             image={getField(author.data.image)}
           />)}
+          <Heading key="heading">{title}</Heading>
           <Slices data={body} />
         </Article>
       </div>

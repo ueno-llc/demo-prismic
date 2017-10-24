@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Text from 'components/text';
+import Quote from 'components/quote';
 
 const QuoteContainer = ({ data }) => (
-  <blockquote>
-    <Text
-      text={data.quote}
-    />
-  </blockquote>
+  <Quote
+    text={data.quote}
+  />
 );
 
 QuoteContainer.propTypes = {

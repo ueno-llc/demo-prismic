@@ -1,0 +1,36 @@
+@import '~styles/config';
+
+.quote {
+  @include responsive-font(20, 36);
+  line-height: 1.4;
+
+  &__container {
+    @include container;
+  }
+
+  &__row {
+    @include grid-row;
+  }
+
+  &__col {
+    @include grid-col(6);
+    @include grid-offset-left(3);
+  }
+
+  &__block {
+    @include reset-all;
+    margin: $gutter * 1.5;
+  }
+
+  p {
+    margin: 0;
+    font-family: $font-family-heading;
+    color: #9ea0a6;
+    font-weight: 100;
+    font-style: italic;
+  }
+
+  p + p {
+    margin-top: 1.4em;
+  }
+}

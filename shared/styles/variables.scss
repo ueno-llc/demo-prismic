@@ -3,19 +3,26 @@ $container-gutter-mobile: $gutter;
 $container-gutter-tablet: 50px;
 $container-gutter-desktop: 70px;
 
+// grid
+$grid-column-count: 12;
+$grid-baseline: 16px;
+
 // page dimensions
-$page-width: 1230px;
+$page-width: 1290px;
 $limit: $page-width + ($container-gutter-desktop * 2);
 
 // Fonts
-$font-family: 'Roboto', sans-serif;
+$font-family-tisa: 'Tisa Pro', sans-serif;
+$font-family-akagi: 'Akagi Pro', sans-serif;
+$font-family: $font-family-akagi;
+$font-family-heading: $font-family-tisa;
 $font-size: 16px;
 $line-height: 1.5;
 
 // Colors
 $color-default: #333;
-$color-light: #777;
-$color-dark: #111;
+$color-light: #9ea0a6;
+$color-dark: #000;
 $color-pink: #aa0078;
 $color-primary: $color-pink;
 $color-placeholder: #ddd;

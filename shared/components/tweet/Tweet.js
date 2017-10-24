@@ -21,10 +21,14 @@ export default class Tweet extends PureComponent {
     const { tweet, authorName, url } = this.props;
     return (
       <div className={s.tweet}>
-        <blockquote className="twitter-tweet">
-          <p lang="en" dir="ltr">{tweet}</p>
-          &mdash; <a href={url}>{authorName}</a>
-        </blockquote>
+        <div className={s.tweet__container}>
+          <div className={s.tweet__block}>
+            <blockquote className="twitter-tweet">
+              <p lang="en" dir="ltr">{tweet}</p>
+              &mdash; <a href={url}>{authorName}</a>
+            </blockquote>
+          </div>
+        </div>
       </div>
     );
   }

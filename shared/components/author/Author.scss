@@ -4,4 +4,46 @@
   &__container {
     @include container;
   }
+
+  &__row {
+    @include grid-row;
+  }
+
+  &__col {
+    @include grid-col(6);
+    @include grid-offset-left(3);
+  }
+
+  &__block {
+    display: flex;
+    margin: $gutter 0 $gutter * 1.5;
+  }
+
+  &__image {
+    margin-right: 1em;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__paragraph {
+    @include reset-paragraph;
+    @include responsive-font(14, 16);
+    font-weight: 200;
+
+    &:first-child {
+      font-weight: 400;
+    }
+  }
 }

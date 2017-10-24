@@ -4,4 +4,25 @@
   &__container {
     @include container;
   }
+
+  &__row {
+    @include grid-row;
+  }
+
+  &__col {
+    @include grid-col(6);
+    @include grid-offset-left(3);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @include reset-heading;
+    font-family: $font-family-heading;
+    font-weight: 200;
+  }
+
+  h1 {
+    @include responsive-font(32, 54);
+    line-height: 1.2;
+    letter-spacing: -0.048em;
+  }
 }
