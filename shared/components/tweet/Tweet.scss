@@ -4,4 +4,12 @@
   &__container {
     @include container;
   }
+
+  &__block {
+    margin: $gutter 0;
+
+    > * {
+      margin: 0 auto;
+    }
+  }
 }

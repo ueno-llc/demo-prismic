@@ -1,11 +1,6 @@
 @import '~styles/config';
 
 .article {
-  &__container {
-    @include container;
-
-  }
-
   &__slices {
     display: flex;
     flex-direction: column;

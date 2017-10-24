@@ -8,23 +8,21 @@ const slicesType = (<Slices />).type;
 
 const Article = ({ children }) => (
   <div className={s.article}>
-    <div className={s.article__container}>
-      {Children.map(children, (child, i) => {
-        if (!child) {
-          return null;
-        }
-        const type = child.type;
+    {Children.map(children, (child, i) => {
+      if (!child) {
+        return null;
+      }
+      const type = child.type;
 
-        if (type === slicesType) {
-          return cloneElement(child, {
-            className: s.article__slices,
-            key: i,
-          });
-        }
+      if (type === slicesType) {
+        return cloneElement(child, {
+          className: s.article__slices,
+          key: i,
+        });
+      }
 
-        return React.cloneElement(child);
-      })}
-    </div>
+      return React.cloneElement(child);
+    })}
   </div>
 );
 

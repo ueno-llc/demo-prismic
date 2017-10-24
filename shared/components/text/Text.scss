@@ -1,7 +1,80 @@
 @import '~styles/config';
 
 .text {
+  @include responsive-font(18, 21);
+  line-height: 1.6;
+
   &__container {
     @include container;
+  }
+
+  &__row {
+    @include grid-row;
+  }
+
+  &__col {
+    @include grid-col(6);
+    @include grid-offset-left(3);
+  }
+
+  p {
+    margin: 1.6em 0;
+    font-weight: 200;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @include reset-heading;
+    margin: 2.2em 0 0.6em;
+    font-family: $font-family-heading;
+    font-weight: 200;
+    line-height: 1.2;
+  }
+
+  h2 {
+    @include responsive-font(26, 42);
+  }
+
+  h3 {
+    @include responsive-font(24, 36);
+  }
+
+  h4 {
+    @include responsive-font(22, 34);
+
+    & + p {
+      margin-top: 0;
+    }
+  }
+
+  ul, ol {
+    margin: 2.6em 0;
+  }
+
+  li {
+    font-weight: 200;
+    margin: 0 0 0.4em;
+  }
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    line-height: 0.7;
+
+    text-shadow:
+      1px 1px #fff,
+      -1px -1px #fff,
+      -1px 1px #fff,
+      1px -1px #fff,
+      2px 2px #fff,
+      -2px -2px #fff,
+      -2px 2px #fff,
+      2px -2px #fff;
+
+    border-bottom: 1px solid $color-light;
+
+    &:hover {
+      border-bottom: 1px solid $color-default;
+    }
   }
 }
