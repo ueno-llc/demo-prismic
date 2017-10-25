@@ -4,9 +4,13 @@
   display: block;
 
   margin: 0;
-  padding: $gutter * 3 0 $gutter * 6;
+  padding: $gutter * 3 0 $gutter * 3;
 
   background-color: #fafafa;
+
+  @media (min-width: $min-420) {
+    padding: $gutter * 3 0 $gutter * 6;
+  }
 
   &__container {
     @include container;
@@ -19,18 +23,23 @@
     padding: $gutter 0;
   }
 
-  &__svg {
-    // path {
-    //   fill: #fff;
-    // }
-  }
-
   &__row {
     @include grid-row;
+    flex-direction: column;
+
+    @media (min-width: $min-420) {
+      flex-direction: row;
+    }
   }
 
   &__logo {
     @include grid-col((100% / 12) * 8);
+
+    margin-bottom: $gutter;
+
+    @media (min-width: $min-420) {
+      margin-bottom: 0;
+    }
   }
 
   &__navigation {
@@ -45,9 +54,15 @@
     @include reset-list;
   }
 
+  &__item {
+    margin-bottom: 5px;
+
+    @media (min-width: $min-420) {
+      margin-bottom: 0;
+    }
+  }
+
   &__link {
     @include reset-anchor;
-
-    // color: #fff;
   }
 }
