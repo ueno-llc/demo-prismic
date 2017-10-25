@@ -8,6 +8,13 @@
   "website": "https://github.com/ueno-llc/demo-prismic#readme",
   "repository": "https://github.com/ueno-llc/demo-prismic.git",
   "env": {
+    "HEROKU_APP_NAME": {
+      "required": false
+    },
+    "LOCAL_API_URL": {
+      "required": false,
+      "value": " "
+    },
     "NODE_ENV": {
       "description": "Environment to build",
       "required": false

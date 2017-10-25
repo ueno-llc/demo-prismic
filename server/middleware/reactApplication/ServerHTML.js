@@ -19,6 +19,10 @@ import ifElse from '../../../internal/utils/logic/ifElse';
 import removeNil from '../../../internal/utils/arrays/removeNil';
 import ClientConfig from '../../../config/components/ClientConfig';
 
+const isPreviewApp = config('prismicPreviewApp');
+const prismicApiUrl = config('prismicApiUrl');
+const prismicEndpoint = `window.prismic = { endpoint: '${prismicApiUrl}'}`;
+
 // PRIVATES
 
 function KeyedComponent({ children }) {
@@ -70,6 +74,12 @@ function ServerHTML(props) {
     <script type="text/javascript" dangerouslySetInnerHTML={{ __html: addHash(body) }} />
   );
 
+  const prismicPreviewScripts = [
+    <script src="//code.jquery.com/jquery-2.1.1.min.js" />,
+    <script dangerouslySetInnerHTML={{ __html: prismicEndpoint }} />,
+    <script type="text/javascript" src="//static.cdn.prismic.io/prismic.min.js" />,
+  ];
+
   const headerElements = removeNil([
     noJs(),
     ifElse(facebookPixel)(() => inlineScript(analytics.facebook)),
@@ -80,6 +90,7 @@ function ServerHTML(props) {
     ...ifElse(helmet)(() => helmet.link.toComponent(), []),
     ifElse(clientEntryAssets && clientEntryAssets.css)(() => stylesheetTag(clientEntryAssets.css)),
     ...ifElse(helmet)(() => helmet.style.toComponent(), []),
+    ...ifElse(isPreviewApp)(() => prismicPreviewScripts, []),
   ]);
 
   const bodyElements = removeNil([
