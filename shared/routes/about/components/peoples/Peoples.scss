@@ -1,0 +1,33 @@
+@import '~styles/config';
+
+.peoples {
+  margin-top: 75px;
+  margin-bottom: 75px;
+
+  @media (min-width: $min-720) {
+    margin-top: 150px;
+    margin-bottom: 200px;
+  }
+
+  &__container {
+    @include container;
+  }
+
+  &__title {
+    @include heading;
+  }
+
+  &__subheading {
+    @include subheading;
+  }
+
+  &__list {
+    @include grid-row;
+
+    margin-top: $gutter;
+
+    @media (min-width: $min-720) {
+      margin-top: $gutter * 2;
+    }
+  }
+}

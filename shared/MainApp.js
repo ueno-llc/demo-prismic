@@ -20,6 +20,7 @@ import Analytics from 'components/analytics';
 
 // Routes
 import Home from './routes/home';
+import About from './routes/about';
 import Articles from './routes/articles';
 import NotFound from './routes/not-found';
 
@@ -45,6 +46,7 @@ export default function App() {
         { /* <Route component={PrismicToolbar} /> */ }
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/about" component={About} />
           <Route path="/articles" component={Articles} />
           <Route component={NotFound} />
         </Switch>
