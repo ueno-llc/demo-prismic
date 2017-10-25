@@ -14,6 +14,7 @@ import Analytics from 'components/analytics';
 // Routes
 import Home from './routes/home';
 import Articles from './routes/articles';
+import Contact from './routes/contact';
 import NotFound from './routes/not-found';
 
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/articles" component={Articles} />
+          <Route path="/contact-us" component={Contact} />
           <Route component={NotFound} />
         </Switch>
         <DevTools />
