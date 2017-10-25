@@ -1,7 +1,7 @@
 @import '~styles/config';
 
 .cta {
-  @include segment;
+  @include segment(0);
 
   // margin-top: 100px;
   // margin-bottom: 200px;
@@ -30,7 +30,5 @@
     letter-spacing: -0.025em;
     line-height: (38/32);
     color: #000;
-
-    // border-top: 8px solid #fafafa;
   }
 }
