@@ -1,7 +1,7 @@
 @import '~styles/config';
 
-.articleList {
-  @include segment($padding-top: 100px, $padding-top-mobile: 50px);
+.list {
+  @include segment;
 
   &__container {
     @include container;
@@ -42,7 +42,7 @@
     flex: 0 0 auto;
 
     @media (min-width: $min-tablet) {
-      flex: 0 0 200px;
+      flex: 0 0 230px;
     }
   }
 

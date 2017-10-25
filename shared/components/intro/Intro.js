@@ -16,7 +16,9 @@ export default class Intro extends Component {
       <div className={s.intro}>
         <div className={s.intro__container}>
           <div className={s.intro__row}>
-            {children}
+            <div className={s.intro__col}>
+              {children}
+            </div>
           </div>
         </div>
       </div>

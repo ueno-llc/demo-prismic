@@ -1,86 +1,73 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 import { getField } from 'utils/prismic';
 
-import Heading from 'components/heading';
 import Loading from 'components/loading';
-
-import s from './ArticleList.scss';
+import Intro from 'components/intro';
+import List, { Item } from './components/list';
 
 class Articles extends PureComponent {
 
   static propTypes = {
-    jobResult: PropTypes.arrayOf(PropTypes.object),
+    jobResult: PropTypes.object,
   };
 
   render() {
-    const { jobResult: articles } = this.props;
+    const { jobResult: { page, articles } } = this.props;
 
     return (
-      <div className={s.articleList}>
-        <div className={s.articleList__container}>
-          <Helmet title="Articles" />
+      <div>
+        <Helmet title="Articles" />
 
-          {articles && (
-            <ul className={s.articleList__list}>
-              {articles.map((article) => {
-                const { uid, data } = article;
+        <Intro>
+          <h1>{getField(page.data.title, 'title')}</h1>
+          <h2>{getField(page.data.subtitle, 'title')}</h2>
+          <p>{getField(page.data.text, 'title')}</p>
+        </Intro>
 
-                if (!uid) {
-                  return null;
-                }
+        {articles && (
+          <List>
+            {articles.map((article, i) => {
+              const { uid, data } = article;
 
-                const url = `/articles/${uid}`;
-                const title = article.data.title[0].text;
-                const description = getField(data.short_description, 'title');
-                const image = getField(data.image);
+              if (!uid) {
+                return null;
+              }
 
-                const src = image && image.url;
+              const image = getField(data.image);
+              const src = image && image.url;
 
-                return (
-                  <li className={s.articleList__item} key={uid}>
-                    <Link to={url} className={s.articleList__block}>
-                      <div className={s.articelList__top}>
-                        <div className={s.articleList__image}>
-                          {src && (<img src={src} alt="" />)}
-                        </div>
-                      </div>
-                      <div className={s.articleList__middle}>
-                        <div className={s.articleList__title}>{title}</div>
-                        <div className={s.articleList__description}>{description}</div>
-                      </div>
-                      <div className={s.articleList__bottom}>
-                        <div className={s.articleList__link}>Read more</div>
-                      </div>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+              return (
+                <Item
+                  key={uid}
+                  url={`/articles/${uid}`}
+                  title={getField(data.title, 'title')}
+                  description={getField(data.short_description, 'title')}
+                  image={image}
+                  src={src}
+                />
+              );
+            })}
+          </List>
+        )}
 
-          {!articles && (
-            <p>No articles at the moment.</p>
-          )}
-        </div>
+        {!articles && (
+          <p>No articles at the moment.</p>
+        )}
       </div>
     );
   }
 }
 
 const articlesWithJob = withJob({
-  work: ({ prismic }) => prismic.articles(),
-  LoadingComponent: () => (
-    <div className={s.articleList}>
-      <div className={s.articleList__container}>
-        <Loading />
-      </div>
-    </div>
-  ),
+  work: async ({ prismic }) => {
+    const [page, articles] = await Promise.all([prismic.articlesPage(), prismic.articles()]);
+
+    return { page, articles };
+  },
 })(Articles);
 
 export default inject('prismic')(articlesWithJob);

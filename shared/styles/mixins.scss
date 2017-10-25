@@ -119,37 +119,34 @@
 }
 
 // change below to reflect your project
-@mixin heading($min: (strip-unit($font-size) * 1.5), $max: (strip-unit($font-size) * 3)) {
+@mixin heading($min: (strip-unit($font-size) * 2), $max: (strip-unit($font-size) * 3.375)) {
   @include reset-heading;
   @include responsive-font($min, $max);
 
-  $arbitrary-heading-margin: 5;
-
-  margin-bottom: ($arbitrary-heading-margin/$max) * 1em;
+  $arbitrary-copy-margin: 27;
+  margin-bottom: ($arbitrary-copy-margin/$max) * 1em;
 
   font-family: $font-family-heading;
   font-weight: 200;
   letter-spacing: 0;
-  line-height: 1.2;
+  line-height: 1.1;
 
   color: $color-font;
 }
 
-@mixin subheading($min: (strip-unit($font-size) * 1.5), $max: (strip-unit($font-size) * 3)) {
+@mixin subheading($min: (strip-unit($font-size) * 2), $max: (strip-unit($font-size) * 3.375)) {
   @include reset-heading;
   @include responsive-font($min, $max);
 
-  $arbitrary-subheading-margin: 26;
-  $arbitrary-subheading-line-height: 58;
+  $arbitrary-copy-margin: 27;
+  margin-bottom: ($arbitrary-copy-margin/$max) * 1em;
 
-  margin-bottom: ($arbitrary-subheading-margin/$max) * 1em;
-
-  font-family: $font-family;
-  font-weight: 200;
+  font-family: $font-family-heading;
+  font-weight: 100;
   letter-spacing: 0;
-  line-height: ($arbitrary-subheading-line-height/$max);
+  line-height: 1.1;
 
-  color: $color-font;
+  color: $color-light;
 }
 
 @mixin copy($min: strip-unit($font-size), $max: (strip-unit($font-size) + 4)) {
@@ -157,7 +154,6 @@
   @include responsive-font($min, $max);
 
   $arbitrary-copy-margin: 26;
-  $arbitrary-copy-line-height: 58;
 
   margin-bottom: ($arbitrary-copy-margin/$max) * 1em;
 
@@ -167,6 +163,30 @@
   line-height: 1.5;
 
   color: $color-font;
+}
+
+@mixin h1 {
+  @include heading;
+}
+
+@mixin h2($min: 26, $max: 42) {
+  @include heading($min, $max);
+}
+
+@mixin h3($min: 24, $max: 38) {
+  @include heading($min, $max);
+}
+
+@mixin h4($min: 22, $max: 34) {
+  @include heading($min, $max);
+}
+
+@mixin h5($min: 18, $max: 30) {
+  @include heading($min, $max);
+}
+
+@mixin h6($min: 16, $max: 26) {
+  @include heading($min, $max);
 }
 
 // html.js / html.no-js will not compile?!

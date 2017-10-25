@@ -6,7 +6,7 @@ import { withJob } from 'react-jobs';
 
 import { getField } from 'utils/prismic';
 
-import Intro from './components/intro';
+import Intro from 'components/intro';
 import Peoples, { People } from './components/peoples';
 
 class About extends PureComponent {
