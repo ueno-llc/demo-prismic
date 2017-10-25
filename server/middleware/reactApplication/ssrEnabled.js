@@ -44,8 +44,10 @@ export default function reactApplicationMiddleware(request, response) {
   // us the ability to track the resolved jobs to send back to the client.
   const jobContext = createJobContext();
 
+  const { cookies = {} } = request;
+
   // Initialize the store
-  const store = new Store();
+  const store = new Store({ cookies });
 
   // Declare our React application.
   const app = (

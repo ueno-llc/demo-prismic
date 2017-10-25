@@ -11,6 +11,13 @@ import Navigation from 'components/navigation';
 import DevTools from 'components/devtools';
 import Analytics from 'components/analytics';
 
+/**
+ * We can't use the prismic-toolbar package at the moment because of a bug
+ * with loading the edit button.
+ * It's being loaded "the old way" in ServerHTML
+ */
+// import PrismicToolbar from 'components/prismic-toolbar';
+
 // Routes
 import Home from './routes/home';
 import Articles from './routes/articles';
@@ -35,6 +42,7 @@ export default function App() {
 
       <Content>
         <Route component={Analytics} />
+        { /* <Route component={PrismicToolbar} /> */ }
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/articles" component={Articles} />
