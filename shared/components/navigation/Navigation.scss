@@ -16,7 +16,11 @@
     display: flex;
     align-items: center;
 
-    padding: 0 ($gutter / 2);
+    padding: 0 ($gutter / 3);
+
+    @media (min-width: $min-360) {
+      padding: 0 ($gutter / 2);
+    }
   }
 
   &__link {
@@ -26,7 +30,6 @@
 
     font-family: $font-family-akagi;
     font-size: 15px;
-    // font-weight: 700;
     color: $color-default;
 
     border-bottom: 1px solid transparent;

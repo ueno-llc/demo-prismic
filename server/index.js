@@ -3,6 +3,7 @@
 import express from 'express';
 import compression from 'compression';
 import { resolve as pathResolve } from 'path';
+import cookieParser from 'cookie-parser';
 import appRootDir from 'app-root-dir';
 import security from './middleware/security';
 import clientBundle from './middleware/clientBundle';
@@ -13,6 +14,7 @@ import enforceHttps from './middleware/enforceHttps';
 import basicAuth from './middleware/basicAuth';
 import config from '../config';
 import api from './api';
+import preview from './preview';
 
 // the webpack config aliases the SSR-appropriate react app in the
 // reactApplication directory
@@ -24,6 +26,8 @@ const app = express();
 
 // Don't expose any software information to potential hackers.
 app.disable('x-powered-by');
+
+app.use(cookieParser());
 
 // Security middlewares.
 app.use(...security);
@@ -63,6 +67,8 @@ if (config('passwordProtect') !== '') {
 }
 
 app.use('/api', api);
+
+app.use('/preview', preview);
 
 // The React application middleware.
 app.get('*', reactApplication);

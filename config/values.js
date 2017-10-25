@@ -69,9 +69,6 @@ const values = {
   // util to create a filter object that can be serialised and included
   // with our client bundle.
   clientConfigFilter: {
-    // This is here as an example showing that you can expose variables
-    // that were potentially provivded by the environment
-    welcomeMessage: true,
     // We only need to expose the enabled flag of the service worker.
     serviceWorker: {
       enabled: true,
@@ -86,10 +83,16 @@ const values = {
     herokuDevtools: true,
 
     clientLocalApiUrl: true,
+
+    prismicApiUrl: true,
   },
 
   localApiUrl,
   clientLocalApiUrl,
+
+  prismicApiUrl: EnvVars.string('PRISMIC_API_URL', 'https://ueno-starter-kit-universally-test.prismic.io/api/v2'),
+  prismicAccessToken: EnvVars.string('PRISMIC_ACCESS_TOKEN', null),
+  prismicPreviewApp: EnvVars.bool('PRISMIC_PREVIEW_APP', false),
 
   // The public facing url of the app
   publicUrl: EnvVars.string('PUBLIC_URL'),
@@ -105,11 +108,6 @@ const values = {
 
   // The port on which the client bundle development server should run.
   clientDevServerPort: EnvVars.number('CLIENT_DEV_PORT', 7331),
-
-  // This is an example environment variable which is used within the react
-  // application to demonstrate the usage of environment variables across
-  // the client and server bundles.
-  welcomeMessage: EnvVars.string('WELCOME_MSG', 'Nothing feels like ::ffff!'),
 
   // Expose environment
   NODE_ENV: EnvVars.string('NODE_ENV', 'development'),
@@ -224,7 +222,7 @@ const values = {
     childSrc: [],
     connectSrc: ['ws:', 'swapi.co'],
     defaultSrc: [],
-    fontSrc: ['fonts.googleapis.com/css', 'fonts.gstatic.com'],
+    fontSrc: ['fonts.googleapis.com/css', 'fonts.gstatic.com', 'localhost:7331'],
     imgSrc: [
       '*.facebook.com',
       '*.google-analytics.com',
@@ -250,10 +248,13 @@ const values = {
       'platform.twitter.com',
       'syndication.twitter.com',
       'cdn.syndication.twimg.com',
+      'code.jquery.com',
+      '*.prismic.io',
     ],
     frameSrc: [
       'platform.twitter.com',
       'syndication.twitter.com',
+      '*.prismic.io',
     ],
     styleSrc: [
       "'self' 'unsafe-inline'",

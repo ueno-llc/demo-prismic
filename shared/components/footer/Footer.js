@@ -22,7 +22,7 @@ export default class Footer extends Component {
         <div className={s.footer__container}>
           <div className={s.footer__row}>
             <div className={s.footer__logo}>
-              <UenoLogoSvg className={s.footer__svg} />
+              <UenoLogoSvg />
             </div>
 
             <div className={s.footer__navigation}>

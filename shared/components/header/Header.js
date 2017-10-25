@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 import UenoLogoSvg from 'assets/images/ueno-logo.svg';
 
+import Button from '../button';
+
 import s from './Header.scss';
 
 export default class Header extends PureComponent {
@@ -13,6 +15,8 @@ export default class Header extends PureComponent {
   };
 
   render() {
+    const { children } = this.props;
+
     return (
       <header className={s.header}>
         <div className={s.header__container}>
@@ -21,12 +25,14 @@ export default class Header extends PureComponent {
               <UenoLogoSvg className={s.header__logoSvg} />
             </Link>
 
-            <div className={s.header__navigation}>
-              {this.props.children}
-            </div>
+            <div className={s.header__row}>
+              <div className={s.header__navigation}>
+                {children}
+              </div>
 
-            <div className={s.header__cta}>
-              <button className={s.header__button}>Contact</button>
+              <div className={s.header__cta}>
+                <Button to="/contact" stroke>Contact</Button>
+              </div>
             </div>
           </div>
         </div>

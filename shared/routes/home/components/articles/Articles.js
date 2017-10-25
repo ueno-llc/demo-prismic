@@ -40,7 +40,10 @@ export default class Articles extends Component {
                 const date = data.publication_date;
 
                 return (
-                  <li className={s.articles__item} key={`article-${i}`}>
+                  <li
+                    className={s.articles__item}
+                    key={`article-${i}`} // eslint-disable-line
+                  >
                     <Link className={s.articles__link} to={url}>
                       <p className={s.articles__date}>{format(date, 'DD MMMM')}</p>
 

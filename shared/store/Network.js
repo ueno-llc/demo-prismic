@@ -6,9 +6,11 @@ import axios, { CancelToken } from 'axios';
  * This store handles network requests.
  */
 export default class Network {
-  constructor({ network = {} }) {
+  constructor({ network = {}, cookies = null }) {
     // Set history from state
     this.history.replace(network.history);
+
+    this.cookies = cookies;
   }
 
   /**
@@ -17,6 +19,18 @@ export default class Network {
    * @var {Map} The key is url.
    */
   @observable history = new ObservableMap();
+
+  createCookieJar() {
+    const jar = [];
+    const cookies = this.cookies || {};
+
+    Object.keys(cookies).forEach((key) => {
+      const value = cookies[key];
+      jar.push(`${key}=${value}`);
+    });
+
+    return jar.join('; ');
+  }
 
   /**
    * Extended fetch method with credentials needed
@@ -58,6 +72,11 @@ export default class Network {
         cancel = c;
       }),
     }, rest);
+
+    if (this.cookies) {
+      config.headers = {};
+      config.headers.Cookie = this.createCookieJar();
+    }
 
     // Create a promisified callback function to be ran by p-retry.
     const promise = axios
