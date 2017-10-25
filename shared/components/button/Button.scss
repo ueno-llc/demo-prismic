@@ -1,9 +1,9 @@
 @import '~styles/config';
 
-$btn-height: 40px;
-$btn-border-width: 2px;
-
 .button {
+  --btn-height: 40px;
+  --btn-border-width: 2px;
+
   @include reset-button;
 
   display: inline-flex;
@@ -11,10 +11,10 @@ $btn-border-width: 2px;
 
   padding: 0 $gutter;
 
-  height: $btn-height;
+  height: var(--btn-height);
 
   font-size: $font-size;
-  line-height: ($btn-height - 2 * $btn-border-width);
+  line-height: calc(var(--btn-height) - 4px);
   vertical-align: middle;
   text-align: center;
   text-decoration: none;
@@ -22,10 +22,11 @@ $btn-border-width: 2px;
 
   cursor: pointer;
 
-  border: $btn-border-width solid transparent;
-  border-radius: $btn-border-width;
+  border: var(--btn-border-width) solid transparent;
+  border-radius: var(--btn-border-width);
 
   background: $color-primary;
+  border-radius: 999px;
 
   transition: 180ms;
   transition-property: border-color, background-color, color, opacity;
@@ -47,5 +48,28 @@ $btn-border-width: 2px;
     cursor: default;
 
     background-color: #bbb;
+  }
+
+  &.large {
+    --btn-height: 58px;
+
+    @media (min-width: $min-720) {
+      --btn-height: 66px;
+
+      padding: 0 $gutter * 1.5;
+    }
+  }
+
+  &.stroke {
+    color: $color-primary;
+
+    border: 2px solid rgba($color-primary, 0.8);
+    background: transparent;
+
+    &:hover {
+      color: #fff;
+
+      background: $color-primary;
+    }
   }
 }

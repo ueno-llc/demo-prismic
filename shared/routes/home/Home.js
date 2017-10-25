@@ -7,9 +7,11 @@ import { withJob } from 'react-jobs';
 import { getField, linkResolver } from 'utils/prismic';
 
 import Segment from 'components/segment';
+import Button from 'components/button';
 
 import Hero from './components/hero';
 import Articles from './components/articles';
+import Cta from './components/cta';
 
 class Home extends PureComponent {
 
@@ -42,18 +44,19 @@ class Home extends PureComponent {
           3 column text thingy
         </Segment>
 
-        <Segment>
-          Image split
-        </Segment>
-
         <Articles
           articles={homepage.data.featured_articles}
           show={4}
         />
 
         <Segment>
-          CTA for contact-us form ?
+          Image split
         </Segment>
+
+        <Cta>
+          <p>Want to talk more.</p>
+          <Button to="/contact" large stroke>Contact us</Button>
+        </Cta>
       </div>
     );
   }

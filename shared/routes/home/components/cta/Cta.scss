@@ -1,0 +1,33 @@
+@import '~styles/config';
+
+.cta {
+  @include container;
+
+  margin-top: 100px;
+  margin-bottom: 200px;
+
+  &__row {
+    @include grid-row;
+    flex-direction: column;
+  }
+
+  &__inner {
+    @include grid-col;
+  }
+
+  p {
+    @include reset-heading;
+    @include responsive-font(20, 52);
+
+    padding-top: 200px;
+    margin-bottom: 40px;
+
+    font-family: $font-family-heading;
+    font-weight: 200;
+    letter-spacing: -0.025em;
+    line-height: (38/32);
+    color: #000;
+
+    border-top: 8px solid #fafafa;
+  }
+}

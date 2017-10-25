@@ -19,6 +19,7 @@ export default class Button extends PureComponent {
     disabled: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
+    stroke: PropTypes.bool,
   };
 
   render() {
@@ -31,6 +32,7 @@ export default class Button extends PureComponent {
       children,
       className,
       disabled,
+      stroke,
       ...rest
     } = this.props;
 
@@ -45,6 +47,7 @@ export default class Button extends PureComponent {
       large,
       small,
       disabled,
+      stroke,
     });
 
     rest.disabled = disabled;
