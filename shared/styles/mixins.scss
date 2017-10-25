@@ -119,24 +119,23 @@
 }
 
 // change below to reflect your project
-@mixin heading($min: ($font-size * 1.5), $max: ($font-size * 3)) {
+@mixin heading($min: (strip-unit($font-size) * 1.5), $max: (strip-unit($font-size) * 3)) {
   @include reset-heading;
   @include responsive-font($min, $max);
 
   $arbitrary-heading-margin: 5;
-  $arbitrary-heading-line-height: 58;
 
   margin-bottom: ($arbitrary-heading-margin/$max) * 1em;
 
-  font-family: $font-family;
-  font-weight: normal;
+  font-family: $font-family-heading;
+  font-weight: 200;
   letter-spacing: 0;
-  line-height: ($arbitrary-heading-line-height/$max);
+  line-height: 1.2;
 
   color: $color-font;
 }
 
-@mixin subheading($min: ($font-size * 1.5), $max: ($font-size * 3)) {
+@mixin subheading($min: (strip-unit($font-size) * 1.5), $max: (strip-unit($font-size) * 3)) {
   @include reset-heading;
   @include responsive-font($min, $max);
 
@@ -146,14 +145,14 @@
   margin-bottom: ($arbitrary-subheading-margin/$max) * 1em;
 
   font-family: $font-family;
-  font-weight: normal;
+  font-weight: 200;
   letter-spacing: 0;
   line-height: ($arbitrary-subheading-line-height/$max);
 
   color: $color-font;
 }
 
-@mixin copy($min: $font-size, $max: ($font-size + 4)) {
+@mixin copy($min: strip-unit($font-size), $max: (strip-unit($font-size) + 4)) {
   @include reset-all;
   @include responsive-font($min, $max);
 
@@ -163,9 +162,9 @@
   margin-bottom: ($arbitrary-copy-margin/$max) * 1em;
 
   font-family: $font-family;
-  font-weight: normal;
+  font-weight: 200;
   letter-spacing: 0;
-  line-height: ($arbitrary-copy-line-height/$max);
+  line-height: 1.5;
 
   color: $color-font;
 }
