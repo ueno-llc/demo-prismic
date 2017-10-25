@@ -1,19 +1,18 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { autobind } from 'core-decorators';
 
-import Forms from 'store/Forms';
 import Segment from 'components/segment';
 import ContactForm from './components/form';
 
 export default class Contact extends PureComponent {
-  @autobind
-  send(data) {
-    console.log('send', data);
-    Forms.contactUs(data);
+  static propTypes = {
+    match: PropTypes.object,
   }
 
   render() {
+    const { success } = this.props.match.params;
+
     return (
       <div>
         <Helmet title="Contact Us" />
@@ -21,7 +20,11 @@ export default class Contact extends PureComponent {
           <h1>Contact Us</h1>
         </Segment>
         <Segment>
-          <ContactForm onSubmit={this.send} />
+          {success ? (
+            <h1>Success</h1>
+          ) : (
+            <ContactForm />
+          )}
         </Segment>
       </div>
     );

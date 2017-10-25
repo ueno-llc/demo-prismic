@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { autobind } from 'core-decorators';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 @observer
 export default class ContactForm extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func,
-  }
 
   @observable
   name = '';
@@ -19,27 +14,16 @@ export default class ContactForm extends Component {
   @observable
   message = '';
 
-  @autobind
-  onSubmit(e) {
-    e.preventDefault();
-    const { name, email, message } = this;
-
-    this.props.onSubmit({
-      name,
-      email,
-      message,
-    });
-  }
-
   render() {
     const { name, email, message } = this;
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form acceptCharset="UTF-8" action="https://formkeep.com/f/37771b24266b" method="POST">
         <label htmlFor="name">
           Name
           <input
             id="name"
+            name="name"
             type="text"
             value={name}
             onChange={({ target }) => { this.name = target.value; }}
@@ -50,6 +34,7 @@ export default class ContactForm extends Component {
           Email
           <input
             id="email"
+            name="email"
             type="email"
             value={email}
             onChange={({ target }) => { this.email = target.value; }}
@@ -60,6 +45,7 @@ export default class ContactForm extends Component {
           Message
           <textarea
             id="message"
+            name="message"
             type="text"
             value={message}
             onChange={({ target }) => { this.message = target.value; }}

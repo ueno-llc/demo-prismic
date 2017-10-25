@@ -39,7 +39,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/articles" component={Articles} />
-          <Route path="/contact-us" component={Contact} />
+          <Route path="/contact-us/:success?" component={Contact} />
           <Route component={NotFound} />
         </Switch>
         <DevTools />
