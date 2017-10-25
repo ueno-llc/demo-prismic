@@ -59,10 +59,6 @@ class Home extends PureComponent {
           show={4}
         />
 
-        <Segment>
-          Image split
-        </Segment>
-
         <Cta>
           <p>Want to talk more.</p>
           <Button to="/contact" large stroke>Contact us</Button>
