@@ -15,6 +15,8 @@ export default class Header extends PureComponent {
   };
 
   render() {
+    const { children } = this.props;
+
     return (
       <header className={s.header}>
         <div className={s.header__container}>
@@ -23,12 +25,14 @@ export default class Header extends PureComponent {
               <UenoLogoSvg className={s.header__logoSvg} />
             </Link>
 
-            <div className={s.header__navigation}>
-              {this.props.children}
-            </div>
+            <div className={s.header__row}>
+              <div className={s.header__navigation}>
+                {children}
+              </div>
 
-            <div className={s.header__cta}>
-              <Button to="/contact" stroke>Contact</Button>
+              <div className={s.header__cta}>
+                <Button to="/contact" stroke>Contact</Button>
+              </div>
             </div>
           </div>
         </div>

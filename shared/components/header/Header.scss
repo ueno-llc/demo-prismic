@@ -12,18 +12,36 @@
   &__content {
     display: flex;
     align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
 
     padding: $gutter 0;
+
+    @media (min-width: $min-720) {
+      flex-direction: row;
+    }
   }
 
   &__logo {
     @include reset-anchor;
+
+    margin-bottom: 20px;
+
     max-width: 63px;
 
     &Svg {
       display: block;
       max-width: 100%;
     }
+
+    @media (min-width: $min-720) {
+      margin-bottom: 0;
+    }
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
   }
 
   &__navigation {
@@ -35,6 +53,10 @@
     position: relative;
     top: -1px;
 
-    margin-left: $gutter;
+    margin-left: $gutter * 0.5;
+
+    @media (min-width: $min-360) {
+      margin-left: $gutter;
+    }
   }
 }

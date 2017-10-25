@@ -9,7 +9,7 @@
   display: inline-flex;
   position: relative;
 
-  padding: 0 $gutter;
+  padding: 0 $gutter * 0.5;
 
   height: var(--btn-height);
 
@@ -23,13 +23,15 @@
   cursor: pointer;
 
   border: var(--btn-border-width) solid transparent;
-  border-radius: var(--btn-border-width);
-
   background: $color-primary;
   border-radius: 999px;
 
   transition: 180ms;
   transition-property: border-color, background-color, color, opacity;
+
+  @media (min-width: $min-360) {
+    padding: 0 $gutter;
+  }
 
   & + & {
     margin-left: $gutter / 2;

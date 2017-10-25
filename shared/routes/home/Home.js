@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 
-import { getField, linkResolver } from 'utils/prismic';
+import { getField } from 'utils/prismic';
 
 import Segment from 'components/segment';
 import Button from 'components/button';
