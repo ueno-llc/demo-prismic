@@ -58,8 +58,24 @@
     }
   }
 
+  &.isLoading &__top {
+    width: 100%;
+  }
+
+  &.isLoading &__image {
+    width: 100%;
+    height: 300px;
+    background-color: #eee;
+  }
+
   &__title {
     @include heading(20, 26);
+  }
+
+  &.isLoading &__title {
+    width: 100%;
+    height: 1em;
+    background-color: #eee;
   }
 
   &__description {

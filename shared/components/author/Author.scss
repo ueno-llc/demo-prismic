@@ -53,4 +53,19 @@
       font-weight: 400;
     }
   }
+
+  &.isLoading &__image {
+    background: #eee;
+  }
+
+  &.isLoading &__paragraph {
+    margin-bottom: 0.5rem;
+    height: 1.5rem;
+    width: 100px;
+    background: #eee;
+
+    &:nth-child(2) {
+      width: 150px;
+    }
+  }
 }
