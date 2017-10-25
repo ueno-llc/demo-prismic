@@ -10,7 +10,7 @@
   "env": {
     "NODE_ENV": {
       "description": "Environment to build",
-      "required": true
+      "required": false
     }
   },
   "environments": {

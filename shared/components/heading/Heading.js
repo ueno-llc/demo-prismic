@@ -21,5 +21,4 @@ Heading.propTypes = {
   children: PropTypes.node,
 };
 
-
 export default Heading;

@@ -16,13 +16,13 @@
   }
 
   &__row {
-    @include make-row;
+    @include grid-row;
 
     width: 100%;
   }
 
   &__content {
-    @include make-col((100% / 12) * 6);
+    @include grid-col((100% / 12) * 6);
 
     color: $color-default;
     color: #fff;

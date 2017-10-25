@@ -25,7 +25,7 @@ function HTML(props) {
   } = props;
 
   return (
-    <html {...htmlAttributes}>
+    <html {...htmlAttributes} className="no-js">
       <head>
         { headerElements }
         <script async src="//platform.twitter.com/widgets.js" charSet="utf-8" />
