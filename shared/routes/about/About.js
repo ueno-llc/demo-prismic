@@ -23,7 +23,6 @@ class About extends PureComponent {
 
   render() {
     const { jobResult: about } = this.props;
-    console.log('-about', about);
 
     const people = getField(about.data.people);
 
