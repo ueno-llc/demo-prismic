@@ -7,6 +7,7 @@ import { withJob } from 'react-jobs';
 import { getField } from 'utils/prismic';
 
 import Heading from 'components/heading';
+import Loading from 'components/loading';
 
 import s from './ArticleList.scss';
 
@@ -26,7 +27,7 @@ class Articles extends PureComponent {
 
           {articles && (
             <ul className={s.articleList__list}>
-              {articles.map((article, i) => {
+              {articles.map((article) => {
                 const { uid, data } = article;
 
                 if (!uid) {
@@ -36,14 +37,16 @@ class Articles extends PureComponent {
                 const url = `/articles/${uid}`;
                 const title = article.data.title[0].text;
                 const description = getField(data.short_description, 'title');
-                const published = new Date(article.first_publication_date);
+                const image = getField(data.image);
+
+                const src = image && image.url;
 
                 return (
                   <li className={s.articleList__item} key={uid}>
                     <Link to={url} className={s.articleList__block}>
                       <div className={s.articelList__top}>
                         <div className={s.articleList__image}>
-                          <img src={require(`assets/images/${i+1}.jpg`)} alt=""/>
+                          {src && (<img src={src} alt="" />)}
                         </div>
                       </div>
                       <div className={s.articleList__middle}>
@@ -71,6 +74,13 @@ class Articles extends PureComponent {
 
 const articlesWithJob = withJob({
   work: ({ prismic }) => prismic.articles(),
+  LoadingComponent: () => (
+    <div className={s.articleList}>
+      <div className={s.articleList__container}>
+        <Loading />
+      </div>
+    </div>
+  ),
 })(Articles);
 
 export default inject('prismic')(articlesWithJob);

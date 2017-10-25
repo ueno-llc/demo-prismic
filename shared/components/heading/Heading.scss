@@ -39,4 +39,10 @@
     line-height: 1.2;
     letter-spacing: -0.048em;
   }
+
+  &.isLoading h1 { // stylelint-disable-line
+    width: 100%;
+    height: 1em;
+    background-color: #eee;
+  }
 }

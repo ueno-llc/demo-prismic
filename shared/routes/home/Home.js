@@ -74,6 +74,12 @@ class Home extends PureComponent {
 
 const homeWithJob = withJob({
   work: ({ prismic }) => prismic.homepage(),
+  LoadingComponent: () => (
+    <div>
+      <Hero />
+      <Segment />
+    </div>
+  ),
 })(Home);
 
 export default inject('prismic')(homeWithJob);
