@@ -4,19 +4,13 @@
   position: relative;
 
   &__title {
-    @include reset-heading;
-
-    margin: 0 0 $gutter / 4;
-
-    font-family: $font-family-heading;
-    @include responsive-font(16, 24);
-    font-weight: 700;
+    @include h6;
+    margin-bottom: 0.5em;
   }
 
   &__text {
     p {
-      @include reset-paragraph;
-      @include copy(14, 20);
+      @include copy;
     }
   }
 }

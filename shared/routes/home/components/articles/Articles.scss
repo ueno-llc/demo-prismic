@@ -1,7 +1,11 @@
 @import '~styles/config';
 
 .articles {
-  @include container;
+  @include segment;
+
+  &__container {
+    @include container;
+  }
 
   &__row {
     @include grid-row;
@@ -10,23 +14,14 @@
   &__header {
     @include grid-col;
 
-    margin-bottom: 80px;
+    margin-bottom: $gutter * 2;
 
     &Title {
-      @include reset-heading;
-      @include responsive-font(16, 46);
-
-      padding-right: $gutter * 2;
-
-      font-family: $font-family-heading;
-      font-weight: 200;
-      letter-spacing: -0.025em;
-      line-height: (50/46);
-
-      color: #000;
+      @include h2;
+      margin-bottom: 0;
 
       &:last-of-type {
-        color: $color-light;
+        @include subheading(26, 42);
       }
     }
   }
