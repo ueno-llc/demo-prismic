@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 import UenoLogoSvg from 'assets/images/ueno-logo.svg';
 
+import Button from '../button';
+
 import s from './Header.scss';
 
 export default class Header extends PureComponent {
@@ -26,7 +28,7 @@ export default class Header extends PureComponent {
             </div>
 
             <div className={s.header__cta}>
-              <button className={s.header__button}>Contact</button>
+              <Button to="/contact" stroke>Contact</Button>
             </div>
           </div>
         </div>

@@ -30,4 +30,11 @@
     display: flex;
     margin-left: auto;
   }
+
+  &__cta {
+    position: relative;
+    top: -1px;
+
+    margin-left: $gutter;
+  }
 }
