@@ -116,18 +116,10 @@
   }
 
   &__title {
-    @include reset-heading;
-    @include responsive-font(18, 32);
+    @include heading(18, 32);
     @include grid-col;
 
     margin-bottom: 12px;
-
-    font-family: $font-family-heading;
-    font-weight: 200;
-    letter-spacing: -0.025em;
-    line-height: (38/32);
-
-    color: #000;
 
     @media (min-width: $min-480) {
       @include grid-col(10);
@@ -143,15 +135,9 @@
   }
 
   &__description {
-    @include reset-all;
-    @include responsive-font(14, 20);
+    @include copy(14, 20);
     @include grid-col;
     @include grid-offset-right;
-
-    color: $color-content;
-    letter-spacing: 0.025em;
-    line-height: (28/20);
-    font-weight: 200;
 
     transition: color $transition-enter;
 

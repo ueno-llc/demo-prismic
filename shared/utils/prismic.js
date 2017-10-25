@@ -58,6 +58,8 @@ function getField(field, type = '') {
   switch (type) {
     case 'title':
       return renderAsText(field);
+    case 'text':
+      return renderAsText(field);
     case 'richtext':
       return renderAsComponentTree(field);
     case 'body':
