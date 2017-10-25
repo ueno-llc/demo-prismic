@@ -4,7 +4,7 @@
   "description": "A starter kit from Ueno. Based on react-universally",
   "main": "build/server/index.js",
   "engines": {
-    "node": ">=7.5 <8"
+    "node": ">=7.5 <9"
   },
   "scripts": {
     "analyze:client": "babel-node internal/scripts/analyze --client",
@@ -146,13 +146,13 @@
     "webpack-node-externals": "1.6.0"
   },
   "devDependencies": {
-    "@ueno/eslint-config": "^0.0.2",
-    "@ueno/stylelint-config": "^0.0.3",
+    "@ueno/eslint-config": "1.1.0",
+    "@ueno/stylelint-config": "1.0.1",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "enzyme": "2.9.1",
     "enzyme-to-json": "1.5.1",
-    "eslint": "3.19.0",
+    "eslint": "^4.9.0",
     "http-proxy-middleware": "0.17.4",
     "husky": "0.14.3",
     "jest": "19.0.2",

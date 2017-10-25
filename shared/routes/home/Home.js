@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 
+import { getField, linkResolver } from 'utils/prismic';
+
 import Segment from 'components/segment';
 import Hero from './components/hero';
-
-import { getField, linkResolver } from 'utils/prismic';
 
 class Home extends PureComponent {
 

@@ -35,7 +35,7 @@
     }
   }
 
-  p {
+  p { // stylelint-disable-line
     margin: 0;
     font-family: $font-family-heading;
     color: #9ea0a6;
@@ -43,7 +43,7 @@
     font-style: italic;
   }
 
-  p + p {
+  p + p { // stylelint-disable-line
     margin-top: 1.4em;
   }
 }

@@ -19,12 +19,13 @@ export default class GridOverlay extends Component {
 
   static propTypes = {
     columns: PropTypes.number,
+    // baseline: PropTypes.number,
     noPanel: PropTypes.bool,
   };
 
   static defaultProps = {
     columns: 12,
-    baseline: 16,
+    // baseline: 16,
     noPanel: true,
   };
 
@@ -33,12 +34,6 @@ export default class GridOverlay extends Component {
 
   @observable
   isVerticalVisible = false;
-
-  // Initial state
-  state = {
-    horizontalIsVisible: false,
-    verticalIsVisible: false,
-  };
 
   /**
    * Fired when component is mounted on the client

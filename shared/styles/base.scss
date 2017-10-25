@@ -21,13 +21,13 @@ html, body { // stylelint-disable-line
 }
 
 html { // stylelint-disable-line
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   -webkit-overflow-scrolling: touch;
-
   overflow-x: hidden;
   // always show the vertical scrollbar so that content doesn't jump
   overflow-y: scroll;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   box-sizing: border-box;
 }
@@ -44,6 +44,8 @@ body { // stylelint-disable-line
 
   margin: 0;
 
+  overflow-x: hidden;
+
   font-family: $font-family;
   font-size: $font-size;
   line-height: $line-height;
@@ -51,8 +53,6 @@ body { // stylelint-disable-line
 
   // iOS on orientation change
   text-size-adjust: 100%;
-
-  overflow-x: hidden;
 }
 
 img { // stylelint-disable-line

@@ -6,10 +6,8 @@ import Image from 'components/image';
 import { getField } from 'utils/prismic';
 
 const ImageContainer = ({ data }) => {
-  const width = data.image.dimensions.width;
-  const height = data.image.dimensions.height;
-  const alt = data.image.alt;
-  const url = data.image.url;
+  const { width, height } = data.image.dimensions;
+  const { alt, url } = data.image;
   const caption = getField(data.caption, 'richtext');
 
   return (

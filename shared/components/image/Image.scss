@@ -18,7 +18,7 @@
     margin: 1em 0;
   }
 
-  &__caption * {
+  &__caption * { // stylelint-disable-line
     @include reset-all;
     @include responsive-font(16, 18);
     font-family: $font-family-heading;
@@ -43,7 +43,7 @@
 
       border-bottom: 1px solid $color-light;
 
-      &:hover {
+      &:hover { // stylelint-disable-line
         border-bottom: 1px solid $color-default;
       }
     }

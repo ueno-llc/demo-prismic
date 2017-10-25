@@ -12,7 +12,7 @@ const Article = ({ children }) => (
       if (!child) {
         return null;
       }
-      const type = child.type;
+      const { type } = child;
 
       if (type === slicesType) {
         return cloneElement(child, {
