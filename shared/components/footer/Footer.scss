@@ -33,21 +33,25 @@
   }
 
   &__logo {
-    @include grid-col((100% / 12) * 8);
+    @include grid-col(6);
 
     margin-bottom: $gutter;
 
     @media (min-width: $min-420) {
       margin-bottom: 0;
     }
+
+    @media (min-width: $min-720) {
+      @include grid-col(8);
+    }
   }
 
   &__navigation {
-    @include grid-col((100% / 12) * 2);
+    @include grid-col(2);
   }
 
   &__social {
-    @include grid-col((100% / 12) * 2);
+    @include grid-col(2);
   }
 
   &__list {
