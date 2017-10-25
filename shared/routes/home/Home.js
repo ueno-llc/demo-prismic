@@ -8,6 +8,7 @@ import { getField } from 'utils/prismic';
 
 import Segment from 'components/segment';
 import Button from 'components/button';
+import Columns, { Column } from 'components/columns';
 
 import Hero from './components/hero';
 import Articles from './components/articles';
@@ -40,9 +41,18 @@ class Home extends PureComponent {
           text={getField(homepage.data.content, 'richtext')}
         />
 
-        <Segment>
-          3 column text thingy
-        </Segment>
+        <Columns
+          heading="Who we are, and who we want to be"
+          subline="A few things you should know about Ueno"
+        >
+          {getField(homepage.data.content_columns, 'group').map((item, i) => (
+            <Column
+              key={i}
+              title={getField(item.title, 'title')}
+              text={getField(item.text, 'richtext')}
+            />
+          ))}
+        </Columns>
 
         <Articles
           articles={homepage.data.featured_articles}

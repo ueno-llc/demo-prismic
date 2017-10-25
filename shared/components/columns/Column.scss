@@ -1,0 +1,22 @@
+@import '~styles/config';
+
+.column {
+  position: relative;
+
+  &__title {
+    @include reset-heading;
+
+    margin: 0 0 $gutter / 4;
+
+    font-family: $font-family-heading;
+    @include responsive-font(16, 24);
+    font-weight: 700;
+  }
+
+  &__text {
+    p {
+      @include reset-paragraph;
+      @include copy(14, 20);
+    }
+  }
+}
