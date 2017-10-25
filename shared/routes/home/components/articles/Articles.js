@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import format from 'date-fns/format';
+
+import { getField } from 'utils/prismic';
 
 import s from './Articles.scss';
 
 export default class Articles extends Component {
 
   static propTypes = {
-    articles: PropTypes.node,
+    articles: PropTypes.array,
     show: PropTypes.number,
   }
 
@@ -21,41 +25,36 @@ export default class Articles extends Component {
             <h2 className={s.articles__headerTitle}>or almost</h2>
           </div>
 
-          <ul className={s.articles__list}>
-            <li className={s.articles__item}>
-              <a className={s.articles__link} href="#">
-                <p className={s.articles__date}>25 october</p>
+          {articles && (
+            <ul className={s.articles__list}>
+              {articles.slice(0, show).map((article, i) => {
+                const { uid, data } = article.article;
 
-                <div className={s.articles__inner}>
-                  <h2 className={s.articles__title}>The 3 most important lessons from my first year at Ueno</h2>
-                  <p className={s.articles__description}>Last September, I started my first full-time job as a product designer at Ueno. I had applied online and did a brief trial period where I worked with Ueno for three days.</p>
-                  <span className={s.articles__button}>Read more</span>
-                </div>
-              </a>
-            </li>
-            <li className={s.articles__item}>
-              <a className={s.articles__link} href="#">
-                <p className={s.articles__date}>25 october</p>
+                if (!uid) {
+                  return null;
+                }
 
-                <div className={s.articles__inner}>
-                  <h2 className={s.articles__title}>The 3 most important lessons from my first year at Ueno</h2>
-                  <p className={s.articles__description}>Last September, I started my first full-time job as a product designer at Ueno. I had applied online and did a brief trial period where I worked with Ueno for three days.</p>
-                  <span className={s.articles__button}>Read more</span>
-                </div>
-              </a>
-            </li>
-            <li className={s.articles__item}>
-              <a className={s.articles__link} href="#">
-                <p className={s.articles__date}>25 october</p>
+                const url = `/articles/${uid}`;
+                const title = getField(data.title, 'title');
+                const description = getField(data.short_description, 'title');
+                const date = data.publication_date;
 
-                <div className={s.articles__inner}>
-                  <h2 className={s.articles__title}>The 3 most important lessons from my first year at Ueno</h2>
-                  <p className={s.articles__description}>Last September, I started my first full-time job as a product designer at Ueno. I had applied online and did a brief trial period where I worked with Ueno for three days.</p>
-                  <span className={s.articles__button}>Read more</span>
-                </div>
-              </a>
-            </li>
-          </ul>
+                return (
+                  <li className={s.articles__item} key={`article-${i}`}>
+                    <Link className={s.articles__link} to={url}>
+                      <p className={s.articles__date}>{format(date, 'DD MMMM')}</p>
+
+                      <div className={s.articles__inner}>
+                        <h2 className={s.articles__title}>{title}</h2>
+                        <p className={s.articles__description}>{description}</p>
+                        <span className={s.articles__button}>Read more</span>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
       </div>
     );

@@ -18,7 +18,7 @@ export default class Prismic {
 
   @timing.promise
   homepage() {
-    const url = `${apiUrl}/prismic/contentType/homepage?fetchLinks=article.title`;
+    const url = `${apiUrl}/prismic/contentType/homepage?fetchLinks=article.title,article.short_description,article.publication_date`;
 
     return this.fetch(url)
       .then(data => data.results)

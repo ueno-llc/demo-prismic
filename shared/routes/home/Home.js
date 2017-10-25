@@ -26,8 +26,6 @@ class Home extends PureComponent {
   render() {
     const { jobResult: homepage } = this.props;
 
-    const article = getField(homepage.data.featured_article, 'link');
-
     return (
       <div>
         <Helmet
@@ -49,8 +47,8 @@ class Home extends PureComponent {
         </Segment>
 
         <Articles
-          articles={article}
-          show={3}
+          articles={homepage.data.featured_articles}
+          show={4}
         />
 
         <Segment>
