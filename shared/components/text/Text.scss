@@ -1,3 +1,5 @@
+/* stylelint-disable selector-max-type */
+
 @import '~styles/config';
 
 .text {
@@ -31,7 +33,12 @@
     font-weight: 200;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @include reset-heading;
     margin: 2.2em 0 0.6em;
     font-family: $font-family-heading;
@@ -62,18 +69,19 @@
   h4 {
     @include responsive-font(22, 34);
 
-    & + p {
+    & + p { // stylelint-disable-line
       margin-top: 0;
     }
   }
 
-  ul, ol {
+  ul,
+  ol {
     margin: 2.6em 0;
   }
 
   li {
-    font-weight: 200;
     margin: 0 0 0.4em;
+    font-weight: 200;
   }
 
   a {

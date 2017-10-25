@@ -26,7 +26,7 @@ class Articles extends PureComponent {
         {articles && (
           <ul>
             {articles.map((article) => {
-              const uid = article.uid;
+              const { uid } = article;
 
               if (!uid) {
                 return null;

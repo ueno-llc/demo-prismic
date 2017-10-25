@@ -26,19 +26,19 @@
   }
 
   &__row {
-    @include make-row;
+    @include grid-row;
   }
 
   &__logo {
-    @include make-col((100% / 12) * 8);
+    @include grid-col((100% / 12) * 8);
   }
 
   &__navigation {
-    @include make-col((100% / 12) * 2);
+    @include grid-col((100% / 12) * 2);
   }
 
   &__social {
-    @include make-col((100% / 12) * 2);
+    @include grid-col((100% / 12) * 2);
   }
 
   &__list {

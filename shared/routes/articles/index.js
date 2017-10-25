@@ -5,7 +5,7 @@ import { Switch, Route } from 'react-router-dom';
 import ArticleList from './article-list';
 import Article from './article';
 
-const PlanetsRoutes = ({ match }) => (
+const ArticlesRoute = ({ match }) => (
   <div>
     <Switch>
       <Route exact path={`${match.url}/:id`} component={Article} />
@@ -14,8 +14,8 @@ const PlanetsRoutes = ({ match }) => (
   </div>
 );
 
-PlanetsRoutes.propTypes = {
+ArticlesRoute.propTypes = {
   match: PropTypes.object,
 };
 
-export default PlanetsRoutes;
+export default ArticlesRoute;

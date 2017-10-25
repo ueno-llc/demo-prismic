@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -15,16 +15,17 @@ const LOCAL_STORAGE_KEY_VERTICAL = '_devtoolsVerticalGridVisible';
  * Grid Overlay component
  */
 @observer
-export default class GridOverlay extends Component {
+export default class GridOverlay extends PureComponent {
 
   static propTypes = {
     columns: PropTypes.number,
+    // baseline: PropTypes.number,
     noPanel: PropTypes.bool,
   };
 
   static defaultProps = {
     columns: 12,
-    baseline: 16,
+    // baseline: 16,
     noPanel: true,
   };
 
@@ -33,12 +34,6 @@ export default class GridOverlay extends Component {
 
   @observable
   isVerticalVisible = false;
-
-  // Initial state
-  state = {
-    horizontalIsVisible: false,
-    verticalIsVisible: false,
-  };
 
   /**
    * Fired when component is mounted on the client
