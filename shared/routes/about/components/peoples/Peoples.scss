@@ -17,17 +17,13 @@
     @include heading;
   }
 
-  &__subheading {
-    @include subheading;
-  }
-
   &__list {
     @include grid-row;
 
-    margin-top: $gutter;
+    margin-top: $gutter * 1.5;
 
     @media (min-width: $min-720) {
-      margin-top: $gutter * 2;
+      margin-top: $gutter * 2.5;
     }
   }
 }
