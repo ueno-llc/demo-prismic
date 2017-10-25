@@ -96,22 +96,31 @@
     @include reset-all;
     @include responsive-font(12, 14);
 
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 
     color: $color-content;
     font-weight: 200;
+
+    @media (min-width: $min-720) {
+      margin-bottom: 20px;
+    }
   }
 
   &__inner {
     @include grid-row;
+    flex-direction: column;
+
+    @media (min-width: $min-720) {
+      flex-direction: row;
+    }
   }
 
   &__title {
     @include reset-heading;
-    @include responsive-font(28, 32);
-    @include grid-col(percentage(5/12));
+    @include responsive-font(18, 32);
+    @include grid-col;
 
-    padding-right: $gutter * 2;
+    margin-bottom: 12px;
 
     font-family: $font-family-heading;
     font-weight: 200;
@@ -119,12 +128,24 @@
     line-height: (38/32);
 
     color: #000;
+
+    @media (min-width: $min-480) {
+      @include grid-col(10);
+
+      padding-right: $gutter * 2;
+    }
+
+    @media (min-width: $min-720) {
+      @include grid-col(5);
+
+      margin-bottom: 0;
+    }
   }
 
   &__description {
     @include reset-all;
     @include responsive-font(14, 20);
-    @include grid-col(percentage(5/12));
+    @include grid-col;
     @include grid-offset-right;
 
     color: $color-content;
@@ -133,15 +154,29 @@
     font-weight: 200;
 
     transition: color $transition-enter;
+
+    @media (min-width: $min-480) {
+      @include grid-col(8);
+    }
+
+    @media (min-width: $min-720) {
+      @include grid-col(5);
+    }
   }
 
   &__button {
     @include responsive-font(12, 14);
-    @include grid-col(percentage(1/12));
+    @include grid-col(4);
 
-    margin-top: 2px;
+    margin-top: 20px;
 
     color: #333;
     font-weight: 700;
+
+    @media (min-width: $min-720) {
+      @include grid-col(1);
+
+      margin-top: 2px;
+    }
   }
 }
