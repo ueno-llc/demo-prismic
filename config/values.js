@@ -232,7 +232,6 @@ const values = {
       'abs.twimg.com',
       'pbs.twimg.com',
       'platform.twitter.com',
-      'i.pinimg.com', // temp
     ],
     mediaSrc: [],
     manifestSrc: [],
