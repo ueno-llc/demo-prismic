@@ -48,6 +48,7 @@ class Articles extends Component {
           <Heading key="heading">{title}</Heading>
           <Slices data={body} />
         </Article>
+
       </div>
     );
   }
@@ -55,6 +56,14 @@ class Articles extends Component {
 
 const articlesWithJob = withJob({
   work: ({ prismic, match }) => prismic.article(match.params.id),
+  LoadingComponent: () => (
+    <Article>
+      <Author
+        loading
+      />
+      <Heading key="heading" loading />
+    </Article>
+  ),
 })(Articles);
 
 export default inject('prismic')(articlesWithJob);

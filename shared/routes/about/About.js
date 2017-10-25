@@ -53,6 +53,16 @@ class About extends PureComponent {
 
 const aboutWithJob = withJob({
   work: ({ prismic }) => prismic.about(),
+  LoadingComponent: () => (
+    <div>
+      <Intro>
+        <h1>&nbsp;</h1>
+        <h2>&nbsp;</h2>
+        <p>&nbsp;</p>
+      </Intro>
+      <Peoples />
+    </div>
+  ),
 })(About);
 
 export default inject('prismic')(aboutWithJob);
