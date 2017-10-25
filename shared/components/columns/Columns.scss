@@ -26,18 +26,12 @@
   }
 
   &__heading {
-    @include reset-heading;
-
-    @include responsive-font(16, 46);
-    font-family: $font-family-heading;
-    font-weight: 200;
-    letter-spacing: -0.025em;
-    line-height: (50/46);
+    @include h2;
+    margin: 0;
   }
 
   &__heading + &__heading {
-    margin: 0 0 $gutter * 2;
-
-    color: $color-light;
+    @include subheading(26, 42);
+    margin-bottom: $gutter * 2;
   }
 }
