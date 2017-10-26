@@ -11,6 +11,8 @@ function linkResolver(doc) {
       return '/';
     case 'about':
       return '/about';
+    case 'articles':
+      return '/articles';
     case 'article':
       return `/articles/${doc.slug || doc.uid}`;
     default:

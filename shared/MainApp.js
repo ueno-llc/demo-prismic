@@ -23,6 +23,7 @@ import Home from './routes/home';
 import About from './routes/about';
 import Articles from './routes/articles';
 import Contact from './routes/contact';
+import Search from './routes/search';
 import NotFound from './routes/not-found';
 
 export default function App() {
@@ -50,6 +51,7 @@ export default function App() {
           <Route exact path="/about" component={About} />
           <Route path="/articles" component={Articles} />
           <Route path="/contact-us" component={Contact} />
+          <Route path="/search/:q" component={Search} />
           <Route component={NotFound} />
         </Switch>
         <DevTools />
