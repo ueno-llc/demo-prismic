@@ -36,10 +36,7 @@ class Home extends PureComponent {
           meta={[{ name: 'description', content: getField(homepage.data.description_seo, 'text').trim() }]}
         />
 
-        <Hero
-          title={getField(homepage.data.title, 'text')}
-          text={getField(homepage.data.content, 'richtext')}
-        />
+        <Hero carousel={getField(homepage.data.carousel)} />
 
         <Columns
           heading={getField(homepage.data.column_title, 'text')}
