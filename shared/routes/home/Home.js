@@ -47,7 +47,7 @@ class Home extends PureComponent {
         >
           {getField(homepage.data.content_columns, 'group').map((item, i) => (
             <Column
-              key={i}
+              key={i} // eslint-disable-line
               title={getField(item.title, 'text')}
               text={getField(item.text, 'richtext')}
             />

@@ -32,8 +32,6 @@ class Articles extends Component {
     const author = getField(article.data.author);
     const body = getField(article.data.body, 'body');
 
-    // const id = getField(article.id);
-    // Add data-wio-id={id} to the div for edit button
     return (
       <div>
         <Helmet

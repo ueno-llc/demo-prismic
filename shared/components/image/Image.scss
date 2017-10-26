@@ -7,7 +7,7 @@
 
   &__figure {
     @include reset-all;
-    margin: $gutter 0;
+    margin: $gutter * 2 0;
   }
 
   &__img {

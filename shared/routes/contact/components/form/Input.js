@@ -45,7 +45,7 @@ export default class Input extends Component {
 
         <InputElement
           className={s.input__field}
-          ref={c => { this.input = c; }}
+          ref={(c) => { this.input = c; }}
           type={type}
           name={id}
           placeholder={placeholder}
