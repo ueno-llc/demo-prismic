@@ -128,7 +128,7 @@
 
   font-family: $font-family-heading;
   font-weight: 200;
-  letter-spacing: 0;
+  letter-spacing: -0.048em;
   line-height: 1.1;
 
   color: $color-font;
@@ -143,7 +143,7 @@
 
   font-family: $font-family-heading;
   font-weight: 100;
-  letter-spacing: 0;
+  letter-spacing: -0.048em;
   line-height: 1.1;
 
   color: $color-light;
@@ -159,34 +159,40 @@
 
   font-family: $font-family;
   font-weight: 200;
-  letter-spacing: 0;
-  line-height: 1.5;
+  letter-spacing: .025em;
+  line-height: 1.6;
 
   color: $color-font;
 }
 
 @mixin h1 {
   @include heading;
+  letter-spacing: -0.048em;
 }
 
 @mixin h2($min: 26, $max: 42) {
   @include heading($min, $max);
+  letter-spacing: -0.048em;
 }
 
 @mixin h3($min: 24, $max: 38) {
   @include heading($min, $max);
+  letter-spacing: -0.025em;
 }
 
 @mixin h4($min: 22, $max: 34) {
   @include heading($min, $max);
+  letter-spacing: -0.025em;
 }
 
 @mixin h5($min: 18, $max: 30) {
   @include heading($min, $max);
+  letter-spacing: -0.025em;
 }
 
 @mixin h6($min: 16, $max: 26) {
   @include heading($min, $max);
+  letter-spacing: -0.025em;
 }
 
 // html.js / html.no-js will not compile?!

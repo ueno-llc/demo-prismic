@@ -1,16 +1,16 @@
 @import '~styles/config';
 
-.image {
+.video {
   &__container {
     @include container;
   }
 
   &__figure {
     @include reset-all;
-    margin: $gutter * 2 0;
+    margin: $gutter 0;
   }
 
-  &__img {
+  &__tag {
     margin: 0 auto;
   }
 

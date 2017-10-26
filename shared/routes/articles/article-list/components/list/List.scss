@@ -53,7 +53,7 @@
   &__image {
     margin-bottom: $gutter;
 
-    img {
+    img { // stylelint-disable-line
       min-width: 100%;
     }
   }
@@ -80,8 +80,5 @@
 
   &__description {
     @include copy(16, 18);
-  }
-
-  &__link {
   }
 }

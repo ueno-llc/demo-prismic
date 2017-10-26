@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { Switch, Route, Link } from 'react-router-dom';
+import { inject } from 'mobx-react';
+import { withJob } from 'react-jobs';
 import config from 'utils/config';
+import { getField } from 'utils/prismic';
 
 // Layout
 import AppLayout, { Content } from 'components/app-layout';
@@ -22,44 +25,62 @@ import Analytics from 'components/analytics';
 import Home from './routes/home';
 import About from './routes/about';
 import Articles from './routes/articles';
+import CustomPage from './routes/custom-page';
 import Contact from './routes/contact';
 import Search from './routes/search';
 import NotFound from './routes/not-found';
 
-export default function App() {
-  const links = [
-    <Link key="home" to="/">Home</Link>,
-    <Link key="articles" to="/articles">Articles</Link>,
-    <Link key="about" to="/about">About</Link>,
-  ];
+class App extends Component {
+  get pages() {
+    const { jobResult } = this.props;
+    const customPages = jobResult.map(({ uid, data: { title } }) => (
+      <Link key={uid} to={`/${uid}`}>{getField(title, 'text')}</Link>
+    ));
 
-  return (
-    <AppLayout>
-      <Helmet {...config('helmet')} />
+    return [
+      <Link key="home" to="/">Home</Link>,
+      <Link key="articles" to="/articles">Articles</Link>,
+      ...customPages,
+      <Link key="about" to="/about">About</Link>,
+    ]
+  }
 
-      <Header>
-        <Navigation>
-          {links}
-        </Navigation>
-      </Header>
+  render() {
+    return (
+      <AppLayout>
+        <Helmet {...config('helmet')} />
 
-      <Content>
-        <Route component={Analytics} />
-        { /* <Route component={PrismicToolbar} /> */ }
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/about" component={About} />
-          <Route path="/articles" component={Articles} />
-          <Route path="/contact-us" component={Contact} />
-          <Route path="/search/:q" component={Search} />
-          <Route component={NotFound} />
-        </Switch>
-        <DevTools />
-      </Content>
+        <Header>
+          <Navigation>
+            {this.pages}
+          </Navigation>
+        </Header>
 
-      <Footer>
-        {links}
-      </Footer>
-    </AppLayout>
-  );
+        <Content>
+          <Route component={Analytics} />
+          { /* <Route component={PrismicToolbar} /> */ }
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/about" component={About} />
+            <Route path="/articles" component={Articles} />
+            <Route path="/contact-us" component={Contact} />
+            <Route path="/search/:q" component={Search} />
+            <Route exact path="/:id" component={CustomPage} />
+            <Route component={NotFound} />
+          </Switch>
+          <DevTools />
+        </Content>
+
+        <Footer>
+          {this.pages}
+        </Footer>
+      </AppLayout>
+    );
+  }
 }
+
+const appWithJob = withJob({
+  work: ({ prismic }) => prismic.getByType({ type: 'custom_page' }),
+})(App);
+
+export default inject('prismic')(appWithJob);

@@ -2,8 +2,8 @@
 
 .tweet {
   @include responsive-font(18, 21);
-  line-height: 1.6;
   min-height: 180px;
+  line-height: 1.6;
 
   &__container {
     @include container;
