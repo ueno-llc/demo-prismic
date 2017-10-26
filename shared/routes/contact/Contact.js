@@ -9,6 +9,7 @@ import { getField } from 'utils/prismic';
 import Intro from 'components/intro';
 import Segment from 'components/segment';
 
+import Success from './components/success';
 import ContactForm from './components/form';
 
 class Contact extends PureComponent {
@@ -43,7 +44,10 @@ class Contact extends PureComponent {
 
         <Segment>
           {success ? (
-            <h1>Success</h1>
+            <Success
+              title={getField(contact.data.success_message_title, 'text')}
+              text={getField(contact.data.success_message_text, 'text')}
+            />
           ) : (
             <ContactForm />
           )}

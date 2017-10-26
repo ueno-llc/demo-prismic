@@ -1,0 +1,15 @@
+@import '~styles/config';
+
+.success {
+  text-align: center;
+
+  &__title {
+    @include heading(20, 52);
+
+    color: $color-success;
+  }
+
+  &__text {
+    @include copy(16, 20);
+  }
+}
