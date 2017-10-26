@@ -18,9 +18,6 @@ import CliVar from './utils/cliVar';
  */
 function defaultLocalApiUrl(envValue = '') {
 
-  // Hack, since Heroku doesn't allow for disabling env inheritance unless you
-  // specify a non-empty string value. So, in app.json we give LOCAL_API_URL a
-  // value of " " and check that here ¯\_(ツ)_/¯
   if (envValue.trim() !== '') {
     return envValue.trim();
   }

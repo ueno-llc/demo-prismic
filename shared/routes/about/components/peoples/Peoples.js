@@ -17,7 +17,6 @@ export default class Peoples extends Component {
       <div className={s.peoples}>
         <div className={s.peoples__container}>
           <h2 className={s.peoples__title}>{title}</h2>
-
           <div className={s.peoples__list}>
             {children}
           </div>
