@@ -42,7 +42,7 @@ class CustomPage extends PureComponent {
 const customPageWithJob = withJob({
   work: ({ prismic, match }) => prismic.getByType({ type: 'custom_page', uid: match.params.id }),
   shouldWorkAgain: (prevProps, nextProps, jobStatus) => prevProps.match.params.id !== nextProps.match.params.id,
-  LoadingComponent: () => (<div>Insert loading template</div>),
+  LoadingComponent: () => (<Intro isLoading />),
 })(CustomPage);
 
 export default inject('prismic')(customPageWithJob);
