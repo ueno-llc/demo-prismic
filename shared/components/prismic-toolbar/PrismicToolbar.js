@@ -8,6 +8,7 @@ import config from 'utils/config';
 import s from './PrismicToolbar.scss';
 
 const endpoint = config('prismicApiUrl');
+const isPreview = config('prismicPreviewApp');
 
 export default class PrismicToolbar extends PureComponent {
   static propTypes = {
@@ -15,15 +16,23 @@ export default class PrismicToolbar extends PureComponent {
   };
 
   componentDidMount() {
-    toolbar.setup(endpoint);
+    if (isPreview) {
+      toolbar.setup(endpoint);
+    }
   }
 
   componentDidUpdate() {
-    toolbar.setup(endpoint);
+    if (isPreview) {
+      toolbar.setup(endpoint);
+    }
   }
 
   render() {
     const { id } = this.props;
+
+    if (!isPreview) {
+      return null;
+    }
 
     return (
       <div className={s.toolbar} data-wio-id={id} />
