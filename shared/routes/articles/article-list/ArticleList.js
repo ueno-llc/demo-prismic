@@ -68,6 +68,9 @@ const articlesWithJob = withJob({
 
     return { page, articles };
   },
+  LoadingComponent: () => (
+    <Intro isLoading />
+  ),
 })(Articles);
 
 export default inject('prismic')(articlesWithJob);

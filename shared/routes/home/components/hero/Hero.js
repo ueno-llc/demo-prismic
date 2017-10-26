@@ -7,6 +7,7 @@ export default class Hero extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
     text: PropTypes.node,
+    isLoading: PropTypes.bool,
   }
 
   componentDidMount() {
@@ -22,10 +23,10 @@ export default class Hero extends PureComponent {
   }
 
   render() {
-    const { title, text } = this.props;
+    const { title, text, isLoading } = this.props;
 
     return (
-      <div className={s.hero} ref={(el) => { this.el = el; }}>
+      <div className={s(s.hero, { isLoading })} ref={(el) => { this.el = el; }}>
         <div className={s.hero__container}>
           <div className={s.hero__row}>
             <div className={s.hero__content}>

@@ -72,7 +72,9 @@ const homeWithJob = withJob({
   work: ({ prismic }) => prismic.homepage(),
   LoadingComponent: () => (
     <div>
-      <Hero />
+      <Hero
+        isLoading
+      />
       <Segment />
     </div>
   ),
