@@ -1,16 +1,33 @@
 @import '~styles/config';
 
 .hero {
-  @include segment;
+  position: relative;
+
+  min-height: 425px;
 
   background: #93cfe3;
-  background: #fe5830;
+
+  @media (min-width: $min-1080) {
+    min-height: 600px;
+  }
 
   &__container {
     @include container;
 
     display: flex;
     align-items: center;
+  }
+
+  &__top {
+    padding-top: $gutter * 2;
+
+    @media (min-width: $min-tablet) {
+      padding-top: percentage($segment-padding / $page-limit);
+    }
+
+    @media (min-width: $page-limit) {
+      padding-top: $segment-padding;
+    }
   }
 
   &__row {
@@ -20,38 +37,65 @@
   }
 
   &__content {
-    @include grid-col;
+    width: 100%;
+  }
 
-    color: $color-default;
-    color: #fff;
+  &__pagination {
+    @include reset-list;
+
+    display: flex;
+
+    position: absolute;
+    bottom: $gutter * 2;
 
     @media (min-width: $min-tablet) {
-      @include grid-col(7);
+      bottom: percentage($segment-padding / $page-limit);
     }
 
-    @media (min-width: $min-desktop) {
-      @include grid-col(5);
+    @media (min-width: $page-limit) {
+      bottom: $segment-padding;
     }
   }
 
-  &__title {
-    @include heading;
-    color: inherit;
-  }
+  &__item {
+    margin-right: 20px;
 
-  &__text {
-    p {
-      @include copy;
-      color: inherit;
+    width: 60px;
+    height: 2px;
 
-      &:last-child { // stylelint-disable-line
-        margin-bottom: 0;
-      }
+    cursor: pointer;
+
+    background-color: rgba(#fff, 0.4);
+
+    transition: background-color $transition-enter;
+
+    @media (min-width: $min-720) {
+      width: 80px;
     }
 
-    a {
-      @include reset-anchor;
-      font-weight: 400;
+    &:hover,
+    &.active {
+      background-color: #fff;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+
+      display: block;
+
+      position: relative;
+
+      width: 100%;
+      height: 10px;
+    }
+
+    &::before {
+      top: -10px;
+    }
+
+    &::after {
+      top: -8px;
     }
   }
 }
