@@ -49,6 +49,18 @@ export default class Prismic {
   }
 
   @timing.promise
+  getSingleByType({ type, links }) {
+    return this.getByType({ type, links })
+      .then((results) => {
+        if (results.length > 0) {
+          return results[0];
+        }
+
+        return {};
+      });
+  }
+
+  @timing.promise
   homepage() {
     const url = `${apiUrl}/prismic/contentType/homepage?fetchLinks=article.title,article.short_description,article.publication_date`;
 

@@ -74,7 +74,7 @@ class Contact extends PureComponent {
 }
 
 const contactWithJob = withJob({
-  work: ({ prismic }) => prismic.getByType({ type: 'contact' }),
+  work: ({ prismic }) => prismic.getSingleByType({ type: 'contact' }),
   LoadingComponent: () => (
     <div>
       <Intro>
