@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import s from './Heading.scss';
 
-const Heading = ({ children }) => (
-  <div className={s.heading}>
+const Heading = ({ children, loading }) => (
+  <div className={s(s.heading, { isLoading: loading })}>
     <div className={s.heading__container}>
       <div className={s.heading__row}>
         <div className={s.heading__col}>
@@ -19,6 +19,7 @@ const Heading = ({ children }) => (
 
 Heading.propTypes = {
   children: PropTypes.node,
+  loading: PropTypes.bool,
 };
 
 export default Heading;

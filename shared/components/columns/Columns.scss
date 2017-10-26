@@ -1,0 +1,37 @@
+@import '~styles/config';
+
+.columns {
+  @include segment;
+
+  &__container {
+    @include container;
+  }
+
+  &__list {
+    @include reset-list;
+
+    @media (min-width: $min-720) {
+      @include grid-row;
+    }
+  }
+
+  &__item {
+    // &:nth-child(3n+1) {
+    //   @include grid-offset-left(1);
+    // }
+
+    @media (min-width: $min-720) {
+      @include grid-col(4);
+    }
+  }
+
+  &__heading {
+    @include h2;
+    margin: 0;
+  }
+
+  &__heading + &__heading {
+    @include subheading(26, 42);
+    margin-bottom: $gutter * 2;
+  }
+}

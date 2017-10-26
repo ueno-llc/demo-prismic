@@ -1,9 +1,10 @@
 import express from 'express';
 import prismic from 'prismic-javascript';
+import config from '../../config';
 
 const app = express();
-const endpoint = 'https://ueno-starter-kit-universally-test.prismic.io/api/v2';
-const accessToken = null;
+const endpoint = config('prismicApiUrl');
+const accessToken = config('prismicAccessToken');
 
 function primiscApi(req) {
   return prismic.getApi(endpoint, {

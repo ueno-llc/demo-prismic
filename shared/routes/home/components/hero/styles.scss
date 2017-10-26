@@ -1,7 +1,7 @@
 @import '~styles/config';
 
 .hero {
-  display: block;
+  @include segment;
 
   background: #93cfe3;
   background: #fe5830;
@@ -11,8 +11,6 @@
 
     display: flex;
     align-items: center;
-
-    min-height: 600px;
   }
 
   &__row {
@@ -22,30 +20,38 @@
   }
 
   &__content {
-    @include grid-col((100% / 12) * 6);
+    @include grid-col;
 
     color: $color-default;
     color: #fff;
+
+    @media (min-width: $min-tablet) {
+      @include grid-col(7);
+    }
+
+    @media (min-width: $min-desktop) {
+      @include grid-col(5);
+    }
   }
 
   &__title {
-    @include reset-heading;
-    @include responsive-font(16, 46);
-    font-family: $font-family-tisa;
-    font-weight: 400;
+    @include heading;
+    color: inherit;
   }
 
   &__text {
-    @include responsive-font(16, 20);
-
     p {
-      @include reset-all;
+      @include copy;
+      color: inherit;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
 
     a {
       @include reset-anchor;
-
-      font-weight: bold;
+      font-weight: 400;
     }
   }
 }

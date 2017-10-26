@@ -1,49 +1,60 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
+import { getField } from 'utils/prismic';
 
-import Heading from 'components/heading';
-
-import s from './ArticleList.scss';
+import Loading from 'components/loading';
+import Intro from 'components/intro';
+import List, { Item } from './components/list';
 
 class Articles extends PureComponent {
 
   static propTypes = {
-    jobResult: PropTypes.arrayOf(PropTypes.object),
+    jobResult: PropTypes.object,
   };
 
   render() {
-    const { jobResult: articles } = this.props;
+    const { jobResult: { page, articles } } = this.props;
 
     return (
-      <div className={s.articleList__container}>
-        <Helmet title="Articles" />
-        <Heading>Articles</Heading>
+      <div>
+        <Helmet
+          title={getField(page.data.title_seo, 'text').trim()}
+          meta={[{ name: 'description', content: getField(page.data.description_seo, 'text').trim() }]}
+        />
+
+        <Intro>
+          <h1>{getField(page.data.title, 'text')}</h1>
+          <h2>{getField(page.data.subtitle, 'text')}</h2>
+          <p>{getField(page.data.text, 'text')}</p>
+        </Intro>
 
         {articles && (
-          <ul>
-            {articles.map((article) => {
-              const { uid } = article;
+          <List>
+            {articles.map((article, i) => {
+              const { uid, data } = article;
 
               if (!uid) {
                 return null;
               }
 
-              const url = `/articles/${uid}`;
-              const title = article.data.title[0].text;
-              const published = new Date(article.first_publication_date);
+              const image = getField(data.image);
+              const src = image && image.url;
 
               return (
-                <li key={uid}>
-                  <Link to={url}>{title}</Link>,
-                  published {published.toUTCString()}
-                </li>
+                <Item
+                  key={uid}
+                  url={`/articles/${uid}`}
+                  title={getField(data.title, 'text')}
+                  description={getField(data.short_description, 'text')}
+                  image={image}
+                  src={src}
+                />
               );
             })}
-          </ul>
+          </List>
         )}
 
         {!articles && (
@@ -55,7 +66,14 @@ class Articles extends PureComponent {
 }
 
 const articlesWithJob = withJob({
-  work: ({ prismic }) => prismic.articles(),
+  work: async ({ prismic }) => {
+    const [page, articles] = await Promise.all([
+      prismic.getByType({ type: 'articles', links: 'author.name,author.bio,author.image' }),
+      prismic.getByType({ type: 'article', links: 'author.name' }),
+    ]);
+
+    return { page, articles };
+  },
 })(Articles);
 
 export default inject('prismic')(articlesWithJob);

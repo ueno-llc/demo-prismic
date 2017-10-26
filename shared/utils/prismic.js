@@ -2,9 +2,17 @@ import { RichText } from 'prismic-reactjs';
 import { asText } from 'prismic-richtext';
 
 function linkResolver(doc) {
+  if (!doc) {
+    return '/';
+  }
+
   switch (doc.type) {
+    case 'homepage':
+      return '/';
+    case 'about':
+      return '/about';
     case 'article':
-      return `/articles/${doc.slug}`;
+      return `/articles/${doc.slug || doc.uid}`;
     default:
       return '/';
   }
@@ -49,6 +57,8 @@ function renderDefault(field) {
 function getField(field, type = '') {
   switch (type) {
     case 'title':
+      return renderAsText(field);
+    case 'text':
       return renderAsText(field);
     case 'richtext':
       return renderAsComponentTree(field);

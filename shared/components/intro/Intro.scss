@@ -1,0 +1,43 @@
+@import '~styles/config';
+
+.intro {
+  @include segment;
+  background-color: #fafafa;
+
+  &__container {
+    @include container;
+  }
+
+  &__row {
+    @include grid-row;
+  }
+
+  &__col {
+    @include grid-col;
+
+    @media (min-width: $min-tablet) {
+      @include grid-col(7);
+    }
+
+    @media (min-width: $min-desktop) {
+      @include grid-col(5);
+    }
+  }
+
+  h1 {
+    @include heading;
+    margin-bottom: 0;
+  }
+
+  h2 {
+    @include subheading;
+  }
+
+  p {
+    @include copy;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

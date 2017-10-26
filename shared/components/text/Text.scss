@@ -63,15 +63,23 @@
   }
 
   h3 {
-    @include responsive-font(24, 36);
+    @include h3;
   }
 
   h4 {
-    @include responsive-font(22, 34);
+    @include h4;
 
     & + p { // stylelint-disable-line
       margin-top: 0;
     }
+  }
+
+  h5 {
+    @include h5;
+  }
+
+  h6 {
+    @include h6;
   }
 
   ul,

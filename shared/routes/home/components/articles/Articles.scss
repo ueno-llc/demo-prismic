@@ -1,7 +1,11 @@
 @import '~styles/config';
 
 .articles {
-  @include container;
+  @include segment;
+
+  &__container {
+    @include container;
+  }
 
   &__row {
     @include grid-row;
@@ -10,23 +14,14 @@
   &__header {
     @include grid-col;
 
-    margin-bottom: 80px;
+    margin-bottom: $gutter * 2;
 
     &Title {
-      @include reset-heading;
-      @include responsive-font(16, 46);
-
-      padding-right: $gutter * 2;
-
-      font-family: $font-family-heading;
-      font-weight: 200;
-      letter-spacing: -0.025em;
-      line-height: (50/46);
-
-      color: #000;
+      @include h2;
+      margin-bottom: 0;
 
       &:last-of-type {
-        color: $color-light;
+        @include subheading(26, 42);
       }
     }
   }
@@ -44,9 +39,9 @@
   &__link {
     @include reset-anchor;
 
-    position: relative;
-
     display: block;
+
+    position: relative;
 
     &:hover {
       &::before {
@@ -88,7 +83,7 @@
       width: 100%;
       height: 1px;
 
-      background-color: #EBEBEB;
+      background-color: #ebebeb;
     }
   }
 
@@ -116,18 +111,10 @@
   }
 
   &__title {
-    @include reset-heading;
-    @include responsive-font(18, 32);
+    @include heading(18, 32);
     @include grid-col;
 
     margin-bottom: 12px;
-
-    font-family: $font-family-heading;
-    font-weight: 200;
-    letter-spacing: -0.025em;
-    line-height: (38/32);
-
-    color: #000;
 
     @media (min-width: $min-480) {
       @include grid-col(10);
@@ -143,15 +130,9 @@
   }
 
   &__description {
-    @include reset-all;
-    @include responsive-font(14, 20);
+    @include copy(14, 20);
     @include grid-col;
     @include grid-offset-right;
-
-    color: $color-content;
-    letter-spacing: 0.025em;
-    line-height: (28/20);
-    font-weight: 200;
 
     transition: color $transition-enter;
 
