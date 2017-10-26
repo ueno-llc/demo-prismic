@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import s from './Content.scss';
 
-export default function Content({ children }) {
+function Content({ children, location }) {
   return (
-    <main className={s.content}>
+    <main className={s.content} key={location.pathname}>
       {children}
     </main>
   );
@@ -13,4 +14,7 @@ export default function Content({ children }) {
 
 Content.propTypes = {
   children: PropTypes.node,
+  location: PropTypes.object,
 };
+
+export default withRouter(Content);

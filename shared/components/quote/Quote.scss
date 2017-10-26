@@ -28,10 +28,10 @@
 
   &__block {
     @include reset-all;
-    margin: 1em 0;
+    margin: 2em 0;
 
     @media (min-width: $min-mobile) {
-      margin: 1em;
+      margin: 2em 1em;
     }
   }
 
