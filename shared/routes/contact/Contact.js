@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { inject } from 'mobx-react';
+import { observable } from 'mobx';
+import { inject, observer } from 'mobx-react';
 import { withJob } from 'react-jobs';
+import { autobind } from 'core-decorators';
 
 import { getField } from 'utils/prismic';
 
@@ -12,6 +14,7 @@ import Segment from 'components/segment';
 import Success from './components/success';
 import ContactForm from './components/form';
 
+@observer
 class Contact extends PureComponent {
 
   static propTypes = {
@@ -22,12 +25,25 @@ class Contact extends PureComponent {
         featured_article: PropTypes.object,
       }),
     }),
-    match: PropTypes.object,
   };
 
+  @observable
+  success = false;
+
+  @autobind
+  onSend(form) {
+    fetch('https://formkeep.com/f/37771b24266b', {
+      method: 'POST',
+      body: form,
+    }).then((res) => {
+      if (res.status === 200) { // success
+        this.success = true;
+      }
+    });
+  }
+
   render() {
-    const { jobResult: contact, match } = this.props;
-    const { success } = match.params;
+    const { jobResult: contact } = this.props;
 
     return (
       <div>
@@ -43,13 +59,13 @@ class Contact extends PureComponent {
         </Intro>
 
         <Segment>
-          {success ? (
+          {this.success ? (
             <Success
               title={getField(contact.data.success_message_title, 'text')}
               text={getField(contact.data.success_message_text, 'text')}
             />
           ) : (
-            <ContactForm />
+            <ContactForm onSend={this.onSend} />
           )}
         </Segment>
       </div>

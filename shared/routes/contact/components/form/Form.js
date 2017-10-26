@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+import { autobind } from 'core-decorators';
 
 import Button from 'components/button';
 
@@ -9,6 +11,9 @@ import s from './Form.scss';
 
 @observer
 export default class ContactForm extends Component {
+  static propTypes = {
+    onSend: PropTypes.func,
+  }
 
   @observable
   name = '';
@@ -19,6 +24,19 @@ export default class ContactForm extends Component {
   @observable
   message = '';
 
+  @autobind
+  onSend(e) {
+    e.preventDefault();
+
+    const form = new FormData();
+
+    form.append('name', this.name);
+    form.append('email', this.email);
+    form.append('message', this.message);
+
+    this.props.onSend(form);
+  }
+
   render() {
     return (
       <div className={s.form}>
@@ -26,8 +44,7 @@ export default class ContactForm extends Component {
           <div className={s.form__col}>
             <form
               acceptCharset="UTF-8"
-              action="https://formkeep.com/f/37771b24266b"
-              method="POST"
+              onSubmit={this.onSend}
               className={s.form__form}
             >
               <Input

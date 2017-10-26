@@ -49,7 +49,7 @@ export default function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
           <Route path="/articles" component={Articles} />
-          <Route path="/contact-us/:success?" component={Contact} />
+          <Route path="/contact-us" component={Contact} />
           <Route component={NotFound} />
         </Switch>
         <DevTools />
