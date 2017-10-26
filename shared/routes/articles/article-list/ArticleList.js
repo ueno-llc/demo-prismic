@@ -23,9 +23,9 @@ class Articles extends PureComponent {
         <Helmet title="Articles" />
 
         <Intro>
-          <h1>{getField(page.data.title, 'title')}</h1>
-          <h2>{getField(page.data.subtitle, 'title')}</h2>
-          <p>{getField(page.data.text, 'title')}</p>
+          <h1>{getField(page.data.title, 'text')}</h1>
+          <h2>{getField(page.data.subtitle, 'text')}</h2>
+          <p>{getField(page.data.text, 'text')}</p>
         </Intro>
 
         {articles && (
@@ -44,8 +44,8 @@ class Articles extends PureComponent {
                 <Item
                   key={uid}
                   url={`/articles/${uid}`}
-                  title={getField(data.title, 'title')}
-                  description={getField(data.short_description, 'title')}
+                  title={getField(data.title, 'text')}
+                  description={getField(data.short_description, 'text')}
                   image={image}
                   src={src}
                 />
