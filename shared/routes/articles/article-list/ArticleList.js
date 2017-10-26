@@ -5,8 +5,8 @@ import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 import { getField } from 'utils/prismic';
 
-import Loading from 'components/loading';
 import Intro from 'components/intro';
+import PrismicToolbar from 'components/prismic-toolbar';
 import List, { Item } from './components/list';
 
 class Articles extends PureComponent {
@@ -17,9 +17,11 @@ class Articles extends PureComponent {
 
   render() {
     const { jobResult: { page, articles } } = this.props;
+    const { id } = page;
 
     return (
       <div>
+        <PrismicToolbar id={id} />
         <Helmet
           title={getField(page.data.title_seo, 'text').trim()}
           meta={[{ name: 'description', content: getField(page.data.description_seo, 'text').trim() }]}

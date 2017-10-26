@@ -7,6 +7,7 @@ import { withJob } from 'react-jobs';
 import { getField } from 'utils/prismic';
 
 import Intro from 'components/intro';
+import PrismicToolbar from 'components/prismic-toolbar';
 import Peoples, { People } from './components/peoples';
 
 class About extends PureComponent {
@@ -25,9 +26,11 @@ class About extends PureComponent {
     const { jobResult: about } = this.props;
 
     const people = getField(about.data.people);
+    const { id } = about;
 
     return (
       <div>
+        <PrismicToolbar id={id} />
         <Helmet
           title={getField(about.data.title_seo, 'text').trim()}
           meta={[{ name: 'description', content: getField(about.data.description_seo, 'text').trim() }]}
