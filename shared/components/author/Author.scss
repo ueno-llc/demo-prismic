@@ -55,14 +55,14 @@
   }
 
   &.isLoading &__image {
-    background: #eee;
+    @include loadingText;
   }
 
   &.isLoading &__paragraph {
+    @include loadingText;
     margin-bottom: 0.5rem;
     height: 1.5rem;
     width: 100px;
-    background: #eee;
 
     &:nth-child(2) {
       width: 150px;

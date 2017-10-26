@@ -31,6 +31,10 @@
 
   h2 {
     @include subheading;
+
+    .isLoading & {
+      @include loadingText;
+    }
   }
 
   p {
@@ -39,5 +43,33 @@
     &:last-child { // stylelint-disable-line
       margin-bottom: 0;
     }
+  }
+
+  &.isLoading &__col > div { // stylelint-disable-line
+    display: flex;
+    flex-flow: nowrap;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &.isLoading h1 {
+    @include loadingText;
+
+    line-height: 0.77em;
+  }
+
+  &.isLoading h2 {
+    @include loadingText;
+
+    margin-bottom: 0.8em;
+    line-height: 0.77em;
+  }
+
+  &.isLoading p {
+    @include loadingText;
+
+    margin-bottom: 1em;
+    font-size: 16px;
+    line-height: 0.9;
   }
 }
