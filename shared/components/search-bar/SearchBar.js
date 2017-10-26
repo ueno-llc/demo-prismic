@@ -7,29 +7,8 @@ import s from './SearchBar.scss';
 class SearchBar extends Component {
 
   static propTypes = {
-    text: PropTypes.string,
     history: PropTypes.object,
   };
-
-  componentDidUpdate() {
-    if (this.input) {
-      this.input.focus();
-      this.input.value = this.props.text || '';
-    }
-  }
-
-  componentWillReceiveProps() {
-    if (this.input) {
-      this.input.value = '';
-    }
-  }
-
-  componentDidMount() {
-    if (this.input) {
-      this.input.focus();
-      this.input.value = this.props.text || '';
-    }
-  }
 
   onKeyDown = (e) => {
     if (e.keyCode === 13) {
@@ -50,7 +29,6 @@ class SearchBar extends Component {
         <input
           ref={(el) => { this.input = el; }}
           className={s.search__input}
-          defaultValue={this.props.text}
           type="text"
           placeholder="Search..."
           onKeyDown={this.onKeyDown}
