@@ -46,6 +46,11 @@
     }
   }
 
+  &__search {
+    max-width: 200px;
+    margin-top: 30px;
+  }
+
   &__navigation {
     @include grid-col(2);
   }

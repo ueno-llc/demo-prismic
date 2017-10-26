@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import SearchBar from 'components/search-bar';
+
 import UenoLogoSvg from 'assets/images/ueno-logo.svg';
 
 import s from './Footer.scss';
@@ -23,6 +25,9 @@ export default class Footer extends Component {
           <div className={s.footer__row}>
             <div className={s.footer__logo}>
               <UenoLogoSvg />
+              <div className={s.footer__search}>
+                <SearchBar />
+              </div>
             </div>
 
             <div className={s.footer__navigation}>
