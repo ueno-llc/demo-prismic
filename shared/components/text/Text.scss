@@ -3,9 +3,6 @@
 @import '~styles/config';
 
 .text {
-  @include responsive-font(18, 21);
-  line-height: 1.6;
-
   &__container {
     @include container;
   }
@@ -29,25 +26,24 @@
   }
 
   p {
-    margin: 1.6em 0;
-    font-weight: 200;
+    @include copy;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @include reset-heading;
-    margin: 2.2em 0 0.6em;
-    font-family: $font-family-heading;
-    font-weight: 200;
-    line-height: 1.2;
+  &:first-child p:first-child {
+    margin-top: 1.3em;
+  }
 
-    &:first-child {
-      margin-top: 0;
-    }
+  p + h1,
+  p + h2,
+  p + h3,
+  p + h4,
+  p + h5,
+  p + h6 {
+    margin-top: 2.2em;
   }
 
   h2 {
@@ -55,11 +51,7 @@
   }
 
   &:first-child h2:first-child {
-    @include responsive-font(32, 54);
-    line-height: 1.2;
-    letter-spacing: -0.048em;
-    color: $color-light;
-    font-weight: 100;
+    @include subheading;
   }
 
   h3 {
@@ -68,10 +60,6 @@
 
   h4 {
     @include h4;
-
-    & + p { // stylelint-disable-line
-      margin-top: 0;
-    }
   }
 
   h5 {
@@ -88,8 +76,8 @@
   }
 
   li {
+    @include copy;
     margin: 0 0 0.4em;
-    font-weight: 200;
   }
 
   a {
@@ -113,5 +101,10 @@
     &:hover {
       border-bottom: 1px solid $color-default;
     }
+  }
+
+  strong,
+  b {
+    font-weight: 400;
   }
 }
