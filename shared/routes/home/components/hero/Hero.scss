@@ -44,7 +44,7 @@
       @include copy;
       color: inherit;
 
-      &:last-child {
+      &:last-child { // stylelint-disable-line
         margin-bottom: 0;
       }
     }

@@ -10,16 +10,11 @@ export default class Item extends PureComponent {
     url: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
-    image: PropTypes.object,
     src: PropTypes.node,
   }
 
-  static defaultProps = {
-    children: undefined,
-  }
-
   render() {
-    const { url, title, description, image, src } = this.props;
+    const { url, title, description, src } = this.props;
     return (
       <li className={s.list__item}>
         <Link to={url} className={s.list__block}>

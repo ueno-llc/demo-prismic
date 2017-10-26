@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { TimelineLite } from 'gsap';
-import s from './styles.scss';
+import s from './Hero.scss';
 
 export default class Hero extends PureComponent {
   static propTypes = {
