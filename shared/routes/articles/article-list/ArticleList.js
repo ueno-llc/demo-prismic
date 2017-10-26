@@ -20,12 +20,15 @@ class Articles extends PureComponent {
 
     return (
       <div>
-        <Helmet title="Articles" />
+        <Helmet
+          title={getField(page.data.title_seo, 'text').trim()}
+          meta={[{ name: 'description', content: getField(page.data.description_seo, 'text').trim() }]}
+        />
 
         <Intro>
-          <h1>{getField(page.data.title, 'title')}</h1>
-          <h2>{getField(page.data.subtitle, 'title')}</h2>
-          <p>{getField(page.data.text, 'title')}</p>
+          <h1>{getField(page.data.title, 'text')}</h1>
+          <h2>{getField(page.data.subtitle, 'text')}</h2>
+          <p>{getField(page.data.text, 'text')}</p>
         </Intro>
 
         {articles && (
@@ -44,8 +47,8 @@ class Articles extends PureComponent {
                 <Item
                   key={uid}
                   url={`/articles/${uid}`}
-                  title={getField(data.title, 'title')}
-                  description={getField(data.short_description, 'title')}
+                  title={getField(data.title, 'text')}
+                  description={getField(data.short_description, 'text')}
                   image={image}
                   src={src}
                 />
@@ -64,7 +67,10 @@ class Articles extends PureComponent {
 
 const articlesWithJob = withJob({
   work: async ({ prismic }) => {
-    const [page, articles] = await Promise.all([prismic.articlesPage(), prismic.articles()]);
+    const [page, articles] = await Promise.all([
+      prismic.getByType({ type: 'articles', links: 'author.name,author.bio,author.image' }),
+      prismic.getByType({ type: 'article', links: 'author.name' }),
+    ]);
 
     return { page, articles };
   },

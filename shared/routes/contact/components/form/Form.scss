@@ -1,0 +1,34 @@
+@import '~styles/config';
+
+.form {
+  &__row {
+    @include grid-row;
+  }
+
+  &__col {
+    @include grid-offset-left;
+
+    width: 100%;
+  }
+
+  &__form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__input {
+    @include grid-col(percentage(5/11));
+  }
+
+  &__textarea {
+    @include grid-col(percentage(10/11));
+
+    margin-top: $gutter * 2;
+  }
+
+  &__button {
+    @include grid-col(percentage(10/11));
+
+    margin-top: $gutter * 2;
+  }
+}

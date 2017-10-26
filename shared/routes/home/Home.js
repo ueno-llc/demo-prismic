@@ -32,36 +32,38 @@ class Home extends PureComponent {
     return (
       <div>
         <Helmet
-          title={getField(homepage.data.title_seo, 'title').trim()}
-          meta={[{ name: 'description', content: getField(homepage.data.description_seo, 'title').trim() }]}
+          title={getField(homepage.data.title_seo, 'text').trim()}
+          meta={[{ name: 'description', content: getField(homepage.data.description_seo, 'text').trim() }]}
         />
 
         <Hero
-          title={getField(homepage.data.title, 'title')}
+          title={getField(homepage.data.title, 'text')}
           text={getField(homepage.data.content, 'richtext')}
         />
 
         <Columns
-          heading="Who we are, and who we want to be"
-          subline="A few things you should know about Ueno"
+          heading={getField(homepage.data.column_title, 'text')}
+          subline={getField(homepage.data.column_subheading, 'text')}
         >
           {getField(homepage.data.content_columns, 'group').map((item, i) => (
             <Column
               key={i}
-              title={getField(item.title, 'title')}
+              title={getField(item.title, 'text')}
               text={getField(item.text, 'richtext')}
             />
           ))}
         </Columns>
 
         <Articles
+          title={getField(homepage.data.articles_title, 'text')}
+          subheading={getField(homepage.data.articles_subheading, 'text')}
           articles={homepage.data.featured_articles}
           show={4}
         />
 
         <Cta>
           <p>Want to talk more.</p>
-          <Button to="/contact" large stroke>Contact us</Button>
+          <Button to="/contact-us" large stroke>Contact us</Button>
         </Cta>
       </div>
     );
@@ -69,7 +71,7 @@ class Home extends PureComponent {
 }
 
 const homeWithJob = withJob({
-  work: ({ prismic }) => prismic.homepage(),
+  work: ({ prismic }) => prismic.getByType({ type: 'homepage', links: 'article.title,article.short_description,article.publication_date' }),
   LoadingComponent: () => (
     <div>
       <Hero

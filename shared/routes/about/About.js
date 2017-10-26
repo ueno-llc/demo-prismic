@@ -28,7 +28,10 @@ class About extends PureComponent {
 
     return (
       <div>
-        <Helmet title="About" />
+        <Helmet
+          title={getField(about.data.title_seo, 'text').trim()}
+          meta={[{ name: 'description', content: getField(about.data.description_seo, 'text').trim() }]}
+        />
 
         <Intro>
           <h1>{getField(about.data.title, 'text')}</h1>
@@ -52,7 +55,7 @@ class About extends PureComponent {
 }
 
 const aboutWithJob = withJob({
-  work: ({ prismic }) => prismic.about(),
+  work: ({ prismic }) => prismic.getByType({ type: 'about', links: 'author.name,author.bio,author.image' }),
   LoadingComponent: () => (
     <div>
       <Intro isLoading />

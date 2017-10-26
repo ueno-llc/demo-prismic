@@ -131,6 +131,7 @@ function ServerHTML(props) {
     ),
     ifElse(clientEntryAssets && clientEntryAssets.js)(() => scriptTag(clientEntryAssets.js)),
     ...ifElse(helmet)(() => helmet.script.toComponent(), []),
+    scriptTag('https://platform.twitter.com/widgets.js'),
   ]);
 
   return (

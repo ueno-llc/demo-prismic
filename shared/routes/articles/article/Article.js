@@ -28,7 +28,7 @@ class Articles extends Component {
       return <Route component={NotFound} />;
     }
 
-    const title = getField(article.data.title, 'title');
+    const title = getField(article.data.title, 'text');
     const author = getField(article.data.author);
     const body = getField(article.data.body, 'body');
 
@@ -36,14 +36,17 @@ class Articles extends Component {
     // Add data-wio-id={id} to the div for edit button
     return (
       <div>
-        <Helmet title={title} />
+        <Helmet
+          title={getField(article.data.title_seo, 'text').trim()}
+          meta={[{ name: 'description', content: getField(article.data.description_seo, 'text').trim() }]}
+        />
 
         <Article>
           {author && (<Author
             key="author"
-            name={getField(author.data.name, 'title')}
-            bio={getField(author.data.bio, 'title')}
-            image={getField(author.data.image)}
+            name={getField(author.data.name, 'text')}
+            bio={getField(author.data.bio, 'text')}
+            image={getField(author.data.image).thumb}
           />)}
           <Heading key="heading">{title}</Heading>
           <Slices data={body} />
@@ -55,7 +58,11 @@ class Articles extends Component {
 }
 
 const articlesWithJob = withJob({
-  work: ({ prismic, match }) => prismic.article(match.params.id),
+  work: ({ prismic, match }) => prismic.getByType({
+    type: 'article',
+    uid: match.params.id,
+    links: 'author.name,author.bio,author.image',
+  }),
   LoadingComponent: () => (
     <Article>
       <Author
