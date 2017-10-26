@@ -63,7 +63,7 @@ class Home extends PureComponent {
 
         <Cta>
           <p>Want to talk more.</p>
-          <Button to="/contact" large stroke>Contact us</Button>
+          <Button to="/contact-us" large stroke>Contact us</Button>
         </Cta>
       </div>
     );
