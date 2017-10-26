@@ -23,6 +23,9 @@ export default class Video extends PureComponent {
               src={url}
               height={574}
               autoPlay
+              muted
+              controls
+              loop
             />
             {caption && (
               <figcaption className={s.video__caption}>{caption}</figcaption>
