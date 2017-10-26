@@ -40,12 +40,12 @@
   p {
     @include copy;
 
-    &:last-child {
+    &:last-child { // stylelint-disable-line
       margin-bottom: 0;
     }
   }
 
-  &.isLoading &__col > div{
+  &.isLoading &__col > div { // stylelint-disable-line
     display: flex;
     flex-flow: nowrap;
     flex-direction: column;

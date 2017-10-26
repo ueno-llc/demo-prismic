@@ -77,6 +77,7 @@ const homeWithJob = withJob({
       <Hero
         isLoading
       />
+      <Columns isLoading />
       <Segment />
     </div>
   ),
