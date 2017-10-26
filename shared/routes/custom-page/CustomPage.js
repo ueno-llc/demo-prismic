@@ -11,6 +11,7 @@ import { getField } from 'utils/prismic';
 
 import Intro from 'components/intro';
 import Slices from 'components/slices';
+import Article from 'components/article';
 
 class CustomPage extends PureComponent {
 
@@ -20,11 +21,12 @@ class CustomPage extends PureComponent {
 
   render() {
     const { jobResult: page } = this.props;
-    const body = getField(page.data.body, 'body');
 
     if (isEmpty(page)) {
       return <Route component={NotFound} />;
     }
+
+    const body = getField(page.data.body, 'body');
 
     return (
       <div>
@@ -36,7 +38,9 @@ class CustomPage extends PureComponent {
           <p>{getField(page.data.text, 'text')}</p>
         </Intro>
 
-        <Slices data={body} />
+        <Article>
+          <Slices data={body} />
+        </Article>
       </div>
     );
   }
