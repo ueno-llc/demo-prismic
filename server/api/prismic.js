@@ -66,7 +66,24 @@ async function fetchById(req, res) {
   }
 }
 
+async function fetchSearchResults(req, res) {
+  try {
+    const api = await primiscApi(req);
+    const q = req.params.q || '';
+    const response = await api.query([
+      prismic.Predicates.any('document.type', ['about', 'article', 'articles', 'custom_page', 'homepage']),
+      prismic.Predicates.fulltext('document', q),
+    ]);
+
+    res.send(response);
+  } catch (e) {
+    console.error('error querying prismic', e);
+    res.status(500).send('500');
+  }
+}
+
 app.get('/contentType/:contentType/:uid?', fetchByContentType);
 app.get('/id/:id', fetchById);
+app.get('/search/:q', fetchSearchResults);
 
 export default app;
