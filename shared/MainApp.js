@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Switch, Route, Link } from 'react-router-dom';
 import { inject } from 'mobx-react';
@@ -31,9 +32,13 @@ import Search from './routes/search';
 import NotFound from './routes/not-found';
 
 class App extends Component {
+  static propTypes = {
+    jobResult: PropTypes.object,
+  }
+
   get pages() {
     const { jobResult } = this.props;
-    const customPages = jobResult.map(({ uid, data: { title } }) => (
+    const customPages = jobResult.data.custom_pages.map(({ custom_page: { uid, data: { title } } }) => (
       <Link key={uid} to={`/${uid}`}>{getField(title, 'text')}</Link>
     ));
 
@@ -42,7 +47,7 @@ class App extends Component {
       <Link key="articles" to="/articles">Articles</Link>,
       ...customPages,
       <Link key="about" to="/about">About</Link>,
-    ]
+    ];
   }
 
   render() {
@@ -80,7 +85,7 @@ class App extends Component {
 }
 
 const appWithJob = withJob({
-  work: ({ prismic }) => prismic.getByType({ type: 'custom_page' }),
+  work: ({ prismic }) => prismic.getSingleByType({ type: 'homepage', links: 'custom_page.title' }),
 })(App);
 
 export default inject('prismic')(appWithJob);
