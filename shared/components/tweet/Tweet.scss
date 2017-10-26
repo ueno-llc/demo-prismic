@@ -1,15 +1,64 @@
 @import '~styles/config';
 
 .tweet {
+  @include responsive-font(18, 21);
+  line-height: 1.6;
+  min-height: 180px;
+
   &__container {
     @include container;
   }
 
-  &__block {
-    margin: $gutter 0;
+  &__row {
+    @include grid-row;
+  }
 
-    > * {
-      margin: 0 auto;
+  &__col {
+    @include grid-col;
+
+    @media (min-width: $min-tablet) {
+      @include grid-col(8);
+      @include grid-offset-left(2);
+    }
+
+    @media (min-width: $min-desktop) {
+      @include grid-col(6);
+      @include grid-offset-left(3);
+    }
+  }
+
+  &__block {
+    @include reset-all;
+
+    padding: $gutter 0;
+
+    font-weight: 200;
+  }
+
+  &__text {
+    margin: 0 0 $gutter 0;
+  }
+
+  &__url {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    line-height: 0.75;
+
+    text-shadow:
+      1px 1px #fff,
+      -1px -1px #fff,
+      -1px 1px #fff,
+      1px -1px #fff,
+      2px 2px #fff,
+      -2px -2px #fff,
+      -2px 2px #fff,
+      2px -2px #fff;
+
+    border-bottom: 1px solid $color-light;
+
+    &:hover {
+      border-bottom: 1px solid $color-default;
     }
   }
 }
