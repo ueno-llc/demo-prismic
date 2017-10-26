@@ -22,9 +22,10 @@ export default class Prismic {
   getByType({ type, uid, links }) {
     if (!type) throw new Error('Missing type');
 
+    const hasUid = uid !== undefined;
     let url = `${apiUrl}/prismic/contentType/${type}`;
 
-    if (uid !== undefined) {
+    if (hasUid) {
       url += `/${uid}`;
     }
 
@@ -35,15 +36,27 @@ export default class Prismic {
     return this.fetch(url)
       .then(data => data.results)
       .then((results) => {
-        if (results.length === 1) {
-          return results[0];
+        if (results.length > 0) {
+          return hasUid ? results[0] : results;
         }
 
-        return results;
+        return hasUid ? {} : [];
       })
       .catch((err) => {
         console.warn('Error fetching prismic data', err);
-        return [];
+        return uid ? {} : [];
+      });
+  }
+
+  @timing.promise
+  getSingleByType({ type, links }) {
+    return this.getByType({ type, links })
+      .then((results) => {
+        if (results.length > 0) {
+          return results[0];
+        }
+
+        return {};
       });
   }
 

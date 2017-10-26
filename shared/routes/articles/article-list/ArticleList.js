@@ -67,12 +67,15 @@ class Articles extends PureComponent {
 const articlesWithJob = withJob({
   work: async ({ prismic }) => {
     const [page, articles] = await Promise.all([
-      prismic.getByType({ type: 'articles', links: 'author.name,author.bio,author.image' }),
+      prismic.getSingleByType({ type: 'articles', links: 'author.name,author.bio,author.image' }),
       prismic.getByType({ type: 'article', links: 'author.name' }),
     ]);
 
     return { page, articles };
   },
+  LoadingComponent: () => (
+    <Intro isLoading />
+  ),
 })(Articles);
 
 export default inject('prismic')(articlesWithJob);

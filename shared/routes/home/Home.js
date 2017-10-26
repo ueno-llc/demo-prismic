@@ -36,10 +36,7 @@ class Home extends PureComponent {
           meta={[{ name: 'description', content: getField(homepage.data.description_seo, 'text').trim() }]}
         />
 
-        <Hero
-          title={getField(homepage.data.title, 'text')}
-          text={getField(homepage.data.content, 'richtext')}
-        />
+        <Hero carousel={getField(homepage.data.carousel)} />
 
         <Columns
           heading={getField(homepage.data.column_title, 'text')}
@@ -71,10 +68,13 @@ class Home extends PureComponent {
 }
 
 const homeWithJob = withJob({
-  work: ({ prismic }) => prismic.getByType({ type: 'homepage', links: 'article.title,article.short_description,article.publication_date' }),
+  work: ({ prismic }) => prismic.getSingleByType({ type: 'homepage', links: 'article.title,article.short_description,article.publication_date' }),
   LoadingComponent: () => (
     <div>
-      <Hero />
+      <Hero
+        isLoading
+      />
+      <Columns isLoading />
       <Segment />
     </div>
   ),

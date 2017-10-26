@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ImageContainer from 'components/slices/image-container';
+import VideoContainer from 'components/slices/video-container';
 import TextContainer from 'components/slices/text-container';
 import QuoteContainer from 'components/slices/quote-container';
 import TwitterContainer from 'components/slices/twitter-container';
@@ -21,6 +22,8 @@ const Slices = ({ data, className }) => (
           return (
             <TwitterContainer key={key} data={s.items.map(t => t.tweet)} />
           );
+        case 'video':
+          return (<VideoContainer key={key} data={s.primary} />);
         default:
           return null;
       }
