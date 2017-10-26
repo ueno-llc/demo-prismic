@@ -10,20 +10,22 @@ import s from './Articles.scss';
 export default class Articles extends Component {
 
   static propTypes = {
+    title: PropTypes.string,
+    subheading: PropTypes.string,
     articles: PropTypes.array,
     show: PropTypes.number,
   }
 
   render() {
-    const { articles, show } = this.props;
+    const { title, subheading, articles, show } = this.props;
 
     return (
       <div className={s.articles}>
-        <div className={s.articles__container}>          
+        <div className={s.articles__container}>
           <div className={s.articles__row}>
             <div className={s.articles__header}>
-              <h2 className={s.articles__headerTitle}>From our lovely people</h2>
-              <h2 className={s.articles__headerTitle}>or almost</h2>
+              <h2 className={s.articles__headerTitle}>{title}</h2>
+              <h2 className={s.articles__headerTitle}>{subheading}</h2>
             </div>
 
             {articles && (

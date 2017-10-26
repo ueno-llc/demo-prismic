@@ -11,22 +11,18 @@ export default class Tweet extends PureComponent {
     tweet: PropTypes.string,
   }
 
-  componentDidMount() {
-    if (window.twttr) {
-      window.twttr.widgets.load();
-    }
-  }
-
   render() {
     const { tweet, authorName, url } = this.props;
     return (
       <div className={s.tweet}>
         <div className={s.tweet__container}>
-          <div className={s.tweet__block}>
-            <blockquote className="twitter-tweet">
-              <p lang="en" dir="ltr">{tweet}</p>
-              &mdash; <a href={url}>{authorName}</a>
-            </blockquote>
+          <div className={s.tweet__row}>
+            <div className={s.tweet__col}>
+              <blockquote className={s(s.tweet__block, 'twitter-tweet')}>
+                <p className={s.tweet__text} lang="en" dir="ltr">{tweet}</p>
+                &mdash; <a className={s.tweet__url} href={url}>{authorName}</a>
+              </blockquote>
+            </div>
           </div>
         </div>
       </div>
@@ -34,7 +30,3 @@ export default class Tweet extends PureComponent {
   }
 }
 
-/*
-"html": "<blockquote class=\"twitter-tweet\"><p lang=\"en\" dir=\"ltr\">
-I just realized a dog is called a dog because the word looks like a dog!!! 🐩🐩</p>&mdash; Steph Jeong (@jeongsteph) <a href=\"https://twitter.com/jeongsteph/status/572284330271232000\">March 2, 2015</a></blockquote>\n<script async src=\"//platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>",
-*/

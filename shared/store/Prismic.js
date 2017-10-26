@@ -1,5 +1,7 @@
 import { extendObservable } from 'mobx';
 import timing from 'utils/timing';
+import groupBy from 'lodash/groupBy';
+import { getField, linkResolver } from 'utils/prismic';
 import config from '../../config';
 
 const localApiUrl = config('localApiUrl');
@@ -56,77 +58,38 @@ export default class Prismic {
         if (results.length === 1) {
           return results[0];
         }
-        return [];
+
+        return results;
       })
       .catch((err) => {
         console.warn('Error fetching prismic data', err);
-        return [];
+        return {};
       });
   }
 
   @timing.promise
-  about() {
-    const url = `${apiUrl}/prismic/contentType/about?fetchLinks=author.name,author.bio,author.image`;
+  search(q) {
+    const url = `${apiUrl}/prismic/search/${q}`;
 
     return this.fetch(url)
       .then(data => data.results)
-      .then((results) => {
-        if (results.length === 1) {
-          return results[0];
-        }
-        return [];
-      })
+      .then(results => results.map(m => ({ // map it to search results
+        id: m.id,
+        title: getField(m.data.title, 'title'),
+        description: m.type === 'article'
+          ? getField(m.data.short_description, 'text')
+          : getField(m.data.description_seo, 'text'),
+        to: linkResolver(m),
+        type: m.type,
+        isPage: m.tags.some(s => s === 'page') || m.type === 'custom_page',
+      })))
+      .then(results => ({ // split into categories
+        ...groupBy(results, m => m.isPage ? 'pages' : m.type),
+        count: results.length,
+      }))
       .catch((err) => {
         console.warn('Error fetching prismic data', err);
-        return [];
-      });
-  }
-
-  @timing.promise
-  articlesPage() {
-    const url = `${apiUrl}/prismic/contentType/articles?fetchLinks=author.name,author.bio,author.image`;
-
-    return this.fetch(url)
-      .then(data => data.results)
-      .then((results) => {
-        if (results.length === 1) {
-          return results[0];
-        }
-        return [];
-      })
-      .catch((err) => {
-        console.warn('Error fetching prismic data', err);
-        return [];
-      });
-  }
-
-  @timing.promise
-  articles() {
-    const url = `${apiUrl}/prismic/contentType/article?fetchLinks=author.name`;
-
-    return this.fetch(url)
-      .then(data => data.results)
-      .catch((err) => {
-        console.warn('Error fetching prismic data', err);
-        return [];
-      });
-  }
-
-  @timing.promise
-  article(uid) {
-    const url = `${apiUrl}/prismic/contentType/article/${uid}?fetchLinks=author.name,author.bio,author.image`;
-
-    return this.fetch(url)
-      .then(data => data.results)
-      .then((results) => {
-        if (results.length === 1) {
-          return results[0];
-        }
-        return [];
-      })
-      .catch((err) => {
-        console.warn('Error fetching prismic data', err);
-        return [];
+        return { count: 0 };
       });
   }
 }

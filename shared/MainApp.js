@@ -26,6 +26,8 @@ import Home from './routes/home';
 import About from './routes/about';
 import Articles from './routes/articles';
 import CustomPage from './routes/custom-page';
+import Contact from './routes/contact';
+import Search from './routes/search';
 import NotFound from './routes/not-found';
 
 class App extends Component {
@@ -61,6 +63,8 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/about" component={About} />
             <Route path="/articles" component={Articles} />
+            <Route path="/contact-us" component={Contact} />
+            <Route path="/search/:q" component={Search} />
             <Route exact path="/:id" component={CustomPage} />
             <Route component={NotFound} />
           </Switch>
