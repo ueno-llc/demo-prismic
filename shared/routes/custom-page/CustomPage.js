@@ -7,10 +7,10 @@ import { withJob } from 'react-jobs';
 import isEmpty from 'lodash/isEmpty';
 
 import NotFound from 'routes/not-found';
-
 import { getField } from 'utils/prismic';
 
 import Intro from 'components/intro';
+import Slices from 'components/slices';
 
 class CustomPage extends PureComponent {
 
@@ -20,6 +20,9 @@ class CustomPage extends PureComponent {
 
   render() {
     const { jobResult: page } = this.props;
+    const body = getField(page.data.body, 'body');
+
+    console.log(body);
 
     if (isEmpty(page)) {
       return <Route component={NotFound} />;
@@ -34,6 +37,8 @@ class CustomPage extends PureComponent {
           <h2>{getField(page.data.subheading, 'text')}</h2>
           <p>{getField(page.data.text, 'text')}</p>
         </Intro>
+
+        <Slices data={body} />
       </div>
     );
   }
@@ -41,7 +46,8 @@ class CustomPage extends PureComponent {
 
 const customPageWithJob = withJob({
   work: ({ prismic, match }) => prismic.getByType({ type: 'custom_page', uid: match.params.id }),
-  shouldWorkAgain: (prevProps, nextProps, jobStatus) => prevProps.match.params.id !== nextProps.match.params.id,
+  shouldWorkAgain: (prevProps, nextProps) =>
+    prevProps.match.params.id !== nextProps.match.params.id,
   LoadingComponent: () => (<div>Insert loading template</div>),
 })(CustomPage);
 

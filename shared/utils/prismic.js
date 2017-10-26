@@ -13,6 +13,8 @@ function linkResolver(doc) {
       return '/about';
     case 'article':
       return `/articles/${doc.slug || doc.uid}`;
+    case 'custom_page':
+      return `/${doc.slugs[0]}`;
     default:
       return '/';
   }

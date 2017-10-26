@@ -233,7 +233,7 @@ const values = {
       'pbs.twimg.com',
       'platform.twitter.com',
     ],
-    mediaSrc: [],
+    mediaSrc: ['prismic-io.s3.amazonaws.com'],
     manifestSrc: [],
     objectSrc: [],
     scriptSrc: [
