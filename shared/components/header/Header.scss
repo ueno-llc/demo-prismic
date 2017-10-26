@@ -41,22 +41,32 @@
 
   &__row {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+
+    @media (min-width: $min-480) {
+      flex-direction: row;
+    }
   }
 
   &__navigation {
     display: flex;
     margin-left: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+    @media (min-width: $min-480) {
+      margin: 0;
+    }
   }
 
   &__cta {
     position: relative;
     top: -1px;
 
-    margin-left: $gutter * 0.5;
+    margin: 1em auto 0;
 
-    @media (min-width: $min-360) {
-      margin-left: $gutter;
+    @media (min-width: $min-480) {
+      margin: 0 0 0 $gutter;
     }
   }
 }
