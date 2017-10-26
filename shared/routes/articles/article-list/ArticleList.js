@@ -20,7 +20,10 @@ class Articles extends PureComponent {
 
     return (
       <div>
-        <Helmet title="Articles" />
+        <Helmet
+          title={getField(page.data.title_seo, 'text').trim()}
+          meta={[{ name: 'description', content: getField(page.data.description_seo, 'text').trim() }]}
+        />
 
         <Intro>
           <h1>{getField(page.data.title, 'text')}</h1>

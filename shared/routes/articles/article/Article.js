@@ -36,7 +36,10 @@ class Articles extends Component {
     // Add data-wio-id={id} to the div for edit button
     return (
       <div>
-        <Helmet title={title} />
+        <Helmet
+          title={getField(article.data.title_seo, 'text').trim()}
+          meta={[{ name: 'description', content: getField(article.data.description_seo, 'text').trim() }]}
+        />
 
         <Article>
           {author && (<Author
