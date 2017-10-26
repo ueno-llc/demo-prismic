@@ -28,7 +28,7 @@ class Articles extends Component {
       return <Route component={NotFound} />;
     }
 
-    const title = getField(article.data.title, 'title');
+    const title = getField(article.data.title, 'text');
     const author = getField(article.data.author);
     const body = getField(article.data.body, 'body');
 
@@ -41,9 +41,9 @@ class Articles extends Component {
         <Article>
           {author && (<Author
             key="author"
-            name={getField(author.data.name, 'title')}
-            bio={getField(author.data.bio, 'title')}
-            image={getField(author.data.image)}
+            name={getField(author.data.name, 'text')}
+            bio={getField(author.data.bio, 'text')}
+            image={getField(author.data.image).thumb}
           />)}
           <Heading key="heading">{title}</Heading>
           <Slices data={body} />
