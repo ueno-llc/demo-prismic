@@ -1,0 +1,29 @@
+
+.toolbar {
+  // edit button is injected, need to target by class selectors
+  & a { // stylelint-disable-line
+    position: fixed;
+    bottom: 10px;
+    left: 20px;
+    z-index: 100;
+
+    width: 70px;
+    height: 70px;
+
+    background-color: #31a8fd;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAADzUExURQAAAP///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////1iq1uUAAABQdFJOUwAXFgUVgI8y7v7U1tXTh2gE0hjXrWeu9K9jsAZlZKwSE/DzMQMvtEwjZiV8DIPB3bpiqZzRROhedzerTbG3x5iN7Vd1odqEvQJv6wEqp6DZWVgKPgAAAUxJREFUWMPt19dSwzAQhWEBoYgSBwgECJCQSu+9917O+z8NA7GNI1kzu6sLhiF75Qv/nx3FY4+UYs/JxflZdlFJp7SNrykEwj4zinCynr1MSPYSob3nC2bPFi5hzRoLKJ5agN5jCT0zlrBObVcdwgKxHxvvbQlTBrBB7YF0YYfcx8Jkst8v0/s0YaCf0ncNReeHQl7amwK/j4TcvLRPCrI+Fo6lfSwsS/tIIPXDgI/g6oFDz562ft3/vR/s9L/ZZ3z7kU7/l/virqu/qtLeoIH2ub5boPdKTWhxf+0SiH2t0tc6WNKy+68DoTCrRb8/QKpAX79b/AhzWrD+d0gRGH05vGQoTGvu/9+ELXB6dQ9D2NKsXj3AFA5Yfa0CS2BNve3hEwgBPIX3ZF7YXClxgY9489K4OcoJ1uD7W/acf6o+CnfTzcZb8Poi3syrT9l9ZvR3VSRYAAAAAElFTkSuQmCC); // stylelint-disable-line
+    background-size: 35px 35px;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border: 4px solid #fff;
+    border-radius: 50%;
+
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  & img { // stylelint-disable-line
+    display: none;
+  }
+}

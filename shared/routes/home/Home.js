@@ -9,6 +9,7 @@ import { getField } from 'utils/prismic';
 import Segment from 'components/segment';
 import Button from 'components/button';
 import Columns, { Column } from 'components/columns';
+import PrismicToolbar from 'components/prismic-toolbar';
 
 import Hero from './components/hero';
 import Articles from './components/articles';
@@ -28,9 +29,11 @@ class Home extends PureComponent {
 
   render() {
     const { jobResult: homepage } = this.props;
+    const { id } = homepage;
 
     return (
       <div>
+        <PrismicToolbar id={id} />
         <Helmet
           title={getField(homepage.data.title_seo, 'text').trim()}
           meta={[{ name: 'description', content: getField(homepage.data.description_seo, 'text').trim() }]}

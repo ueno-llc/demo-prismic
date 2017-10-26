@@ -12,6 +12,7 @@ import Heading from 'components/heading';
 import Article from 'components/article';
 import Author from 'components/author';
 import Slices from 'components/slices';
+import PrismicToolbar from 'components/prismic-toolbar';
 
 import { getField } from 'utils/prismic';
 
@@ -32,10 +33,11 @@ class Articles extends Component {
     const author = getField(article.data.author);
     const body = getField(article.data.body, 'body');
 
-    // const id = getField(article.id);
-    // Add data-wio-id={id} to the div for edit button
+    const id = getField(article.id);
+
     return (
       <div>
+        <PrismicToolbar id={id} />
         <Helmet
           title={getField(article.data.title_seo, 'text').trim()}
           meta={[{ name: 'description', content: getField(article.data.description_seo, 'text').trim() }]}
