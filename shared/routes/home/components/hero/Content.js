@@ -17,9 +17,10 @@ export default class Content extends Component {
 
     t.staggerFromTo(
       [this.title, this.text],
-      0.5,
+      0.7,
       { alpha: 0 },
       { alpha: 1, ease },
+      '-=0.15',
     );
 
     cb();
@@ -31,7 +32,7 @@ export default class Content extends Component {
 
     t.staggerFromTo(
       [this.title, this.text],
-      0.25,
+      0.2,
       { alpha: 1 },
       { alpha: 0, ease },
     );
