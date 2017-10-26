@@ -17,6 +17,37 @@ export default class Prismic {
   }
 
   @timing.promise
+  getByType({ type, uid, links }) {
+    if (!type) throw new Error('Missing type');
+
+    let url = `${apiUrl}/prismic/contentType/${type}`;
+
+    if (uid !== undefined) {
+      url += `/${uid}`;
+    }
+
+    if (links !== undefined) {
+      url += `?fetchLinks=${links}`;
+    }
+
+    console.log(url);
+
+    return this.fetch(url)
+      .then(data => data.results)
+      .then((results) => {
+        if (results.length === 1) {
+          return results[0];
+        }
+
+        return results;
+      })
+      .catch((err) => {
+        console.warn('Error fetching prismic data', err);
+        return [];
+      });
+  }
+
+  @timing.promise
   homepage() {
     const url = `${apiUrl}/prismic/contentType/homepage?fetchLinks=article.title,article.short_description,article.publication_date`;
 
