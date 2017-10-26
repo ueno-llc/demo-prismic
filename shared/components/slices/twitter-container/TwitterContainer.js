@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Tweet from 'components/tweet';
 
-// lol
 function tweetFromTitle(name, title) {
   return title.replace(`${name} on Twitter: "`, '').slice(0, -1);
 }

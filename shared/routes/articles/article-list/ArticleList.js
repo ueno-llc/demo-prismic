@@ -5,7 +5,6 @@ import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 import { getField } from 'utils/prismic';
 
-import Loading from 'components/loading';
 import Intro from 'components/intro';
 import List, { Item } from './components/list';
 
@@ -33,7 +32,7 @@ class Articles extends PureComponent {
 
         {articles && (
           <List>
-            {articles.map((article, i) => {
+            {articles.map((article) => {
               const { uid, data } = article;
 
               if (!uid) {
