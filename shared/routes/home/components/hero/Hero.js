@@ -36,26 +36,25 @@ export default class Hero extends PureComponent {
     const { carousel } = this.props;
     const { current } = this.state;
 
-    const title = getField(carousel[current].title, 'text');
-    const text = getField(carousel[current].text, 'text');
-
     return (
       <div className={s.hero} ref={(el) => { this.el = el; }}>
         <div className={s(s.hero__container, s.hero__top)}>
           <div className={s.hero__row}>
-            <TransitionGroup className={s.hero__content}>
-              <Content
-                key={`content-slide-${current}`}
-                title={title}
-                text={text}
-              />
-            </TransitionGroup>
+            {carousel && (
+              <TransitionGroup className={s.hero__content}>
+                <Content
+                  key={`content-slide-${current}`}
+                  title={getField(carousel[current].title, 'text')}
+                  text={getField(carousel[current].text, 'text')}
+                />
+              </TransitionGroup>
+            )}
           </div>
         </div>
 
         <div className={s.hero__container}>
           <ul className={s.hero__pagination}>
-            {carousel.map((_, i) => (
+            {carousel && carousel.map((_, i) => (
               <li // eslint-disable-line
                 onClick={() => this.changeSlide(i)}
                 className={s(s.hero__item, { active: current === i })}
