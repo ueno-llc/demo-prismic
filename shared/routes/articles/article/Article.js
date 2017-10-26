@@ -58,7 +58,11 @@ class Articles extends Component {
 }
 
 const articlesWithJob = withJob({
-  work: ({ prismic, match }) => prismic.article(match.params.id),
+  work: ({ prismic, match }) => prismic.getByType({
+    type: 'article',
+    uid: match.params.id,
+    links: 'author.name,author.bio,author.image',
+  }),
   LoadingComponent: () => (
     <Article>
       <Author

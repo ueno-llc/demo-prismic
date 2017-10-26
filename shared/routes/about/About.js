@@ -55,7 +55,7 @@ class About extends PureComponent {
 }
 
 const aboutWithJob = withJob({
-  work: ({ prismic }) => prismic.about(),
+  work: ({ prismic }) => prismic.getByType({ type: 'about', links: 'author.name,author.bio,author.image' }),
   LoadingComponent: () => (
     <div>
       <Intro>

@@ -71,7 +71,7 @@ class Home extends PureComponent {
 }
 
 const homeWithJob = withJob({
-  work: ({ prismic }) => prismic.homepage(),
+  work: ({ prismic }) => prismic.getByType({ type: 'homepage', links: 'article.title,article.short_description,article.publication_date' }),
   LoadingComponent: () => (
     <div>
       <Hero />
