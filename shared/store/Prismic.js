@@ -49,25 +49,6 @@ export default class Prismic {
   }
 
   @timing.promise
-  homepage() {
-    const url = `${apiUrl}/prismic/contentType/homepage?fetchLinks=article.title,article.short_description,article.publication_date`;
-
-    return this.fetch(url)
-      .then(data => data.results)
-      .then((results) => {
-        if (results.length === 1) {
-          return results[0];
-        }
-
-        return results;
-      })
-      .catch((err) => {
-        console.warn('Error fetching prismic data', err);
-        return {};
-      });
-  }
-
-  @timing.promise
   search(q) {
     const url = `${apiUrl}/prismic/search/${q}`;
 
