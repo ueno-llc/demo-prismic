@@ -14,10 +14,8 @@ export default class Cta extends Component {
 
     return (
       <div className={s.cta}>
-        <div className={s.cta__row}>
-          <div className={s.cta__inner}>
-            {children}
-          </div>
+        <div className={s.cta__container}>
+          {children}
         </div>
       </div>
     );
