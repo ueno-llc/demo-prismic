@@ -31,7 +31,7 @@ export default class Header extends PureComponent {
               </div>
 
               <div className={s.header__cta}>
-                <Button to="/contact" stroke>Contact</Button>
+                <Button to="/contact-us" stroke>Contact</Button>
               </div>
             </div>
           </div>

@@ -3,26 +3,16 @@
 .cta {
   @include segment(0);
 
-  // margin-top: 100px;
-  // margin-bottom: 200px;
-
   text-align: center;
 
-  &__row {
+  &__container {
     @include container;
-    // @include grid-row;
-    // flex-direction: column;
-  }
-
-  &__inner {
-    // @include grid-col;
   }
 
   p {
     @include reset-heading;
     @include responsive-font(20, 52);
 
-    // padding-top: 200px;
     margin-bottom: 40px;
 
     font-family: $font-family-heading;
