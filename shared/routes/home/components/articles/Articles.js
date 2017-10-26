@@ -38,7 +38,7 @@ export default class Articles extends Component {
                   }
 
                   const url = `/articles/${uid}`;
-                  const title = getField(data.title, 'title');
+                  const itemTitle = getField(data.title, 'title');
                   const description = getField(data.short_description, 'title');
                   const date = data.publication_date;
 
@@ -46,22 +46,22 @@ export default class Articles extends Component {
                     <li
                       className={s.articles__item}
                       key={`article-${i}`} // eslint-disable-line
-                      >
-                        <Link className={s.articles__link} to={url}>
-                          <p className={s.articles__date}>{format(date, 'DD MMMM')}</p>
+                    >
+                      <Link className={s.articles__link} to={url}>
+                        <p className={s.articles__date}>{format(date, 'DD MMMM')}</p>
 
-                          <div className={s.articles__inner}>
-                            <h2 className={s.articles__title}>{title}</h2>
-                            <p className={s.articles__description}>{description}</p>
-                            <span className={s.articles__button}>Read more</span>
-                          </div>
-                        </Link>
-                      </li>
+                        <div className={s.articles__inner}>
+                          <h2 className={s.articles__title}>{itemTitle}</h2>
+                          <p className={s.articles__description}>{description}</p>
+                          <span className={s.articles__button}>Read more</span>
+                        </div>
+                      </Link>
+                    </li>
                     );
                   })}
-                </ul>
-              )}
-            </div>
+              </ul>
+            )}
+          </div>
         </div>
       </div>
     );
