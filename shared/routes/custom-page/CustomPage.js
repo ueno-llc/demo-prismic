@@ -22,8 +22,6 @@ class CustomPage extends PureComponent {
     const { jobResult: page } = this.props;
     const body = getField(page.data.body, 'body');
 
-    console.log(body);
-
     if (isEmpty(page)) {
       return <Route component={NotFound} />;
     }

@@ -1,13 +1,18 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import s from './Video.scss';
 
 export default class Video extends PureComponent {
+  static propTypes = {
+    url: PropTypes.string,
+    caption: PropTypes.node,
+  }
+
   render() {
-    console.log(this.props.url);
-    const { url } = this.props;
+    const { url, caption } = this.props;
 
     return (
       <div className={s.video}>
@@ -16,15 +21,12 @@ export default class Video extends PureComponent {
             <video
               className={s.video__tag}
               src={url}
-              height={500}
+              height={574}
               autoPlay
             />
-            {/*
-            <img className={s.video__img} src={src} alt={alt} width={width} height={height} />
             {caption && (
               <figcaption className={s.video__caption}>{caption}</figcaption>
             )}
-            */}
           </figure>
         </div>
       </div>
