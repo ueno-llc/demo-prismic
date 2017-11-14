@@ -22,6 +22,8 @@ import Analytics from 'components/analytics';
  */
 // import PrismicToolbar from 'components/prismic-toolbar';
 
+import ScrollToTop from 'utils/ScrollToTop';
+
 // Routes
 import Home from './routes/home';
 import About from './routes/about';
@@ -52,34 +54,36 @@ class App extends Component {
 
   render() {
     return (
-      <AppLayout>
-        <Helmet {...config('helmet')} />
+      <ScrollToTop>
+        <AppLayout>
+          <Helmet {...config('helmet')} />
 
-        <Header>
-          <Navigation>
+          <Header>
+            <Navigation>
+              {this.pages}
+            </Navigation>
+          </Header>
+
+          <Content>
+            <Route component={Analytics} />
+            { /* <Route component={PrismicToolbar} /> */ }
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/about" component={About} />
+              <Route path="/articles" component={Articles} />
+              <Route path="/contact-us" component={Contact} />
+              <Route path="/search/:q" component={Search} />
+              <Route exact path="/:id" component={CustomPage} />
+              <Route component={NotFound} />
+            </Switch>
+            <DevTools />
+          </Content>
+
+          <Footer>
             {this.pages}
-          </Navigation>
-        </Header>
-
-        <Content>
-          <Route component={Analytics} />
-          { /* <Route component={PrismicToolbar} /> */ }
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/about" component={About} />
-            <Route path="/articles" component={Articles} />
-            <Route path="/contact-us" component={Contact} />
-            <Route path="/search/:q" component={Search} />
-            <Route exact path="/:id" component={CustomPage} />
-            <Route component={NotFound} />
-          </Switch>
-          <DevTools />
-        </Content>
-
-        <Footer>
-          {this.pages}
-        </Footer>
-      </AppLayout>
+          </Footer>
+        </AppLayout>
+      </ScrollToTop>
     );
   }
 }
