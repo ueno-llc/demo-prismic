@@ -47,14 +47,14 @@ export default class Content extends Component {
       <div className={s.content}>
         <h1
           className={s.content__title}
-          ref={c => { this.title = c; }}
+          ref={(c) => { this.title = c; }}
         >
           {title}
         </h1>
 
         <p
           className={s.content__text}
-          ref={c => { this.text = c; }}
+          ref={(c) => { this.text = c; }}
         >
           {text}
         </p>

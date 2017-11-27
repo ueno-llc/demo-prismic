@@ -1,14 +1,19 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+
 import s from './styles.scss';
 
 export default class Results extends PureComponent {
+
   static propTypes = {
     children: PropTypes.node,
+    onSearch: PropTypes.func,
+    query: PropTypes.string,
+    count: PropTypes.number,
   }
 
   onKeyUp = (e) => {
-    const value = this.inputEl.value;
+    const { value } = this.inputEl;
 
     if (e.keyCode === 13) {
       this.props.onSearch(value);
