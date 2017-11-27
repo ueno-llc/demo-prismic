@@ -49,6 +49,7 @@ class App extends Component {
       <Link key="articles" to="/articles">Articles</Link>,
       ...customPages,
       <Link key="about" to="/about">About</Link>,
+      <Link key="contact" to="/contact-us">Contact us</Link>,
     ];
   }
 
