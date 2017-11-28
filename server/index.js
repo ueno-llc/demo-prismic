@@ -1,10 +1,14 @@
-/* eslint-disable no-console */
-
 import express from 'express';
 import compression from 'compression';
 import { resolve as pathResolve } from 'path';
 import cookieParser from 'cookie-parser';
 import appRootDir from 'app-root-dir';
+
+// the webpack config aliases the SSR-appropriate react app in the
+// reactApplication directory
+import reactApplication from 'reactApplication';
+import config from 'utils/config';
+
 import security from './middleware/security';
 import clientBundle from './middleware/clientBundle';
 import serviceWorker from './middleware/serviceWorker';
@@ -12,14 +16,10 @@ import offlinePage from './middleware/offlinePage';
 import errorHandlers from './middleware/errorHandlers';
 import enforceHttps from './middleware/enforceHttps';
 import basicAuth from './middleware/basicAuth';
-import config from '../config';
+import { log } from '../internal/utils';
+
 import api from './api';
 import preview from './preview';
-
-// the webpack config aliases the SSR-appropriate react app in the
-// reactApplication directory
-// eslint-disable-next-line import/no-unresolved, import/extensions
-import reactApplication from './middleware/reactApplication';
 
 // Create our express based server.
 const app = express();
@@ -71,7 +71,15 @@ app.use('/api', api);
 app.use('/preview', preview);
 
 // The React application middleware.
-app.get('*', reactApplication);
+app.get('*', (request, response) => {
+  log({
+    title: 'Request',
+    level: 'special',
+    message: `Received for "${request.url}"`,
+  });
+
+  return reactApplication(request, response);
+});
 
 // Error Handler middlewares.
 app.use(...errorHandlers);
@@ -82,10 +90,15 @@ const listener = app.listen(config('port'), () => {
   const port = config('port');
   const localUrl = `http://${host}:${port}`;
   const publicUrl = process.env.PUBLIC_URL;
-
   const url = publicUrl && publicUrl !== '' ? publicUrl : localUrl;
 
-  console.info(`Server listening on ${url}`);
+  log({
+    title: 'server',
+    level: 'special',
+    message: `Server started on port ${port}
+Available on ${url}
+Press Ctrl-C to stop.`,
+  });
 });
 
 // We export the listener as it will be handy for our development hot reloader,

@@ -1,5 +1,4 @@
-import { observable, ObservableMap } from 'mobx';
-import { autobind } from 'core-decorators';
+import { observable, ObservableMap, toJS } from 'mobx';
 import axios, { CancelToken } from 'axios';
 
 /**
@@ -18,7 +17,8 @@ export default class Network {
    * throttling them.
    * @var {Map} The key is url.
    */
-  @observable history = new ObservableMap();
+  @observable
+  history = new ObservableMap();
 
   createCookieJar() {
     const jar = [];
@@ -39,8 +39,7 @@ export default class Network {
    * @param {object} Options
    * @return {Promise}
    */
-  @autobind
-  fetch(url, { maxAge = Infinity, force = false, ...rest } = {}) {
+  fetch = (url, { maxAge = Infinity, force = false, ...rest } = {}) => {
     const { history } = this;
 
     if (!history.has(url)) {
@@ -57,16 +56,19 @@ export default class Network {
     }
 
     // Return cache if still valid
-    if (item.data) {
+    // Unless force flag is in options.
+    if (!force && item.data) {
       const now = new Date().getTime();
+
       if ((now / 1000) - (item.ts / 1000) <= maxAge) {
-        return Promise.resolve(item.data);
+        return Promise.resolve(toJS(item.data));
       }
     }
 
     // Adds cancel token
     // Store the cancel method in the `cancel` variable
     let cancel;
+
     const config = Object.assign({
       cancelToken: new CancelToken((c) => {
         cancel = c;

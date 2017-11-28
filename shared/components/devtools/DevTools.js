@@ -1,7 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import autobind from 'core-decorators/lib/autobind';
 import config from 'utils/config';
 
 const showDevTools = process.env.BUILD_FLAG_IS_DEV === 'true' || config('herokuDevtools');
@@ -11,8 +10,10 @@ const GridOverlay = showDevTools && require('components/grid-overlay').default;
 const LOCAL_STORAGE_KEY_VISIBLE = '_devtoolsVisible';
 
 @observer
-class DevTools extends PureComponent {
-  @observable display = false;
+class DevTools extends Component {
+
+  @observable
+  display = false;
 
   componentDidMount() {
     this.display = (localStorage.getItem(LOCAL_STORAGE_KEY_VISIBLE) === 'true');
@@ -24,15 +25,13 @@ class DevTools extends PureComponent {
     document.removeEventListener('keydown', this.keydownRef);
   }
 
-  @autobind
-  onKeyDown(e) {
+  onKeyDown = (e) => {
     if (e.ctrlKey && e.keyCode === 75) {
       this.onToggleDisplay();
     }
   }
 
-  @autobind
-  onToggleDisplay() {
+  onToggleDisplay = () => {
     this.display = !this.display;
 
     localStorage.setItem(LOCAL_STORAGE_KEY_VISIBLE, this.display);

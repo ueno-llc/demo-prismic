@@ -2,6 +2,7 @@
  * This script builds a production output of all of our bundles.
  */
 
+import fs from 'fs';
 import webpack from 'webpack';
 import webpackConfigFactory from '../webpack/configFactory';
 import config from '../../config';
@@ -22,11 +23,17 @@ Object.keys(config('bundles'))
   // And then build them all.
   .forEach((bundleName) => {
     const compiler = webpack(webpackConfigFactory({ target: bundleName, optimize }));
+
     compiler.run((err, stats) => {
       if (err) {
         console.error(err);
         return;
       }
       console.log(stats.toString({ colors: true }));
+
+      // Save the build stats to a file so it can be used for serving css chunks
+      if (bundleName === 'client') {
+        fs.writeFileSync('build/stats.json', JSON.stringify(stats.toJson()));
+      }
     });
   });

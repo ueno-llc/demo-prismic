@@ -2,7 +2,6 @@
  * Helper for resolving args passed via cli.
  */
 export default function cliVarString(name, defaultVal) {
-  let val = defaultVal;
   const args = process.argv.slice(2);
 
   const index = args.findIndex(arg => arg.includes(`--${name}`));
@@ -11,5 +10,5 @@ export default function cliVarString(name, defaultVal) {
     val = args[index].split('=')[1]; // eslint-disable-line
   }
 
-  return val;
+  return defaultVal;
 }
