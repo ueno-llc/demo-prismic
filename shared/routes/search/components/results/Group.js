@@ -5,6 +5,7 @@ import s from './styles.scss';
 export default class Group extends PureComponent {
   static propTypes = {
     children: PropTypes.node,
+    title: PropTypes.string,
   }
 
   render() {

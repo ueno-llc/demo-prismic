@@ -1,11 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import s from './styles.scss';
 
 export default class Group extends PureComponent {
+
   static propTypes = {
-    children: PropTypes.node,
+    title: PropTypes.string,
+    to: PropTypes.string,
+    text: PropTypes.string,
   }
 
   render() {

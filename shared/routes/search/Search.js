@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { withJob } from 'react-jobs';
 import { inject } from 'mobx-react';
-import { Link } from 'react-router-dom';
 
 import Results, { Group, Item } from './components/results';
 
@@ -26,7 +25,7 @@ class Search extends Component {
         <Results
           query={q}
           count={count}
-          onSearch={(value) => history.push(`/search/${value}`)}
+          onSearch={value => history.push(`/search/${value}`)}
         >
           {Object.keys(results).map(key => (
             <Group key={key} title={key}>
@@ -48,7 +47,7 @@ class Search extends Component {
 
 const searchWithJob = withJob({
   work: ({ prismic, match }) => prismic.search(match.params.q),
-  shouldWorkAgain: (prevProps, nextProps, jobStatus) => prevProps.match.params.q !== nextProps.match.params.q,
+  shouldWorkAgain: (prevProps, nextProps) => prevProps.match.params.q !== nextProps.match.params.q,
 })(Search);
 
 export default inject('prismic')(searchWithJob);
