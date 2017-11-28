@@ -37,7 +37,7 @@ export default class Button extends PureComponent {
     const isExternal = isLink && /^((https?:)?\/\/|[0-9a-zA-Z]+:)/.test(to);
 
     // Extend className of the rest
-    rest.className = s('button', className, {
+    rest.className = s(s.button, className, {
       alt,
       flat,
       large,
@@ -50,7 +50,7 @@ export default class Button extends PureComponent {
 
     if (isExternal) {
       // http, https, //, mailto, etc.
-      return <a href={to} {...rest}>{children}</a>;
+      return <a target="_blank" rel="noopener noreferrer" href={to} {...rest}>{children}</a>;
     }
 
     if (isLink) {

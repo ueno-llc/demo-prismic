@@ -155,7 +155,7 @@
 
   $arbitrary-copy-margin: 26;
 
-  margin-bottom: ($arbitrary-copy-margin/$max) * 1em;
+  margin-bottom: (strip-unit($arbitrary-copy-margin) / strip-unit($max)) * 1em;
 
   font-family: $font-family;
   font-weight: 200;

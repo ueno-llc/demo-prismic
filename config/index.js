@@ -9,10 +9,6 @@
  *   config('welcomeMessage'); // => "Hello World!"
  */
 
-/* eslint-disable no-console */
-/* eslint-disable import/global-require */
-/* eslint-disable no-underscore-dangle */
-
 // PRIVATES
 
 let configCache;
@@ -39,15 +35,14 @@ function resolveConfigForBrowserOrServer() {
     process.env.BUILD_FLAG_IS_NODE === 'true'
   ) {
     // i.e. running in our server/node process.
-    // eslint-disable-next-line global-require
     configCache = require('./values').default;
     return configCache;
   }
 
   // To get here we are likely running in the browser.
 
-  if (typeof window !== 'undefined' && typeof window.__CLIENT_CONFIG__ === 'object') {
-    configCache = window.__CLIENT_CONFIG__;
+  if (typeof window !== 'undefined' && typeof window.__CLIENT_CONFIG__ === 'object') { // eslint-disable-line
+    configCache = window.__CLIENT_CONFIG__; // eslint-disable-line
   } else {
     // To get here we must be running in the browser.
     console.warn('No client configuration object was bound to the window.');
@@ -97,10 +92,13 @@ export default function configGet(path) {
       'You must provide the path to the configuration value you would like to consume.',
     );
   }
+
   let result = resolveConfigForBrowserOrServer();
+
   for (let i = 0; i < parts.length; i += 1) {
     if (result === undefined) {
       const errorMessage = `Failed to resolve configuration value at "${parts.join('.')}".`;
+
       // This "if" block gets stripped away by webpack for production builds.
       if (process.env.BUILD_FLAG_IS_DEV === 'true' && process.env.BUILD_FLAG_IS_CLIENT === 'true') {
         throw new Error(
@@ -109,7 +107,9 @@ export default function configGet(path) {
       }
       throw new Error(errorMessage);
     }
+
     result = result[parts[i]];
   }
+
   return result;
 }
