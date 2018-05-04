@@ -223,6 +223,7 @@ const values = {
       '*.facebook.com',
       '*.google-analytics.com',
       't.co',
+      '*.prismic.io',
       '*.amazonaws.com',
       'syndication.twitter.com',
       'abs.twimg.com',
