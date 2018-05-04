@@ -50,7 +50,7 @@
 }
 
 .item {
-  padding: $gutter 0;
+  padding: $gutter;
 
   &:nth-child(2n) {
     background: #fafafa;
