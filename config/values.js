@@ -6,58 +6,35 @@
  */
 
 import * as EnvVars from './utils/envVars';
+import {
+  getPublicUrl,
+  getPublicPath,
+  getLocalApiUrl,
+} from './utils/publicPath';
 
 import codeSplittingConfigExtender from './extenders/codeSplitting';
 import singleRouteAppConfigExtender from './extenders/singleRouteApp';
 import reactApplicationExtender from './extenders/reactApplication';
 
-/**
- * Construct the fully qualified URL to our local API.
- * Assumes we're using HTTP in dev and HTTPS when not
- */
-function defaultLocalApiUrl(envValue = '') {
+const clientBundleWebPath = '/client/';
+const clientDevServerPort = EnvVars.number('CLIENT_DEV_PORT', 7331);
+const herokuAppName = EnvVars.string('HEROKU_APP_NAME');
+const host = EnvVars.string('HOST', 'localhost');
+const port = EnvVars.number('PORT', 3000);
+const baseUrl = EnvVars.string('BASE_URL', `http://${host}:${port}`);
+const remoteUrl = EnvVars.string('REMOTE_URL');
+const NODE_ENV = EnvVars.string('NODE_ENV', 'development');
 
-  if (envValue.trim() !== '') {
-    return envValue.trim();
-  }
-
-  const herokuAppName = EnvVars.string('HEROKU_APP_NAME', '');
-  // If running on Heroku and app name is available (defined in app.json), use that
-  if (herokuAppName !== '') {
-    return `https://${herokuAppName}.herokuapp.com/api`;
-  }
-
-  const port = EnvVars.number('PORT', 3000);
-
-  return EnvVars.string('API_URL', `http://localhost:${port}/api`);
-}
-
-function defaultClientLocalApiUrl(envValue = '', localApiUrl = '') {
-  if (envValue && envValue !== '') {
-    return envValue;
-  }
-
-  const isClientDevProxy = EnvVars.bool('CLIENT_DEV_PROXY', false);
-
-  if (isClientDevProxy) {
-    return '/api';
-  }
-
-  if (localApiUrl && localApiUrl !== '') {
-    return localApiUrl;
-  }
-
-  return '/api';
-}
-
-const localApiUrl = defaultLocalApiUrl(EnvVars.string('LOCAL_API_URL'));
-const clientLocalApiUrl = defaultClientLocalApiUrl(EnvVars.string('CLIENT_LOCAL_API_URL'), localApiUrl);
-
-console.info('Local API served from %s', localApiUrl);
-
-if (localApiUrl !== clientLocalApiUrl) {
-  console.info('Client API served from %s', clientLocalApiUrl);
-}
+const urlParams = {
+  clientBundleWebPath,
+  baseUrl,
+  clientDevServerPort,
+  herokuAppName,
+  host,
+  port,
+  remoteUrl,
+  NODE_ENV,
+};
 
 const values = {
   // The configuration values that should be exposed to our client bundle.
@@ -78,13 +55,8 @@ const values = {
     // Expose heroku devtools flag
     herokuDevtools: true,
 
-    clientLocalApiUrl: true,
-
     prismicApiUrl: true,
   },
-
-  localApiUrl,
-  clientLocalApiUrl,
 
   prismicApiUrl: EnvVars.string('PRISMIC_API_URL', 'https://ueno-starter-kit-universally-test.prismic.io/api/v2'),
   prismicAccessToken: EnvVars.string('PRISMIC_ACCESS_TOKEN', null),
@@ -94,19 +66,25 @@ const values = {
   publicUrl: EnvVars.string('PUBLIC_URL'),
 
   // The host on which the server should bind to.
-  host: EnvVars.string('HOST', 'localhost'),
+  host,
 
   // The port on which the server should bind to.
-  port: EnvVars.number('PORT', 3000),
-
-  // Should the webpack dev server be proxied through the public url
-  clientDevProxy: EnvVars.bool('CLIENT_DEV_PROXY', false),
+  port,
 
   // The port on which the client bundle development server should run.
-  clientDevServerPort: EnvVars.number('CLIENT_DEV_PORT', 7331),
+  clientDevServerPort,
 
   // Expose environment
-  NODE_ENV: EnvVars.string('NODE_ENV', 'development'),
+  NODE_ENV,
+
+  // Local api url for internal requests
+  localApiUrl: getLocalApiUrl(urlParams),
+
+  // The public facing url of the app
+  publicUrl: getPublicUrl(urlParams),
+
+  // The path were assets are stored
+  publicPath: getPublicPath(urlParams),
 
   // Are we measuring performance?
   performance: EnvVars.bool('PERFORMANCE', false),
@@ -117,6 +95,7 @@ const values = {
   // Toggle devtools on heroku
   herokuDevtools: EnvVars.bool('HEROKU_DEVTOOLS', false),
 
+  // Define a password to access the app
   passwordProtect: EnvVars.string('PASSWORD_PROTECT', ''),
 
   // Disable server side rendering?
@@ -174,7 +153,7 @@ const values = {
         http://realfavicongenerator.net/
         http://www.favicomatic.com/
       */
-      { httpEquiv: 'X-UA-Compatible', content: 'IE=edge' },
+      { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
       { name: 'description', content: 'Ueno. description text here!' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no' }, // prevents inputs from zooming, but iOS still allows normal pinch zoom
       { name: 'msapplication-TileColor', content: '#00E2AD' },
@@ -204,7 +183,7 @@ const values = {
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicons/apple-touch-icon-180x180.png' },
       { rel: 'mask-icon', href: '/favicons/safari-pinned-tab.svg', color: '#00a9d9' },
       { rel: 'icon', type: 'image/png', href: '/favicons/favicon-196x196.png', sizes: '196x196' },
-      { rel: 'icon', type: 'image/png', href: '/favicons/favicon-128.png', sizes: '128x128' },
+      { rel: 'icon', type: 'image/png', href: '/favicons/favicon-128x128.png', sizes: '128x128' },
       { rel: 'icon', type: 'image/png', href: '/favicons/favicon-96x96.png', sizes: '96x96' },
       { rel: 'icon', type: 'image/png', href: '/favicons/favicon-32x32.png', sizes: '32x32' },
       { rel: 'icon', sizes: '16x16 32x32', href: '/favicon.ico' },
@@ -234,7 +213,6 @@ const values = {
     manifestSrc: [],
     objectSrc: [],
     scriptSrc: [
-      "'self'",
       // Allow scripts from cdn.polyfill.io so that we can import the polyfill.
       'cdn.polyfill.io',
       // For analytics
@@ -254,7 +232,6 @@ const values = {
       '*.prismic.io',
     ],
     styleSrc: [
-      "'self' 'unsafe-inline'",
       'fonts.googleapis.com',
       'blob:',
       'platform.twitter.com',
@@ -299,9 +276,8 @@ const values = {
     'webm',
   ],
 
-  // What should we name the json output file that webpack generates
-  // containing details of all output files for a bundle?
-  bundleAssetsFileName: 'assets.json',
+  // What should we name the json output file that webpack generates?
+  webpackStatsFileName: 'stats.json',
 
   // node_modules are not included in any bundles that target "node" as a
   // runtime (e.g.. the server bundle) as including them often breaks builds
@@ -360,7 +336,7 @@ const values = {
       outputPath: './build/client',
 
       // What is the public http path at which we must serve the bundle from?
-      webPath: '/client/',
+      webPath: clientBundleWebPath,
 
       // Configuration settings for the development vendor DLL.  This will be created
       // by our development server and provides an improved dev experience
@@ -459,12 +435,11 @@ const values = {
       }
      */
 
-      // Decorators for everybody
-      plugins.push('transform-decorators-legacy');
-
+      // For code splitting
       plugins.push('universal-import');
 
-      plugins.push('css-modules-transform');
+      // Decorators for everybody
+      plugins.push('transform-decorators-legacy');
 
       // Remove stage-# prests
       presets.forEach((val, pos) => String(val).match(/stage-\d/) && presets.splice(pos, 1));

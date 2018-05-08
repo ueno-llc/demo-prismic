@@ -1,11 +1,9 @@
 import appRootDir from 'app-root-dir';
-import AssetsPlugin from 'assets-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
 import path from 'path';
 import webpack from 'webpack';
-import WebpackMd5Hash from 'webpack-md5-hash';
 
 import { happyPackPlugin, log } from '../utils';
 import { ifElse } from '../utils/logic';
@@ -46,7 +44,6 @@ export default function webpackConfigFactory(buildOptions) {
   const ifClient = ifElse(isClient);
   const ifDevClient = ifElse(isDev && isClient);
   const ifProdClient = ifElse(isProd && isClient);
-  const ifPublicUrl = ifElse(config('publicUrl'));
   const ifPerf = ifElse(isPerf);
 
   const clientTimers = [];
@@ -82,18 +79,6 @@ export default function webpackConfigFactory(buildOptions) {
 
   buildOptions.localIdentName = localIdentName;
 
-  // UENO: Get public url for webpack dev server based on if it is proxied or not.
-  const publicUrl = ifElse(config('clientDevProxy'))(
-    ifPublicUrl(
-      `${config('publicUrl')}/webpack`,
-      `http://${config('host')}:${config('port')}/webpack`,
-    ),
-    ifPublicUrl(
-      config('publicUrl'),
-      `http://${config('host')}:${config('clientDevServerPort')}`,
-    ),
-  );
-
   let webpackConfig = {
     // Define our entry chunks for our bundle.
     entry: {
@@ -111,7 +96,7 @@ export default function webpackConfigFactory(buildOptions) {
         // Required to support hot reloading of our client.
         ifDevClient(
           () =>
-            `webpack-hot-middleware/client?reload=true&path=${publicUrl}/__webpack_hmr`,
+            `webpack-hot-middleware/client?reload=true&path=${config('publicUrl')}/__webpack_hmr`,
         ),
         // The source entry file for the bundle.
         path.resolve(appRootDir.get(), bundleConfig.srcEntryFile),
@@ -142,13 +127,7 @@ export default function webpackConfigFactory(buildOptions) {
       libraryTarget: ifNode('commonjs2', 'var'),
       // This is the web path under which our webpack bundled client should
       // be considered as being served from.
-      publicPath: ifDev(
-        // As we run a seperate development server for our client and server
-        // bundles we need to use an absolute http path for the public path.
-        `${publicUrl}${config('bundles.client.webPath')}`,
-        // Otherwise we expect our bundled client to be served from this path.
-        bundleConfig.webPath,
-      ),
+      publicPath: config('publicPath'),
     },
 
     target: isClient
@@ -256,13 +235,6 @@ export default function webpackConfigFactory(buildOptions) {
       // the significant improvement will be how fast the JavaScript loads in the browser.
       ifProdClient(new webpack.optimize.ModuleConcatenationPlugin()),
 
-      // We use this so that our generated [chunkhash]'s are only different if
-      // the content for our respective chunks have changed.  This optimises
-      // our long term browser caching strategy for our client bundle, avoiding
-      // cases where browsers end up having to download all the client chunks
-      // even though 1 or 2 may have only changed.
-      ifClient(() => new WebpackMd5Hash()),
-
       // These are process.env flags that you can use in your code in order to
       // have advanced control over what is included/excluded in your bundles.
       // For example you may only want certain parts of your code to be
@@ -305,19 +277,6 @@ export default function webpackConfigFactory(buildOptions) {
         // Is this a development build?
         BUILD_FLAG_IS_DEV: JSON.stringify(isDev),
       }),
-
-      // Generates a JSON file containing a map of all the output files for
-      // our webpack bundle.  A necessisty for our server rendering process
-      // as we need to interogate these files in order to know what JS/CSS
-      // we need to inject into our HTML. We only need to know the assets for
-      // our client bundle.
-      ifClient(
-        () =>
-          new AssetsPlugin({
-            filename: config('bundleAssetsFileName'),
-            path: path.resolve(appRootDir.get(), bundleConfig.outputPath),
-          }),
-      ),
 
       // We don't want webpack errors to occur during development as it will
       // kill our dev servers.
@@ -600,13 +559,7 @@ export default function webpackConfigFactory(buildOptions) {
                 // The same value has to be used for both the client and the
                 // server bundles in order to ensure that SSR paths match the
                 // paths used on the client.
-                publicPath: isDev
-                  // When running in dev mode the client bundle runs on a
-                  // seperate port so we need to put an absolute path here.
-                  ?
-                  `http://${config('host')}:${config('clientDevServerPort')}${config('bundles.client.webPath')}`
-                  : // Otherwise we just use the configured web path for the client.
-                  config('bundles.client.webPath'),
+                publicPath: config('publicPath'),
                 // We only emit files when building a web bundle, for the server
                 // bundle we only care about the file loader being able to create
                 // the correct asset URLs.

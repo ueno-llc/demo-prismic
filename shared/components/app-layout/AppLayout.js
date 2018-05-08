@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import 'styles/fonts.css';
+import 'styles/fonts.scss';
 
 import s from './AppLayout.scss';
 

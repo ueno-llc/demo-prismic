@@ -7,7 +7,7 @@ import config from 'utils/config';
 import AppLayout, { Content } from 'components/app-layout';
 import Header from 'components/header';
 import Navigation from 'components/navigation';
-import DevTools from 'components/devtools';
+import DevTools from 'components/dev-tools';
 
 // Routes
 import SingleRoute from 'route';
@@ -16,18 +16,21 @@ export default function App() {
   return (
     <AppLayout>
       <Helmet {...config('helmet')} />
+
       <Header>
         <Navigation>
           <Link to="/">Home</Link>
           <Link to="/articles">Articles</Link>
         </Navigation>
       </Header>
+
       <Content>
         <Switch>
           <Route component={SingleRoute} />
         </Switch>
-        <DevTools />
       </Content>
+
+      <DevTools />
     </AppLayout>
   );
 }

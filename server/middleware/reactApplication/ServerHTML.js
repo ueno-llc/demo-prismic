@@ -9,15 +9,15 @@
 import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import serialize from 'serialize-javascript';
-import url from 'url';
+import { flushChunkNames } from 'react-universal-component/server';
 
 import HTML from 'components/html';
 import config from 'utils/config';
 import Analytics from 'utils/analytics';
-import flushChunks from 'webpack-flush-chunks';
 
-import getClientBundleEntryAssets from './getClientBundleEntryAssets';
-import getClientWebpackStats from './getClientWebpackStats';
+import getChunks from './getChunks';
+import getManifest from './getManifest';
+
 import ifElse from '../../../internal/utils/logic/ifElse';
 import removeNil from '../../../internal/utils/arrays/removeNil';
 import ClientConfig from '../../../config/components/ClientConfig';
@@ -34,9 +34,7 @@ const facebookPixel = config('facebookPixel');
 const twitterPixel = config('twitterPixel');
 const analytics = new Analytics({ facebookPixel, twitterPixel });
 
-// Resolve the assets (js/css) for the client bundle's entry chunk.
-const clientEntryAssets = getClientBundleEntryAssets();
-const webpackStats = getClientWebpackStats();
+const webpackManifest = getManifest();
 
 function stylesheetTag(stylesheetFilePath) {
   return (
@@ -48,29 +46,6 @@ function scriptTag(jsFilePath) {
   return <script type="text/javascript" src={jsFilePath} />;
 }
 
-// renames html class from no-js to js
-function noJs() {
-  return (
-    <script
-      type="text/javascript"
-      dangerouslySetInnerHTML={{ __html: `document.documentElement.className =
-       document.documentElement.className.replace('no-js', 'js')` }}
-    />
-  );
-}
-
-function resolveUrl(filename) {
-  const isDev = process.env.BUILD_FLAG_IS_DEV === 'true';
-  const webPath = config('bundles.client.webPath');
-  const filePath = url.resolve(webPath, filename);
-
-  if (!isDev) {
-    return filePath;
-  }
-
-  return `${filePath}?t=${Date.now()}`;
-}
-
 function ServerHTML(props) {
   const {
     jobsState,
@@ -79,7 +54,6 @@ function ServerHTML(props) {
     addHash,
     reactAppString,
     appState,
-    chunkNames,
   } = props;
 
   // Creates an inline script definition that is protected by the nonce.
@@ -92,25 +66,27 @@ function ServerHTML(props) {
     <script dangerouslySetInnerHTML={{ __html: prismicEndpoint }} />,
     <script type="text/javascript" src="//static.cdn.prismic.io/prismic.min.js" />,
   ];
+  const chunkNames = flushChunkNames();
 
   const {
-    cssHashRaw,
+    cssHashRaw = {},
     scripts,
     stylesheets,
-  } = flushChunks(webpackStats, { chunkNames });
+  } = getChunks(chunkNames);
 
   const headerElements = removeNil([
-    noJs(),
+    // Renames html class from no-js to js
+    inlineScript('var e=document.documentElement;e.className=e.className.replace("no-js","js")'),
     ifElse(facebookPixel)(() => inlineScript(analytics.facebook)),
     ifElse(twitterPixel)(() => inlineScript(analytics.twitter)),
     ...ifElse(helmet)(() => helmet.meta.toComponent(), []),
     ...ifElse(helmet)(() => helmet.title.toComponent(), []),
     ...ifElse(helmet)(() => helmet.base.toComponent(), []),
     ...ifElse(helmet)(() => helmet.link.toComponent(), []),
-    ifElse(clientEntryAssets && clientEntryAssets.css)(() => stylesheetTag(clientEntryAssets.css)),
     ...ifElse(helmet)(() => helmet.style.toComponent(), []),
     ...ifElse(isPreviewApp)(() => prismicPreviewScripts, []),
-    ...stylesheets.map(s => stylesheetTag(`/client/${s}`)),
+    ifElse(webpackManifest)(() => inlineScript(`window.__WEBPACK_MANIFEST__=${serialize(webpackManifest, { isJSON: true })};`)),
+    ...ifElse(stylesheets)(() => stylesheets.map(s => stylesheetTag(s)), []),
   ]);
 
   const bodyElements = removeNil([
@@ -119,8 +95,8 @@ function ServerHTML(props) {
     // that we can safely expose some configuration values to the
     // client bundle that gets executed in the browser.
     <ClientConfig addHash={addHash} />,
-    ifElse(jobsState)(() => inlineScript(`window.__JOBS_STATE__=${serialize(jobsState)}`)),
-    ifElse(routerState)(() => inlineScript(`window.__ROUTER_STATE__=${serialize(routerState)}`)),
+    ifElse(jobsState)(() => inlineScript(`window.__JOBS_STATE__=${serialize(jobsState, { isJSON: true })}`)),
+    ifElse(routerState)(() => inlineScript(`window.__ROUTER_STATE__=${serialize(routerState, { isJSON: true })}`)),
     ifElse(appState)(() => inlineScript(`window.__APP_STATE__=${serialize(appState, { isJSON: true })}`)),
     // Enable the polyfill io script?
     // This can't be configured within a react-helmet component as we
@@ -144,8 +120,7 @@ function ServerHTML(props) {
         )}.js?t=${Date.now()}`,
       )),
     inlineScript(`window.__CSS_CHUNKS__=${serialize(cssHashRaw)}`),
-    ...scripts.map(s => scriptTag(resolveUrl(s))),
-    ifElse(clientEntryAssets && clientEntryAssets.js)(() => scriptTag(clientEntryAssets.js)),
+    ...ifElse(scripts)(() => scripts.map(s => scriptTag(s)), []),
     ...ifElse(helmet)(() => helmet.script.toComponent(), []),
     scriptTag('https://platform.twitter.com/widgets.js'),
   ]);
@@ -177,7 +152,6 @@ ServerHTML.propTypes = {
   addHash: PropTypes.func,
   reactAppString: PropTypes.string,
   appState: PropTypes.object,
-  chunkNames: PropTypes.array,
 };
 
 export default ServerHTML;

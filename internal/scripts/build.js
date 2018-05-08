@@ -3,6 +3,8 @@
  */
 
 import fs from 'fs';
+import path from 'path';
+import appRootDir from 'app-root-dir';
 import webpack from 'webpack';
 import webpackConfigFactory from '../webpack/configFactory';
 import config from '../../config';
@@ -33,7 +35,25 @@ Object.keys(config('bundles'))
 
       // Save the build stats to a file so it can be used for serving css chunks
       if (bundleName === 'client') {
-        fs.writeFileSync('build/stats.json', JSON.stringify(stats.toJson()));
+        const {
+          assetsByChunkName,
+          publicPath,
+          assets,
+        } = stats.toJson({
+          all: false,
+          errors: false,
+          warnings: false,
+          assetsByChunkName: true,
+          publicPath: true,
+          assets: true,
+        });
+
+        const output = { assetsByChunkName, publicPath, assets };
+
+        fs.writeFileSync(
+          path.resolve(appRootDir.get(), config('buildOutputPath'), config('webpackStatsFileName')),
+          JSON.stringify(output),
+        );
       }
     });
   });

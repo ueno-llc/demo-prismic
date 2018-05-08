@@ -3,15 +3,15 @@ import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { JobProvider, createJobContext } from 'react-jobs';
 import asyncBootstrapper from 'react-async-bootstrapper';
+import { clearChunks } from 'react-universal-component/server';
 import { toJS } from 'mobx';
 import { Provider, useStaticRendering } from 'mobx-react';
 import Helmet from 'react-helmet';
 import Store from 'store';
 import timing from 'utils/timing';
-import sha256 from 'sha256';
 import App from 'App';
-import { flushChunkNames } from 'react-universal-component/server';
 
+import addHash from './addHashToCspHeader';
 import ServerHTML from './ServerHTML';
 
 useStaticRendering(true);
@@ -22,17 +22,7 @@ useStaticRendering(true);
 export default function reactApplicationMiddleware(request, response) {
   // Add script hashes
   // See the server/middleware/security.js for more info.
-  const addHash = (content) => {
-    response.setHeader(
-      'content-security-policy',
-      (response.getHeader('content-security-policy') || '')
-        .split(';')
-        .map(directive => directive.indexOf('script-src') >= 0 ?
-          `${directive} sha256-${sha256(content)}` : directive)
-        .join(';'),
-    );
-    return content;
-  };
+  const hashFunction = addHash(response);
 
   // Create a context for <StaticRouter>, which will allow us to
   // query for the results of the render.
@@ -62,41 +52,46 @@ export default function reactApplicationMiddleware(request, response) {
   const { end: endRuntimeTiming } = timing.start('Server runtime');
 
   // Needed for react-jobs
-  asyncBootstrapper(app).then(() => {
-    const { end: endRenderTiming } = timing.start('Render app');
-    const appString = renderToString(app);
-    const chunkNames = flushChunkNames();
+  asyncBootstrapper(app)
+    .then(() => {
+      const { end: endRenderTiming } = timing.start('Render app');
 
-    endRenderTiming();
+      clearChunks();
+      const appString = renderToString(app);
 
-    const html = renderToStaticMarkup(
-      <ServerHTML
-        reactAppString={appString}
-        chunkNames={chunkNames}
-        addHash={addHash}
-        helmet={Helmet.rewind()}
-        routerState={reactRouterContext}
-        jobsState={jobContext.getState()}
-        appState={toJS(store)}
-      />,
-    );
+      endRenderTiming();
 
-    // Check if the router context contains a redirect, if so we need to set
-    // the specific status and redirect header and end the response.
-    if (reactRouterContext.url) {
-      response.status(302).setHeader('Location', reactRouterContext.url);
-      response.end();
-      return;
-    }
+      const html = renderToStaticMarkup(
+        <ServerHTML
+          reactAppString={appString}
+          addHash={hashFunction}
+          helmet={Helmet.rewind()}
+          routerState={reactRouterContext}
+          jobsState={jobContext.getState()}
+          appState={toJS(store)}
+        />,
+      );
 
-    // End the measurement
-    endRuntimeTiming();
+      // Check if the router context contains a redirect, if so we need to set
+      // the specific status and redirect header and end the response.
+      if (reactRouterContext.url) {
+        response.status(302).setHeader('Location', reactRouterContext.url);
+        response.end();
+        return;
+      }
 
-    // Set server timings header for Chrome network tab timings.
-    response.set('Server-Timing', timing.toString());
+      // End the measurement
+      endRuntimeTiming();
 
-    response
-      .status(reactRouterContext.status || 200)
-      .send(`<!DOCTYPE html>${html}`);
-  });
+      // Set server timings header for Chrome network tab timings.
+      response.set('Server-Timing', timing.toString());
+
+      response
+        .status(reactRouterContext.status || 200)
+        .send(`<!DOCTYPE html>${html}`);
+    })
+    .catch((err) => {
+      console.warn('Error bootstrapping react app', err);
+      response.status(500).send('Error bootstrapping app');
+    });
 }

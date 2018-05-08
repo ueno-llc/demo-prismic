@@ -2,14 +2,7 @@ import { extendObservable } from 'mobx';
 import timing from 'utils/timing';
 import groupBy from 'lodash/groupBy';
 import { getField, linkResolver } from 'utils/prismic';
-import config from '../../config';
-
-const localApiUrl = config('localApiUrl');
-const clientLocalApiUrl = config('clientLocalApiUrl');
-
-// different api url dependant on if we're fetching on server or client
-// makes "yarn run dev-remote" work with ngrok
-const apiUrl = typeof window === 'undefined' ? localApiUrl : clientLocalApiUrl;
+import apiUrl from 'utils/localApiUrl';
 
 export default class Prismic {
 

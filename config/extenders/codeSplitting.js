@@ -1,15 +1,17 @@
 import fs from 'fs';
 import _isArray from 'lodash/isArray';
+import _get from 'lodash/get';
 import appRootDir from 'app-root-dir';
 import path from 'path';
 import webpack from 'webpack';
 import ExtractCssChunks from 'extract-css-chunks-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import WriteFilePlugin from 'write-file-webpack-plugin'; // here so you can see what chunks are built
+import ChunkManifestWebpackPlugin from 'chunk-manifest-webpack-plugin';
+import NameAllModulesPlugin from 'name-all-modules-plugin';
+
 import config from '../';
 import { removeNil } from '../../internal/utils/arrays';
 import { ifElse } from '../../internal/utils/logic';
-import { happyPackPlugin } from '../../internal/utils';
 
 function externals() {
 
@@ -58,12 +60,12 @@ export default (webpackConfig, buildOptions) => {
 
   const ifNode = ifElse(isNode);
   const ifClient = ifElse(isClient);
-  const ifDevClient = ifElse(isDev && isClient);
+  const ifProdClient = ifElse(isProd && isClient);
 
   // Overwrite the externals because apparently `webpack-node-externals` does not
   // work well with `webpack-flush-chunks`
   if (isNode) {
-    webpackConfig.externals = externals();
+    webpackConfig.externals = [externals()];
   }
 
   // Remove ExtractTextPlugin
@@ -72,18 +74,60 @@ export default (webpackConfig, buildOptions) => {
   if (etpIndex > -1) {
     webpackConfig.plugins.splice(etpIndex, 1);
   }
+
   // Add some plugins for css code splitting
   webpackConfig.plugins.push(
     ...removeNil([
-      ifDevClient(new WriteFilePlugin()),
-      ifClient(new ExtractCssChunks()),
+
+      // NamedModulesPlugin, NamedChunksPlugin and NameAllModulesPlugin (see below) are all here to
+      // deal with chunk hashes.
+      // See https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31
+      ifClient(new webpack.NamedModulesPlugin()),
+
       ifClient(
-        new webpack.optimize.CommonsChunkPlugin({
-          names: ['bootstrap'], // needed to put webpack bootstrap code before chunks
-          filename: isDev ? '[name].js' : '[name]-[chunkhash].js',
-          minChunks: Infinity,
+        new webpack.NamedChunksPlugin((chunk) => {
+          if (chunk.name) {
+            return chunk.name;
+          }
+          return chunk.mapModules(m => path.relative(m.context, m.request)).join('_');
         }),
       ),
+
+      ifClient(new ExtractCssChunks({
+        filename: isDev ? '[name].js' : '[name]-[contenthash].css',
+      })),
+
+      ifProdClient(new ChunkManifestWebpackPlugin({
+        filename: '../manifest.json',
+        manifestVariable: '__WEBPACK_MANIFEST__',
+      })),
+
+      // To make sure chunk hashes stay the same if their contents don’t change
+      // see: https://webpack.js.org/guides/caching/#module-identifiers
+      ifClient(new webpack.HashedModuleIdsPlugin()),
+
+      // Add vendor code chunk
+      ifProdClient(
+        new webpack.optimize.CommonsChunkPlugin({
+          name: 'vendor',
+          filename: '[name]-[chunkhash].js',
+          // Put all node_modules into one chunk
+          // see: https://webpack.js.org/plugins/commons-chunk-plugin/#passing-the-minchunks-property-a-function
+          minChunks: module => module.context && module.context.includes('node_modules'),
+        }),
+      ),
+
+      // Add webpack boilerplate chunk
+      ifClient(
+        new webpack.optimize.CommonsChunkPlugin({
+          name: 'bootstrap', // needed to put webpack bootstrap code before chunks
+          filename: isDev ? '[name].js' : '[name]-[chunkhash].js',
+        }),
+      ),
+
+      ifClient(new NameAllModulesPlugin()),
+
+      // We only want one server chunk
       ifNode(
         new webpack.optimize.LimitChunkCountPlugin({
           maxChunks: 1,
@@ -92,32 +136,11 @@ export default (webpackConfig, buildOptions) => {
     ]),
   );
 
-  // Overwrite happypack css dev plugin. Adds css chunks to the dev build.
-  const happyPackDevclientCssIndex = webpackConfig.plugins.findIndex(r => r.id === 'happypack-devclient-css');
-
-  if (happyPackDevclientCssIndex > 1) {
-    webpackConfig.plugins.splice(
-      happyPackDevclientCssIndex,
-      1,
-      happyPackPlugin({
-        name: 'happypack-devclient-css',
-        loaders: [
-          'classnames-loader',
-          ...ExtractCssChunks.extract({
-            fallback: 'style-loader',
-            use: [
-              `css-loader?sourceMap=1&modules=1&importLoaders=1&localIdentName=${localIdentName}`,
-              'postcss-loader?sourceMap=1',
-              'sass-loader?sourceMap=1&outputStyle=expanded',
-            ],
-          }),
-        ],
-      }),
-    );
-  }
+  const { rules } = webpackConfig.module;
+  const moduleRules = [..._get(rules, '0.oneOf', rules)];
 
   // Overwrite css loader ExtractTextPlugin
-  const cssRule = webpackConfig.module.rules[0].oneOf.find(r => r.test.test('.css'));
+  const cssRule = moduleRules.find(r => r.test.test('.css'));
 
   if (cssRule && _isArray(cssRule.use)) {
     // Find plugin
@@ -143,11 +166,13 @@ export default (webpackConfig, buildOptions) => {
   }
 
   // Overwrite node_modules css loader ExtractTextPlugin
-  const nmCssRule = webpackConfig.module.rules[0].oneOf.find(r => r.test.test('node_modules.css'));
+  const nmCssRule = moduleRules.find(r =>
+    r.test.test('node_modules.css') &&
+    (!r.exclude || !r.exclude.test('node_modules.css')));
 
   if (nmCssRule && _isArray(nmCssRule.use)) {
     // Find plugin
-    const pluginIndex = cssRule.use.findIndex(u =>
+    const pluginIndex = nmCssRule.use.findIndex(u =>
       Object.prototype.hasOwnProperty.call(u, 'loader') && /extract-text-webpack-plugin/.test(u.loader));
 
     if (pluginIndex > -1) {
@@ -156,7 +181,7 @@ export default (webpackConfig, buildOptions) => {
         use: ['css-loader', 'postcss-loader'],
       });
 
-      cssRule.use.splice(
+      nmCssRule.use.splice(
         pluginIndex,
         loaders.length,
         ...loaders,

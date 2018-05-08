@@ -17,6 +17,7 @@ $font-family-akagi: 'Akagi Pro', sans-serif;
 $font-family: $font-family-akagi;
 $font-family-heading: $font-family-tisa;
 $font-size: 16px;
+$font-size-min: 13px;
 $line-height: 1.5;
 
 // Colors
@@ -82,8 +83,26 @@ $min-desktop: $min-1080;
 $segment-padding-mobile: $gutter * 2;
 $segment-padding: 150px; //percentage-based segments spacing
 
-// scale for edge-case wide pages
-// used in :root in base.scss
+// vertically responsive breakpoints
+// might need to fine-tune these
+$scale-height-sm: 685px;
+$scale-height-md: 805px;
+$scale-height-lg: 920px;
+
+// vertical scaling baselines
 $scale: 1;
-$scale-md: 0.9;
-$scale-sm: 0.8;
+$scale-lg: 0.9;
+$scale-md: 0.8;
+$scale-sm: 0.7;
+
+// element scaling
+$scale-element: $scale;
+$scale-element-lg: $scale-lg;
+$scale-element-md: $scale-md;
+$scale-element-sm: $scale-sm;
+
+// font-scaling
+$scale-font: $scale;
+$scale-font-lg: $scale-lg;
+$scale-font-md: $scale-md;
+$scale-font-sm: $scale-sm;

@@ -12,7 +12,7 @@ import AppLayout, { Content } from 'components/app-layout';
 import Header from 'components/header';
 import Footer from 'components/footer';
 import Navigation from 'components/navigation';
-import DevTools from 'components/devtools';
+import DevTools from 'components/dev-tools';
 import Analytics from 'components/analytics';
 
 /**
