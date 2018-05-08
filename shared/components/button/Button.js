@@ -12,6 +12,7 @@ export default class Button extends PureComponent {
     children: PropTypes.node,
     className: PropTypes.string,
     stroke: PropTypes.bool,
+    large: PropTypes.bool,
   };
 
   render() {
@@ -21,6 +22,7 @@ export default class Button extends PureComponent {
       className,
       disabled,
       stroke,
+      large,
       ...rest
     } = this.props;
 
@@ -29,7 +31,7 @@ export default class Button extends PureComponent {
     const isExternal = isLink && /^((https?:)?\/\/|[0-9a-zA-Z]+:)/.test(to);
 
     // Extend className of the rest
-    rest.className = s(s.button, className, { disabled });
+    rest.className = s(s.button, className, { disabled, large });
     rest.disabled = disabled;
 
     // http, https, //, mailto, etc.
