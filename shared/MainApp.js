@@ -27,6 +27,7 @@ import ScrollToTop from 'utils/ScrollToTop';
 // Routes
 import Home from './routes/home';
 import About from './routes/about';
+import Images from './routes/images';
 import Articles from './routes/articles';
 import CustomPage from './routes/custom-page';
 import Contact from './routes/contact';
@@ -73,6 +74,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/about" component={About} />
+              <Route exact path="/images" component={Images} />
               <Route path="/articles" component={Articles} />
               <Route path="/contact-us" component={Contact} />
               <Route path="/search/:q" component={Search} />

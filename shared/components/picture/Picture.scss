@@ -1,0 +1,7 @@
+@import '~styles/config';
+
+.picture {
+  &__container {
+    @include container;
+  }
+}

@@ -11,6 +11,7 @@ const Slices = ({ data, className }) => (
   <div className={className}>
     {data.map((s, i) => {
       const key = `slice-${s.slice_type}-${i}`;
+
       switch (s.slice_type) {
         case 'image':
           return (<ImageContainer key={key} data={s.primary} />);
