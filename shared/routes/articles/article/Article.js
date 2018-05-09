@@ -44,7 +44,7 @@ class Articles extends Component {
             key="author"
             name={getField(author.data.name, 'text')}
             bio={getField(author.data.bio, 'text')}
-            image={getField(author.data.image).thumb}
+            image={(getField(author.data.image) || {}).thumb}
           />)}
           <Heading key="heading">{title}</Heading>
           <Slices data={body} />

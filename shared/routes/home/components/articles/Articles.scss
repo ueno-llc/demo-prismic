@@ -110,9 +110,11 @@
     }
   }
 
-  &__title {
-    @include heading(18, 32);
+  &__lead {
     @include grid-col;
+
+    display: flex;
+    flex-direction: column;
 
     margin-bottom: 12px;
 
@@ -127,6 +129,17 @@
 
       margin-bottom: 0;
     }
+  }
+
+  &__title {
+    @include heading(18, 32);
+  }
+
+  &__author {
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
   }
 
   &__description {
