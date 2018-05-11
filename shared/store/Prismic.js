@@ -1,7 +1,7 @@
 import { extendObservable } from 'mobx';
 import Prismic from 'prismic-javascript';
 import groupBy from 'lodash/groupBy';
-import { getField, linkResolver } from 'utils/prismic';
+import { get, linkResolver } from 'utils/prismic';
 import apiUrl from 'utils/localApiUrl';
 import config from 'utils/config';
 
@@ -64,6 +64,101 @@ export default class PrismicStore {
     return home;
   }
 
+  async getArticles() {
+    const api = await Prismic.getApi(prismicApiUrl, { accessToken });
+
+    let page = {};
+    let articles = [];
+
+    try {
+      [page, articles] = await Promise.all([
+        api.getSingle('about', {
+          fetchLinks: ['author.name', 'author.bio', 'author.image'],
+        }),
+        api.query(
+          Prismic.Predicates.at('document.type', 'article'),
+          { fetchLinks: ['author.name'] },
+        ),
+      ]);
+    } catch (e) {
+      console.warn('Unable to get articles', e);
+    }
+
+    return { page, articles: articles.results };
+  }
+
+  async getArticle(id) {
+    const api = await Prismic.getApi(prismicApiUrl, { accessToken });
+
+    try {
+      const data = await api.query(
+        Prismic.Predicates.at('my.article.uid', id),
+        { fetchLinks: ['author.name', 'author.bio', 'author.image'] },
+      );
+
+      if (data.results.length === 1) {
+        return data.results[0];
+      }
+    } catch (e) {
+      console.warn(`Unable to get article "${id}"`, e);
+    }
+
+    return {};
+  }
+
+  async getAbout() {
+    const api = await Prismic.getApi(prismicApiUrl, { accessToken });
+
+    try {
+      return await api.getSingle('about', {
+        fetchLinks: ['author.name', 'author.bio', 'author.image'],
+      });
+    } catch (e) {
+      console.warn('Unable to get about', e);
+      return {};
+    }
+  }
+
+  async getContact() {
+    const api = await Prismic.getApi(prismicApiUrl, { accessToken });
+
+    try {
+      return await api.getSingle('contact');
+    } catch (e) {
+      console.warn('Unable to get about', e);
+      return {};
+    }
+  }
+
+  async getCustomPages() {
+    const api = await Prismic.getApi(prismicApiUrl, { accessToken });
+
+    try {
+      return await api.getSingle('homepage', {
+        fetchLinks: ['custom_page.title'],
+      });
+    } catch (e) {
+      console.warn('Unable to get about', e);
+      return {};
+    }
+  }
+
+  async getCustomPage(id) {
+    const api = await Prismic.getApi(prismicApiUrl, { accessToken });
+
+    try {
+      const data = await api.query(Prismic.Predicates.at('my.custom_page.uid', id));
+
+      if (data.results.length === 1) {
+        return data.results[0];
+      }
+    } catch (e) {
+      console.warn(`Unable to get custom page "${id}"`, e);
+    }
+
+    return {};
+  }
+
   /* Via proxied API, see `server/api` */
 
   getByType({ type, uid, links }) {
@@ -113,10 +208,10 @@ export default class PrismicStore {
       .then(data => data.results)
       .then(results => results.map(m => ({ // map it to search results
         id: m.id,
-        title: getField(m.data.title, 'title'),
+        title: get(m, 'data.title'),
         description: m.type === 'article'
-          ? getField(m.data.short_description, 'text')
-          : getField(m.data.description_seo, 'text'),
+          ? get(m, 'data.short_description')
+          : get(m, 'data.description_seo'),
         to: linkResolver(m),
         type: m.type,
         isPage: m.tags.some(s => s === 'page') || m.type === 'custom_page',

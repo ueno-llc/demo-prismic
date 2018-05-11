@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 
-import { getField } from 'utils/prismic';
+import { get, getCollection, getRichtext } from 'utils/prismic';
 
 import Segment from 'components/segment';
 import Button from 'components/button';
@@ -32,29 +32,29 @@ class Home extends PureComponent {
     return (
       <div>
         <Helmet
-          title={getField(homepage.data.title_seo, 'text').trim()}
-          meta={[{ name: 'description', content: getField(homepage.data.description_seo, 'text').trim() }]}
+          title={get(homepage, 'data.title_seo')}
+          meta={[{ name: 'description', content: get(homepage, 'data.description_seo') }]}
         />
 
-        <Hero carousel={getField(homepage.data.carousel)} />
+        <Hero carousel={getCollection(homepage, 'data.carousel')} />
 
         <Columns
-          heading={getField(homepage.data.column_title, 'text')}
-          subline={getField(homepage.data.column_subheading, 'text')}
+          heading={get(homepage, 'data.column_title')}
+          subline={get(homepage, 'data.column_subheading')}
         >
-          {getField(homepage.data.content_columns, 'group').map((item, i) => (
+          {getCollection(homepage, 'data.content_columns').map((item, i) => (
             <Column
               key={i} // eslint-disable-line
-              title={getField(item.title, 'text')}
-              text={getField(item.text, 'richtext')}
+              title={get(item, 'title')}
+              text={getRichtext(item, 'text')}
             />
           ))}
         </Columns>
 
         <Articles
-          title={getField(homepage.data.articles_title, 'text')}
-          subheading={getField(homepage.data.articles_subheading, 'text')}
-          articles={homepage.data.featured_articles}
+          title={get(homepage, 'data.articles_title')}
+          subheading={get(homepage, 'data.articles_subheading')}
+          articles={getCollection(homepage, 'data.featured_articles')}
           show={4}
         />
 

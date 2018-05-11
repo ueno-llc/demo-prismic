@@ -1,5 +1,6 @@
 import { RichText } from 'prismic-reactjs';
 import { asText } from 'prismic-richtext';
+import _get from 'lodash/get';
 
 function linkResolver(doc) {
   if (!doc) {
@@ -14,67 +15,74 @@ function linkResolver(doc) {
     case 'articles':
       return '/articles';
     case 'article':
-      return `/articles/${doc.slug || doc.uid}`;
+      return `/articles/${doc.uid}`;
     case 'custom_page':
-      return `/${doc.slug || doc.uid}`;
+      return `/${doc.uid}`;
     default:
       return '/';
   }
 }
 
-function renderAsText(field) {
+const SHOULD_WARN = true;
+
+function warn(...m) {
+  if (SHOULD_WARN) {
+    console.warn(...m);
+  }
+}
+
+function get(obj, path = undefined, defaultValue = '') {
+  const value = path ? _get(obj, path) : obj;
+
+  if (!value) {
+    return defaultValue;
+  }
+
+  if (typeof value === 'string') {
+    return value;
+  }
+
   try {
-    return asText(field);
+    return asText(value).trim();
   } catch (e) {
-    console.warn('unable to render field as text', field);
+    warn(`unable to render field "${path}" as text`, e);
   }
 
-  return '';
+  return defaultValue;
 }
 
-function renderAsComponentTree(field) {
-  if (!field) {
-    console.warn('cannot render undefined field');
-    return null;
+function getCollection(obj, path) {
+  const value = path ? _get(obj, path) : obj;
+
+  return Array.isArray(value) ? value : [];
+}
+
+function getObject(obj, path) {
+  const value = path ? _get(obj, path) : obj;
+
+  return !(typeof obj !== 'object' || Array.isArray(obj)) ? value : {};
+}
+
+function getRichtext(obj, path = undefined, defaultValue = '') {
+  const value = path ? _get(obj, path) : obj;
+
+  if (!Array.isArray(value)) {
+    return defaultValue;
   }
 
   try {
-    const result = RichText.render(field, linkResolver);
-    return result;
+    return RichText.render(value, linkResolver);
   } catch (e) {
-    console.warn('unable to render field as component tree', field);
-  }
-  return null;
-}
-
-function renderDefault(field) {
-  if (field && typeof field === 'object') {
-    const keys = Object.keys(field);
-    if (keys.length === 1 && keys[0] === 'link_type') {
-      return null;
-    }
+    warn(`unable to render field "${path}" as richtext`, e);
   }
 
-  return field;
-}
-
-function getField(field, type = '') {
-  switch (type) {
-    case 'title':
-      return renderAsText(field);
-    case 'text':
-      return renderAsText(field);
-    case 'richtext':
-      return renderAsComponentTree(field);
-    case 'body':
-      // slices
-      return field || [];
-    default:
-      return renderDefault(field);
-  }
+  return defaultValue;
 }
 
 export {
   linkResolver,
-  getField,
+  get,
+  getObject,
+  getCollection,
+  getRichtext,
 };

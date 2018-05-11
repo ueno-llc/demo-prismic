@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 import Image from 'components/image';
 
-import { getField } from 'utils/prismic';
+import { getRichtext } from 'utils/prismic';
 
 const ImageContainer = ({ data }) => {
   const { width, height } = data.image.dimensions;
   const { alt, url } = data.image;
-  const caption = getField(data.caption, 'richtext');
+  const caption = getRichtext(data, 'caption');
 
   return (
     <Image

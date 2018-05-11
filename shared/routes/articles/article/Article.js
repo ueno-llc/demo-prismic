@@ -13,7 +13,7 @@ import Article from 'components/article';
 import Author from 'components/author';
 import Slices from 'components/slices';
 
-import { getField } from 'utils/prismic';
+import { get, getCollection, getObject } from 'utils/prismic';
 
 class Articles extends Component {
 
@@ -28,23 +28,23 @@ class Articles extends Component {
       return <Route component={NotFound} />;
     }
 
-    const title = getField(article.data.title, 'text');
-    const author = getField(article.data.author);
-    const body = getField(article.data.body, 'body');
+    const title = get(article, 'data.title');
+    const author = getObject(article, 'data.author');
+    const body = getCollection(article, 'data.body');
 
     return (
       <div>
         <Helmet
-          title={getField(article.data.title_seo, 'text').trim()}
-          meta={[{ name: 'description', content: getField(article.data.description_seo, 'text').trim() }]}
+          title={get(article, 'data.title_seo')}
+          meta={[{ name: 'description', content: get(article, 'data.description_seo')}]}
         />
 
         <Article>
           {author && (<Author
             key="author"
-            name={getField(author.data.name, 'text')}
-            bio={getField(author.data.bio, 'text')}
-            image={(getField(author.data.image) || {}).thumb}
+            name={get(author, 'data.name')}
+            bio={get(author, 'data.bio')}
+            image={getObject(author, 'data.image').thumb}
           />)}
           <Heading key="heading">{title}</Heading>
           <Slices data={body} />
@@ -56,11 +56,7 @@ class Articles extends Component {
 }
 
 const articlesWithJob = withJob({
-  work: ({ prismic, match }) => prismic.getByType({
-    type: 'article',
-    uid: match.params.id,
-    links: 'author.name,author.bio,author.image',
-  }),
+  work: ({ prismic, match }) => prismic.getArticle(match.params.id),
   LoadingComponent: () => (
     <Article>
       <Author

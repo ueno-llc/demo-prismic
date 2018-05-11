@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getField } from 'utils/prismic';
+import { getRichtext } from 'utils/prismic';
 
 import s from './Quote.scss';
 
@@ -11,7 +11,7 @@ const Quote = ({ text }) => (
       <div className={s.quote__row}>
         <div className={s.quote__col}>
           <blockquote className={s.quote__block}>
-            {getField(text, 'richtext')}
+            {getRichtext(text)}
           </blockquote>
         </div>
       </div>

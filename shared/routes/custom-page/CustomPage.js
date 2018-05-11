@@ -7,7 +7,7 @@ import { withJob } from 'react-jobs';
 import isEmpty from 'lodash/isEmpty';
 
 import NotFound from 'routes/not-found';
-import { getField } from 'utils/prismic';
+import { get, getCollection } from 'utils/prismic';
 
 import Intro from 'components/intro';
 import Slices from 'components/slices';
@@ -26,16 +26,16 @@ class CustomPage extends PureComponent {
       return <Route component={NotFound} />;
     }
 
-    const body = getField(page.data.body, 'body');
+    const body = getCollection(page, 'data.body');
 
     return (
       <div>
-        <Helmet title={getField(page.data.title, 'text')} />
+        <Helmet title={get(page, 'data.title')} />
 
         <Intro>
-          <h1>{getField(page.data.title, 'text')}</h1>
-          <h2>{getField(page.data.subheading, 'text')}</h2>
-          <p>{getField(page.data.text, 'text')}</p>
+          <h1>{get(page, 'data.title')}</h1>
+          <h2>{get(page, 'data.subheading')}</h2>
+          <p>{get(page, 'data.text')}</p>
         </Intro>
 
         <Article>
@@ -47,8 +47,7 @@ class CustomPage extends PureComponent {
 }
 
 const customPageWithJob = withJob({
-  work: ({ prismic, match }) =>
-    prismic.getByType({ type: 'custom_page', uid: match.params.id }),
+  work: ({ prismic, match }) => prismic.getCustomPage(match.params.id),
 
   shouldWorkAgain: (prevProps, nextProps) =>
     prevProps.match.params.id !== nextProps.match.params.id,

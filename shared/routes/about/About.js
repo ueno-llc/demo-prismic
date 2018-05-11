@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 
-import { getField } from 'utils/prismic';
+import { get, getCollection, getObject } from 'utils/prismic';
 
 import Intro from 'components/intro';
 import Peoples, { People } from './components/peoples';
@@ -24,28 +24,28 @@ class About extends PureComponent {
   render() {
     const { jobResult: about } = this.props;
 
-    const people = getField(about.data.people);
+    const people = getCollection(about.data.people);
 
     return (
       <div>
         <Helmet
-          title={getField(about.data.title_seo, 'text').trim()}
-          meta={[{ name: 'description', content: getField(about.data.description_seo, 'text').trim() }]}
+          title={get(about, 'data.title_seo')}
+          meta={[{ name: 'description', content: get(about, 'data.description_seo') }]}
         />
 
         <Intro>
-          <h1>{getField(about.data.title, 'text')}</h1>
-          <h2>{getField(about.data.subheading, 'text')}</h2>
-          <p>{getField(about.data.text, 'text')}</p>
+          <h1>{get(about, 'data.title')}</h1>
+          <h2>{get(about, 'data.subheading')}</h2>
+          <p>{get(about, 'data.text')}</p>
         </Intro>
 
-        <Peoples title={getField(about.data.people_title, 'text')}>
-          {people && people.map(({ person: { data: { name, bio, image } } }, i) => (
+        <Peoples title={get(about, 'data.people_title')}>
+          {people.map(({ person: { data: { name, bio, image } } }, i) => (
             <People
               key={`people-${i}`} // eslint-disable-line
-              image={getField(image).url}
-              name={getField(name, 'text')}
-              description={getField(bio, 'text')}
+              image={getObject(image).url}
+              name={get(name)}
+              description={get(bio)}
             />
           ))}
         </Peoples>
@@ -55,7 +55,7 @@ class About extends PureComponent {
 }
 
 const aboutWithJob = withJob({
-  work: ({ prismic }) => prismic.getSingleByType({ type: 'about', links: 'author.name,author.bio,author.image' }),
+  work: ({ prismic }) => prismic.getAbout(),
   LoadingComponent: () => (
     <div>
       <Intro isLoading />

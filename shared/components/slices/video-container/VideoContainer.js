@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Video from 'components/video';
-import { getField } from 'utils/prismic';
+import { getRichtext } from 'utils/prismic';
 
 export default class VideoContainer extends Component {
   static propTypes = {
@@ -11,7 +11,7 @@ export default class VideoContainer extends Component {
 
   render() {
     const { data } = this.props;
-    const caption = getField(data.caption, 'richtext');
+    const caption = getRichtext(data, 'caption');
 
     return (
       <Video
