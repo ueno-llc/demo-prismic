@@ -37,7 +37,7 @@ class Images extends PureComponent {
 
         <Intro>
           <h1>{getField(data.title, 'text')}</h1>
-          <p>{getField(data.description, 'richtext')}</p>
+          <div>{getField(data.description, 'richtext')}</div>
         </Intro>
 
         <Segment>
