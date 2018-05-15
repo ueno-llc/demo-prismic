@@ -1,0 +1,30 @@
+{
+  "Main" : {
+    "name" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1",
+        "label" : "Name"
+      }
+    },
+    "bio" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "paragraph",
+        "label" : "Bio"
+      }
+    },
+    "image" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : { },
+        "thumbnails" : [ {
+          "name" : "thumb",
+          "width" : 150,
+          "height" : 150
+        } ],
+        "label" : "Image"
+      }
+    }
+  }
+}

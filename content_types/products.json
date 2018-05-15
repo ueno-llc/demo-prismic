@@ -1,0 +1,55 @@
+{
+  "Main" : {
+    "title" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1",
+        "label" : "Title"
+      }
+    },
+    "subtitle" : {
+      "type" : "StructuredText",
+      "config" : {
+        "multi" : "paragraph",
+        "label" : "Subtitle"
+      }
+    },
+    "text" : {
+      "type" : "StructuredText",
+      "config" : {
+        "multi" : "paragraph",
+        "label" : "Text"
+      }
+    },
+    "Products" : {
+      "type" : "Group",
+      "config" : {
+        "fields" : {
+          "article" : {
+            "type" : "Link",
+            "config" : {
+              "label" : "Product"
+            }
+          }
+        },
+        "label" : "Products"
+      }
+    }
+  },
+  "SEO" : {
+    "title_seo" : {
+      "config" : {
+        "single" : "heading1",
+        "label" : "Title (SEO)"
+      },
+      "type" : "StructuredText"
+    },
+    "description_seo" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "paragraph",
+        "label" : "Description (SEO)"
+      }
+    }
+  }
+}

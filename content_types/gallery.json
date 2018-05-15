@@ -1,0 +1,48 @@
+{
+  "Main" : {
+    "name" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1",
+        "label" : "Name"
+      }
+    },
+    "images" : {
+      "type" : "Group",
+      "config" : {
+        "fields" : {
+          "caption" : {
+            "type" : "StructuredText",
+            "config" : {
+              "single" : "paragraph",
+              "label" : "Caption"
+            }
+          },
+          "alt_text" : {
+            "type" : "Text",
+            "config" : {
+              "label" : "Alt Text"
+            }
+          },
+          "image" : {
+            "type" : "Image",
+            "config" : {
+              "constraint" : { },
+              "thumbnails" : [ {
+                "name" : "cover",
+                "width" : 1920,
+                "height" : 1280
+              }, {
+                "name" : "thumb_small",
+                "width" : 180,
+                "height" : 120
+              } ],
+              "label" : "Image"
+            }
+          }
+        },
+        "label" : "Images"
+      }
+    }
+  }
+}

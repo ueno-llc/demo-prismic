@@ -1,0 +1,161 @@
+{
+  "Main" : {
+    "uid" : {
+      "type" : "UID",
+      "config" : {
+        "label" : "Slug"
+      }
+    },
+    "name" : {
+      "config" : {
+        "single" : "heading1",
+        "label" : "Name"
+      },
+      "type" : "StructuredText"
+    },
+    "description" : {
+      "type" : "StructuredText",
+      "config" : {
+        "multi" : "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
+        "label" : "Description"
+      }
+    },
+    "hero_image" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : { },
+        "thumbnails" : [ {
+          "name" : "tablet",
+          "width" : 1080,
+          "height" : null
+        }, {
+          "name" : "mobile",
+          "width" : 720,
+          "height" : null
+        }, {
+          "name" : "desktop_2x",
+          "width" : 2580,
+          "height" : null
+        }, {
+          "name" : "tablet_2x",
+          "width" : 2160,
+          "height" : null
+        }, {
+          "name" : "mobile_2x",
+          "width" : 1440,
+          "height" : null
+        }, {
+          "name" : "desktop",
+          "width" : 1290,
+          "height" : null
+        }, {
+          "name" : "square",
+          "width" : 600,
+          "height" : 600
+        } ],
+        "label" : "Image"
+      }
+    }
+  },
+  "Gallery" : {
+    "gallery_link" : {
+      "type" : "Link",
+      "config" : {
+        "select" : "document",
+        "customtypes" : [ "gallery" ],
+        "label" : "Gallery"
+      }
+    },
+    "gallery" : {
+      "type" : "Group",
+      "config" : {
+        "fields" : {
+          "description" : {
+            "type" : "StructuredText",
+            "config" : {
+              "single" : "heading1",
+              "label" : "Description"
+            }
+          },
+          "photo_by" : {
+            "type" : "StructuredText",
+            "config" : {
+              "single" : "heading4",
+              "label" : "Photo by"
+            }
+          },
+          "image" : {
+            "type" : "Image",
+            "config" : {
+              "constraint" : { },
+              "thumbnails" : [ {
+                "name" : "cover",
+                "width" : 1920,
+                "height" : null
+              }, {
+                "name" : "thumb_small",
+                "width" : 180,
+                "height" : 120
+              } ],
+              "label" : "Image"
+            }
+          }
+        },
+        "label" : "Gallery"
+      }
+    }
+  },
+  "Related Products" : {
+    "product_link" : {
+      "type" : "Link",
+      "config" : {
+        "select" : "document",
+        "customtypes" : [ "Product", "product" ],
+        "label" : "Product"
+      }
+    },
+    "related_products" : {
+      "type" : "Group",
+      "config" : {
+        "fields" : {
+          "products" : {
+            "type" : "Link",
+            "config" : {
+              "select" : "document",
+              "customtypes" : [ "tour", "category" ],
+              "label" : "Products"
+            }
+          }
+        },
+        "label" : "Related Products"
+      }
+    }
+  },
+  "Meta" : {
+    "meta_title" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label" : "Meta title"
+      }
+    },
+    "meta_description" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label" : "Meta description"
+      }
+    },
+    "meta_image" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 1200,
+          "height" : 630
+        },
+        "thumbnails" : [ ],
+        "label" : "Meta image"
+      }
+    }
+  }
+}

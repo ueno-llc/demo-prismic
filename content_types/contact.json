@@ -1,0 +1,55 @@
+{
+  "Main" : {
+    "title" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label" : "Title"
+      }
+    },
+    "subheading" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label" : "Subheading"
+      }
+    },
+    "text" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label" : "Text"
+      }
+    },
+    "success_message_title" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label" : "Success message title"
+      }
+    },
+    "success_message_text" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label" : "Success message text"
+      }
+    }
+  },
+  "SEO" : {
+    "title_seo" : {
+      "config" : {
+        "single" : "heading1",
+        "label" : "Title (SEO)"
+      },
+      "type" : "StructuredText"
+    },
+    "description_seo" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "paragraph",
+        "label" : "Description (SEO)"
+      }
+    }
+  }
+}
