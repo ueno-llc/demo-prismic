@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
-import { getField } from 'utils/prismic';
+import { getString, getObject } from 'utils/prismic';
 
 import Intro from 'components/intro';
 import List, { Item } from './components/list';
@@ -20,14 +20,14 @@ class Articles extends PureComponent {
     return (
       <div>
         <Helmet
-          title={getField(page.data.title_seo, 'text').trim()}
-          meta={[{ name: 'description', content: getField(page.data.description_seo, 'text').trim() }]}
+          title={getString(page, 'data.title_seo')}
+          meta={[{ name: 'description', content: getString(page, 'data.description_seo') }]}
         />
 
         <Intro>
-          <h1>{getField(page.data.title, 'text')}</h1>
-          <h2>{getField(page.data.subtitle, 'text')}</h2>
-          <p>{getField(page.data.text, 'text')}</p>
+          <h1>{getString(page, 'data.title')}</h1>
+          <h2>{getString(page, 'data.subtitle')}</h2>
+          <p>{getString(page, 'data.text')}</p>
         </Intro>
 
         {articles && (
@@ -39,15 +39,15 @@ class Articles extends PureComponent {
                 return null;
               }
 
-              const image = getField(data.image);
+              const image = getObject(data, 'image');
               const src = image && image.url;
 
               return (
                 <Item
                   key={uid}
                   url={`/articles/${uid}`}
-                  title={getField(data.title, 'text')}
-                  description={getField(data.short_description, 'text')}
+                  title={getString(data, 'title')}
+                  description={getString(data, 'short_description')}
                   image={image}
                   src={src}
                 />
@@ -65,14 +65,7 @@ class Articles extends PureComponent {
 }
 
 const articlesWithJob = withJob({
-  work: async ({ prismic }) => {
-    const [page, articles] = await Promise.all([
-      prismic.getSingleByType({ type: 'articles', links: 'author.name,author.bio,author.image' }),
-      prismic.getByType({ type: 'article', links: 'author.name' }),
-    ]);
-
-    return { page, articles };
-  },
+  work: async ({ prismic }) => prismic.getArticles(),
   LoadingComponent: () => (
     <Intro isLoading />
   ),

@@ -5,8 +5,7 @@ import format from 'date-fns/format';
 import isEmpty from 'lodash/isEmpty';
 
 import { AuthorBlock } from 'components/author';
-import { getField } from 'utils/prismic';
-import { asText } from 'prismic-richtext';
+import { getString, getObject } from 'utils/prismic';
 
 import s from './Articles.scss';
 
@@ -40,14 +39,14 @@ export default class Articles extends Component {
                 {articles.slice(0, show).map(({ article = {} }) => {
                   const { uid, data } = article;
 
-                  const itemTitle = getField(data.title, 'title').trim();
+                  const itemTitle = getString(data, 'title').trim();
 
                   if (!uid || !itemTitle) {
                     return null;
                   }
 
                   const url = `/articles/${uid}`;
-                  const description = getField(data.short_description, 'title');
+                  const description = getString(data, 'short_description');
                   const date = data.publication_date;
                   const { author } = data;
                   const hasAuthor = !isEmpty(author) && !isEmpty(author.data);
@@ -68,9 +67,9 @@ export default class Articles extends Component {
                             {hasAuthor && (
                               <div className={s.articles__author}>
                                 <AuthorBlock
-                                  name={getField(author.data.name, 'text')}
-                                  bio={getField(author.data.bio, 'text')}
-                                  image={(getField(author.data.image) || {}).thumb}
+                                  name={getString(author, 'data.name')}
+                                  bio={getString(author, 'data.bio')}
+                                  image={(getObject(author, 'data.image')).thumb}
                                 />
                               </div>
                             )}

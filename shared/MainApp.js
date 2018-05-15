@@ -5,7 +5,7 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 import config from 'utils/config';
-import { getField } from 'utils/prismic';
+import { getString } from 'utils/prismic';
 
 // Layout
 import AppLayout, { Content } from 'components/app-layout';
@@ -35,6 +35,7 @@ import Search from './routes/search';
 import NotFound from './routes/not-found';
 
 class App extends Component {
+
   static propTypes = {
     jobResult: PropTypes.object,
   }
@@ -44,7 +45,7 @@ class App extends Component {
 
     const customPages = jobResult.data.custom_pages
       .map(({ custom_page: { uid, data: { title } } }) => (
-        <Link key={uid} to={`/${uid}`}>{getField(title, 'text')}</Link>
+        <Link key={uid} to={`/${uid}`}>{getString(title)}</Link>
       ));
 
     return [
@@ -94,7 +95,7 @@ class App extends Component {
 }
 
 const appWithJob = withJob({
-  work: ({ prismic }) => prismic.getSingleByType({ type: 'homepage', links: 'custom_page.title' }),
+  work: ({ prismic }) => prismic.getCustomPages(),
 })(App);
 
 export default inject('prismic')(appWithJob);

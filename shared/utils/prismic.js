@@ -1,5 +1,6 @@
 import { RichText } from 'prismic-reactjs';
-import { asText } from 'prismic-richtext';
+import _get from 'lodash/get';
+import _isPlainObject from 'lodash/isPlainObject';
 
 function linkResolver(doc) {
   if (!doc) {
@@ -14,67 +15,119 @@ function linkResolver(doc) {
     case 'articles':
       return '/articles';
     case 'article':
-      return `/articles/${doc.slug || doc.uid}`;
+      return `/articles/${doc.uid}`;
     case 'custom_page':
-      return `/${doc.slug || doc.uid}`;
+      return `/${doc.uid}`;
     default:
       return '/';
   }
 }
 
-function renderAsText(field) {
+const SHOULD_WARN = process.env.NODE_ENV === 'development';
+
+function warn(...m) {
+  if (SHOULD_WARN) {
+    console.warn(...m);
+  }
+}
+
+/**
+ * Get string value from object, optionally by path. If `obj` is a string
+ * it is returned. If no path is given `obj` is used as the value.
+ *
+ * @param {Object} The object to query
+ * @param {string} [path=undefined] The path of the property to get
+ * @param {string} [defaultValue=''] Default value returned if no value is found
+ * @returns {*} Resolved value or the empty array if not possible
+ */
+function getString(obj, path = undefined, defaultValue = '') {
+  const value = path ? _get(obj, path) : obj;
+
+  if (!value) {
+    return defaultValue;
+  }
+
+  if (typeof value === 'string') {
+    return value;
+  }
+
+  // if we run `asText` on an array that does not have a text key we'll get
+  // undefined for that value
+  if (Array.isArray(value) && !value.every(i => _isPlainObject(i) && 'text' in i)) {
+    return defaultValue;
+  }
+
   try {
-    return asText(field);
+    return RichText.asText(value).trim();
   } catch (e) {
-    console.warn('unable to render field as text', field);
+
+    warn(`unable to render field "${path}" as text`, e);
   }
 
-  return '';
+  return defaultValue;
 }
 
-function renderAsComponentTree(field) {
-  if (!field) {
-    console.warn('cannot render undefined field');
-    return null;
+/**
+ * Get array value from object by path or empty array. If no path is given
+ * `obj` is used as the value. If `obj` is an array it is returned.
+ *
+ * @param {Object} The object to query
+ * @param {string} [path=undefined] The path of the property to get
+ * @returns {*} Resolved value or the empty array if not possible
+ */
+function getArray(obj, path = undefined) {
+  if (Array.isArray(obj)) {
+    return obj;
+  }
+
+  const value = path ? _get(obj, path) : obj;
+
+  return Array.isArray(value) ? value : [];
+}
+
+/**
+ * Get object value from object by path or empty object. If no path is given
+ * `obj` is used as the value.
+ *
+ * @param {Object} The object to query
+ * @param {string} [path=undefined] The path of the property to get
+ * @returns {*} Resolved value or the empty object if not possible
+ */
+function getObject(obj, path = undefined) {
+  const value = path ? _get(obj, path) : obj;
+
+  return _isPlainObject(value) ? value : {};
+}
+
+/**
+ * Get richtext value from object by path or defaultValue. If no path is given
+ * `obj` is used as the value.
+ *
+ * @param {Object} The object to query
+ * @param {string} [path=undefined] The path of the property to get
+ * @param {string} [defaultValue=''] Default value returned if no value is found
+ * @returns {*} Resolved value or `defaultValue` if not possible
+ */
+function getRichtext(obj, path = undefined, defaultValue = '') {
+  const value = path ? _get(obj, path) : obj;
+
+  if (!Array.isArray(value)) {
+    return defaultValue;
   }
 
   try {
-    const result = RichText.render(field, linkResolver);
-    return result;
+    return RichText.render(value, linkResolver);
   } catch (e) {
-    console.warn('unable to render field as component tree', field);
-  }
-  return null;
-}
-
-function renderDefault(field) {
-  if (field && typeof field === 'object') {
-    const keys = Object.keys(field);
-    if (keys.length === 1 && keys[0] === 'link_type') {
-      return null;
-    }
+    warn(`unable to render field "${path}" as richtext`, e);
   }
 
-  return field;
-}
-
-function getField(field, type = '') {
-  switch (type) {
-    case 'title':
-      return renderAsText(field);
-    case 'text':
-      return renderAsText(field);
-    case 'richtext':
-      return renderAsComponentTree(field);
-    case 'body':
-      // slices
-      return field || [];
-    default:
-      return renderDefault(field);
-  }
+  return defaultValue;
 }
 
 export {
   linkResolver,
-  getField,
+  getString,
+  getObject,
+  getArray,
+  getRichtext,
 };

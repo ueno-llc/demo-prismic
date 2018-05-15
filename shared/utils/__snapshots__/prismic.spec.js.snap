@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getRichtext for property that is a richtext array 1`] = `
+<div>
+  <p>
+    <strong>
+      foo
+    </strong>
+     
+    <em>
+      bar
+    </em>
+  </p>
+</div>
+`;
