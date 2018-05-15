@@ -42,7 +42,7 @@ export default class Hero extends PureComponent {
                 <Content
                   key={`content-slide-${current}`}
                   title={getField(carousel[current].title, 'text')}
-                  text={getField(carousel[current].text, 'text')}
+                  text={getField(carousel[current].text, 'richtext')}
                 />
               </TransitionGroup>
             )}

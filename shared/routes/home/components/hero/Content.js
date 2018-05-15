@@ -8,7 +8,7 @@ export default class Content extends Component {
 
   static propTypes = {
     title: PropTypes.string,
-    text: PropTypes.string,
+    text: PropTypes.node,
   }
 
   componentWillEnter(cb) {
@@ -52,12 +52,12 @@ export default class Content extends Component {
           {title}
         </h1>
 
-        <p
+        <div
           className={s.content__text}
           ref={(c) => { this.text = c; }}
         >
           {text}
-        </p>
+        </div>
       </div>
     );
   }
