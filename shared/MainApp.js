@@ -5,7 +5,7 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 import config from 'utils/config';
-import { get } from 'utils/prismic';
+import { getString } from 'utils/prismic';
 
 // Layout
 import AppLayout, { Content } from 'components/app-layout';
@@ -44,7 +44,7 @@ class App extends Component {
 
     const customPages = jobResult.data.custom_pages
       .map(({ custom_page: { uid, data: { title } } }) => (
-        <Link key={uid} to={`/${uid}`}>{get(title)}</Link>
+        <Link key={uid} to={`/${uid}`}>{getString(title)}</Link>
       ));
 
     return [

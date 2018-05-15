@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TimelineLite } from 'gsap';
 import { TransitionGroup } from 'react-transition-group';
 
-import { get } from 'utils/prismic';
+import { getString } from 'utils/prismic';
 
 import Content from './Content';
 import s from './Hero.scss';
@@ -47,8 +47,8 @@ export default class Hero extends PureComponent {
               <TransitionGroup className={s.hero__content}>
                 <Content
                   key={`content-slide-${current}`}
-                  title={get(slide, 'title')}
-                  text={get(slide, 'text')}
+                  title={getString(slide, 'title')}
+                  text={getString(slide, 'text')}
                 />
               </TransitionGroup>
             )}
@@ -60,7 +60,7 @@ export default class Hero extends PureComponent {
             {Array.isArray(carousel) && carousel.map((c, i) => {
               return (
                 <li // eslint-disable-line
-                  onClick={() => this.changeSlide(i, get(carousel[i], 'color'))}
+                  onClick={() => this.changeSlide(i, getString(carousel[i], 'color'))}
                   className={s(s.hero__item, { active: current === i })}
                   key={`pagination-item-${i}`} // eslint-disable-line
                 />

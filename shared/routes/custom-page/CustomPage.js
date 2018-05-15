@@ -7,7 +7,7 @@ import { withJob } from 'react-jobs';
 import isEmpty from 'lodash/isEmpty';
 
 import NotFound from 'routes/not-found';
-import { get, getCollection } from 'utils/prismic';
+import { getString, getArray } from 'utils/prismic';
 
 import Intro from 'components/intro';
 import Slices from 'components/slices';
@@ -26,16 +26,16 @@ class CustomPage extends PureComponent {
       return <Route component={NotFound} />;
     }
 
-    const body = getCollection(page, 'data.body');
+    const body = getArray(page, 'data.body');
 
     return (
       <div>
-        <Helmet title={get(page, 'data.title')} />
+        <Helmet title={getString(page, 'data.title')} />
 
         <Intro>
-          <h1>{get(page, 'data.title')}</h1>
-          <h2>{get(page, 'data.subheading')}</h2>
-          <p>{get(page, 'data.text')}</p>
+          <h1>{getString(page, 'data.title')}</h1>
+          <h2>{getString(page, 'data.subheading')}</h2>
+          <p>{getString(page, 'data.text')}</p>
         </Intro>
 
         <Article>

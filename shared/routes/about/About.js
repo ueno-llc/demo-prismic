@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 
-import { get, getCollection, getObject } from 'utils/prismic';
+import { getString, getArray, getObject } from 'utils/prismic';
 
 import Intro from 'components/intro';
 import Peoples, { People } from './components/peoples';
@@ -24,28 +24,28 @@ class About extends PureComponent {
   render() {
     const { jobResult: about } = this.props;
 
-    const people = getCollection(about.data.people);
+    const people = getArray(about.data.people);
 
     return (
       <div>
         <Helmet
-          title={get(about, 'data.title_seo')}
-          meta={[{ name: 'description', content: get(about, 'data.description_seo') }]}
+          title={getString(about, 'data.title_seo')}
+          meta={[{ name: 'description', content: getString(about, 'data.description_seo') }]}
         />
 
         <Intro>
-          <h1>{get(about, 'data.title')}</h1>
-          <h2>{get(about, 'data.subheading')}</h2>
-          <p>{get(about, 'data.text')}</p>
+          <h1>{getString(about, 'data.title')}</h1>
+          <h2>{getString(about, 'data.subheading')}</h2>
+          <p>{getString(about, 'data.text')}</p>
         </Intro>
 
-        <Peoples title={get(about, 'data.people_title')}>
+        <Peoples title={getString(about, 'data.people_title')}>
           {people.map(({ person: { data: { name, bio, image } } }, i) => (
             <People
               key={`people-${i}`} // eslint-disable-line
               image={getObject(image).url}
-              name={get(name)}
-              description={get(bio)}
+              name={getString(name)}
+              description={getString(bio)}
             />
           ))}
         </Peoples>

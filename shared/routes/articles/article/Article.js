@@ -13,7 +13,7 @@ import Article from 'components/article';
 import Author from 'components/author';
 import Slices from 'components/slices';
 
-import { get, getCollection, getObject } from 'utils/prismic';
+import { getString, getArray, getObject } from 'utils/prismic';
 
 class Articles extends Component {
 
@@ -28,22 +28,22 @@ class Articles extends Component {
       return <Route component={NotFound} />;
     }
 
-    const title = get(article, 'data.title');
+    const title = getString(article, 'data.title');
     const author = getObject(article, 'data.author');
-    const body = getCollection(article, 'data.body');
+    const body = getArray(article, 'data.body');
 
     return (
       <div>
         <Helmet
-          title={get(article, 'data.title_seo')}
-          meta={[{ name: 'description', content: get(article, 'data.description_seo')}]}
+          title={getString(article, 'data.title_seo')}
+          meta={[{ name: 'description', content: getString(article, 'data.description_seo')}]}
         />
 
         <Article>
           {author && (<Author
             key="author"
-            name={get(author, 'data.name')}
-            bio={get(author, 'data.bio')}
+            name={getString(author, 'data.name')}
+            bio={getString(author, 'data.bio')}
             image={getObject(author, 'data.image').thumb}
           />)}
           <Heading key="heading">{title}</Heading>

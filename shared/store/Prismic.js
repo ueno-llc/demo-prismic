@@ -1,7 +1,7 @@
 import { extendObservable } from 'mobx';
 import Prismic from 'prismic-javascript';
 import groupBy from 'lodash/groupBy';
-import { get, linkResolver } from 'utils/prismic';
+import { getString, linkResolver } from 'utils/prismic';
 import apiUrl from 'utils/localApiUrl';
 import config from 'utils/config';
 
@@ -208,10 +208,10 @@ export default class PrismicStore {
       .then(data => data.results)
       .then(results => results.map(m => ({ // map it to search results
         id: m.id,
-        title: get(m, 'data.title'),
+        title: getString(m, 'data.title'),
         description: m.type === 'article'
-          ? get(m, 'data.short_description')
-          : get(m, 'data.description_seo'),
+          ? getString(m, 'data.short_description')
+          : getString(m, 'data.description_seo'),
         to: linkResolver(m),
         type: m.type,
         isPage: m.tags.some(s => s === 'page') || m.type === 'custom_page',

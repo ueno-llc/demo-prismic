@@ -6,7 +6,7 @@ import { inject, observer } from 'mobx-react';
 import { withJob } from 'react-jobs';
 import { autobind } from 'core-decorators';
 
-import { get } from 'utils/prismic';
+import { getString } from 'utils/prismic';
 
 import Intro from 'components/intro';
 import Segment from 'components/segment';
@@ -48,21 +48,21 @@ class Contact extends PureComponent {
     return (
       <div>
         <Helmet
-          title={get(contact, 'data.title_seo')}
-          meta={[{ name: 'description', content: get(contact, 'data.description_seo') }]}
+          title={getString(contact, 'data.title_seo')}
+          meta={[{ name: 'description', content: getString(contact, 'data.description_seo') }]}
         />
 
         <Intro>
-          <h1>{get(contact, 'data.title')}</h1>
-          <h2>{get(contact, 'data.subheading')}</h2>
-          <p>{get(contact, 'data.text')}</p>
+          <h1>{getString(contact, 'data.title')}</h1>
+          <h2>{getString(contact, 'data.subheading')}</h2>
+          <p>{getString(contact, 'data.text')}</p>
         </Intro>
 
         <Segment>
           {this.success ? (
             <Success
-              title={get(contact, 'data.success_message_title')}
-              text={get(contact, 'data.success_message_text')}
+              title={getString(contact, 'data.success_message_title')}
+              text={getString(contact, 'data.success_message_text')}
             />
           ) : (
             <ContactForm onSend={this.onSend} />

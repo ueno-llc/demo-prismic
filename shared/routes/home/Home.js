@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 
-import { get, getCollection, getRichtext } from 'utils/prismic';
+import { getString, getArray, getRichtext } from 'utils/prismic';
 
 import Segment from 'components/segment';
 import Button from 'components/button';
@@ -32,29 +32,29 @@ class Home extends PureComponent {
     return (
       <div>
         <Helmet
-          title={get(homepage, 'data.title_seo')}
-          meta={[{ name: 'description', content: get(homepage, 'data.description_seo') }]}
+          title={getString(homepage, 'data.title_seo')}
+          meta={[{ name: 'description', content: getString(homepage, 'data.description_seo') }]}
         />
 
-        <Hero carousel={getCollection(homepage, 'data.carousel')} />
+        <Hero carousel={getArray(homepage, 'data.carousel')} />
 
         <Columns
-          heading={get(homepage, 'data.column_title')}
-          subline={get(homepage, 'data.column_subheading')}
+          heading={getString(homepage, 'data.column_title')}
+          subline={getString(homepage, 'data.column_subheading')}
         >
-          {getCollection(homepage, 'data.content_columns').map((item, i) => (
+          {getArray(homepage, 'data.content_columns').map((item, i) => (
             <Column
               key={i} // eslint-disable-line
-              title={get(item, 'title')}
+              title={getString(item, 'title')}
               text={getRichtext(item, 'text')}
             />
           ))}
         </Columns>
 
         <Articles
-          title={get(homepage, 'data.articles_title')}
-          subheading={get(homepage, 'data.articles_subheading')}
-          articles={getCollection(homepage, 'data.featured_articles')}
+          title={getString(homepage, 'data.articles_title')}
+          subheading={getString(homepage, 'data.articles_subheading')}
+          articles={getArray(homepage, 'data.featured_articles')}
           show={4}
         />
 

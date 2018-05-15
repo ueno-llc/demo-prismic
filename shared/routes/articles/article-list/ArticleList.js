@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
-import { get, getObject } from 'utils/prismic';
+import { getString, getObject } from 'utils/prismic';
 
 import Intro from 'components/intro';
 import List, { Item } from './components/list';
@@ -20,14 +20,14 @@ class Articles extends PureComponent {
     return (
       <div>
         <Helmet
-          title={get(page, 'data.title_seo')}
-          meta={[{ name: 'description', content: get(page, 'data.description_seo') }]}
+          title={getString(page, 'data.title_seo')}
+          meta={[{ name: 'description', content: getString(page, 'data.description_seo') }]}
         />
 
         <Intro>
-          <h1>{get(page, 'data.title')}</h1>
-          <h2>{get(page, 'data.subtitle')}</h2>
-          <p>{get(page, 'data.text')}</p>
+          <h1>{getString(page, 'data.title')}</h1>
+          <h2>{getString(page, 'data.subtitle')}</h2>
+          <p>{getString(page, 'data.text')}</p>
         </Intro>
 
         {articles && (
@@ -46,8 +46,8 @@ class Articles extends PureComponent {
                 <Item
                   key={uid}
                   url={`/articles/${uid}`}
-                  title={get(data, 'title')}
-                  description={get(data, 'short_description')}
+                  title={getString(data, 'title')}
+                  description={getString(data, 'short_description')}
                   image={image}
                   src={src}
                 />
