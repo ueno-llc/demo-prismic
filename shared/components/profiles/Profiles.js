@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import s from './Peoples.scss';
+import s from './Profiles.scss';
 
-export default class Peoples extends Component {
+export default class Profiles extends Component {
 
   static propTypes = {
     children: PropTypes.node,
@@ -14,10 +14,10 @@ export default class Peoples extends Component {
     const { children, title } = this.props;
 
     return (
-      <div className={s.peoples}>
-        <div className={s.peoples__container}>
-          <h2 className={s.peoples__title}>{title}</h2>
-          <div className={s.peoples__list}>
+      <div className={s.profiles}>
+        <div className={s.profiles__container}>
+          <h2 className={s.profiles__title}>{title}</h2>
+          <div className={s.profiles__list}>
             {children}
           </div>
         </div>

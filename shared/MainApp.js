@@ -31,6 +31,7 @@ import Images from './routes/images';
 import Articles from './routes/articles';
 import CustomPage from './routes/custom-page';
 import Contact from './routes/contact';
+import Products from './routes/products';
 import Search from './routes/search';
 import NotFound from './routes/not-found';
 
@@ -52,6 +53,7 @@ class App extends Component {
       <Link key="articles" to="/articles">Articles</Link>,
       ...customPages,
       <Link key="about" to="/about">About</Link>,
+      <Link key="products" to="/products">Products</Link>,
       <Link key="contact" to="/contact-us">Contact us</Link>,
     ];
   }
@@ -77,6 +79,7 @@ class App extends Component {
               <Route exact path="/images" component={Images} />
               <Route path="/articles" component={Articles} />
               <Route path="/contact-us" component={Contact} />
+              <Route path="/products" component={Products} />
               <Route path="/search/:q" component={Search} />
               <Route exact path="/:id" component={CustomPage} />
               <Route component={NotFound} />

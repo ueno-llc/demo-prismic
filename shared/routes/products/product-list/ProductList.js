@@ -8,14 +8,14 @@ import { getField } from 'utils/prismic';
 import Intro from 'components/intro';
 import List, { Item } from './components/list';
 
-class Articles extends PureComponent {
+class Products extends PureComponent {
 
   static propTypes = {
     jobResult: PropTypes.object,
   };
 
   render() {
-    const { jobResult: { page, articles } } = this.props;
+    const { jobResult: { page, products } } = this.props;
 
     return (
       <div>
@@ -27,24 +27,25 @@ class Articles extends PureComponent {
           <p>{getField(page.data.text, 'text')}</p>
         </Intro>
 
-        {articles && (
+        {products && (
           <List>
-            {articles.map((article) => {
-              const { uid, data } = article;
+            {products.map((product) => {
+              const { uid, data } = product;
 
               if (!uid) {
                 return null;
               }
 
-              const image = getField(data.image);
-              const src = image && image.url;
+              const image = getField(data.hero_image);
+              const src = image && image.square
+                && image.square.url;
 
               return (
                 <Item
                   key={uid}
-                  url={`/articles/${uid}`}
-                  title={getField(data.title, 'text')}
-                  description={getField(data.short_description, 'text')}
+                  url={`/products/${uid}`}
+                  title={getField(data.name, 'text')}
+                  description={getField(data.description, 'text')}
                   image={image}
                   src={src}
                 />
@@ -53,26 +54,26 @@ class Articles extends PureComponent {
           </List>
         )}
 
-        {!articles && (
-          <p>No articles at the moment.</p>
+        {!products && (
+          <p>No products at the momednt.</p>
         )}
       </div>
     );
   }
 }
 
-const articlesWithJob = withJob({
+const productsWithJob = withJob({
   work: async ({ prismic }) => {
-    const [page, articles] = await Promise.all([
-      prismic.getSingleByType({ type: 'custom_page', uid: 'articles' }),
-      prismic.getByType({ type: 'article', links: 'author.name' }),
+    const [page, products] = await Promise.all([
+      prismic.getByType({ type: 'custom_page', uid: 'products' }),
+      prismic.getByType({ type: 'product', links: 'product.gallery' }),
     ]);
 
-    return { page, articles };
+    return { page, products };
   },
   LoadingComponent: () => (
     <Intro isLoading />
   ),
-})(Articles);
+})(Products);
 
-export default inject('prismic')(articlesWithJob);
+export default inject('prismic')(productsWithJob);

@@ -1,0 +1,55 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import { getField } from 'utils/prismic';
+
+import Gallery from 'components/gallery';
+import Profiles, { Profile } from 'components/profiles';
+
+const Slices = ({ data }) => (
+  <div>
+    {data.map((s, i) => {
+      const key = `slice-${s.slice_type}-${i}`;
+
+      switch (s.slice_type) {
+        case 'gallery':
+          return (
+            <Gallery
+              key={key}
+              title={getField(s.primary.title, 'text')}
+              data={s.items}
+            />
+          );
+          case 'profiles':
+            return (
+              <Profiles
+                title={getField(s.primary.profiles_title, 'text')}
+                key={key}
+              >
+                {s.items.map(({ profile_link: { data: { name, bio, image } } }, k) => (
+                  <Profile
+                    key={`profile-${k}`} // eslint-disable-line
+                    image={getField(image).url}
+                    name={getField(name, 'text')}
+                    description={getField(bio, 'text')}
+                  />
+                ))}
+              </Profiles>
+            );
+      default:
+        return null;
+      }
+    })}
+  </div>
+);
+
+Slices.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string,
+      text: PropTypes.string,
+    }),
+  ),
+};
+
+export default Slices;

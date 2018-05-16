@@ -6,8 +6,8 @@ import { withJob } from 'react-jobs';
 
 import { getField } from 'utils/prismic';
 
+import Slices from 'containers/slices';
 import Intro from 'components/intro';
-import Peoples, { People } from './components/peoples';
 
 class About extends PureComponent {
 
@@ -24,42 +24,29 @@ class About extends PureComponent {
   render() {
     const { jobResult: about } = this.props;
 
-    const people = getField(about.data.people);
+    const slicesData = getField(about.data.body, 'body');
 
     return (
       <div>
-        <Helmet
-          title={getField(about.data.title_seo, 'text').trim()}
-          meta={[{ name: 'description', content: getField(about.data.description_seo, 'text').trim() }]}
-        />
-
+        <Helmet title={getField(about.data.title, 'text')} />
         <Intro>
           <h1>{getField(about.data.title, 'text')}</h1>
           <h2>{getField(about.data.subheading, 'text')}</h2>
           <p>{getField(about.data.text, 'text')}</p>
         </Intro>
 
-        <Peoples title={getField(about.data.people_title, 'text')}>
-          {people && people.map(({ person: { data: { name, bio, image } } }, i) => (
-            <People
-              key={`people-${i}`} // eslint-disable-line
-              image={getField(image).url}
-              name={getField(name, 'text')}
-              description={getField(bio, 'text')}
-            />
-          ))}
-        </Peoples>
+        <Slices data={slicesData} />
+
       </div>
     );
   }
 }
 
 const aboutWithJob = withJob({
-  work: ({ prismic }) => prismic.getSingleByType({ type: 'about', links: 'author.name,author.bio,author.image' }),
+  work: ({ prismic }) => prismic.getSingleByType({ type: 'custom_page', uid: 'about', links: 'author.name,author.bio,author.image' }),
   LoadingComponent: () => (
     <div>
       <Intro isLoading />
-      <Peoples />
     </div>
   ),
 })(About);
