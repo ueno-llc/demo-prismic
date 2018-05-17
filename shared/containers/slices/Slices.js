@@ -6,6 +6,9 @@ import { getField } from 'utils/prismic';
 import Image from 'components/image';
 import Contact from 'components/contact';
 import Gallery from 'components/gallery';
+import Text from 'components/text';
+import Quote from 'components/quote';
+import Video from 'components/video';
 import Profiles, { Profile } from 'components/profiles';
 
 const Slices = ({ data }) => (
@@ -14,6 +17,7 @@ const Slices = ({ data }) => (
       const key = `slice-${s.slice_type}-${i}`;
 
       switch (s.slice_type) {
+
         case 'gallery':
           return (
             <Gallery
@@ -22,6 +26,7 @@ const Slices = ({ data }) => (
               data={s.items}
             />
           );
+
           case 'profiles':
             return (
               <Profiles
@@ -38,6 +43,7 @@ const Slices = ({ data }) => (
                 ))}
               </Profiles>
             );
+
           case 'contact_form':
             return (
               <Contact
@@ -47,8 +53,46 @@ const Slices = ({ data }) => (
                 target={getField(s.primary.target_url, 'text')}
               />
             );
-        default:
-          return null;
+
+          case 'image':
+            return (
+              <Image
+                key={key}
+                width={s.primary.image.dimensions.width}
+                height={s.primary.image.dimensions.height}
+                alt={s.primary.image.alt}
+                src={s.primary.image.url}
+                caption={getField(s.primary.caption, 'richtext')}
+              />
+            );
+
+          case 'text':
+            return (
+              <Text
+                key={key}
+                text={s.primary.text}
+              />
+            );
+
+          case 'quote':
+            return (
+              <Quote
+                key={key}
+                text={s.primary.quote}
+              />
+            );
+
+          case 'video':
+            return (
+              <Video
+                key={key}
+                url={s.primary.video.url}
+                caption={getField(s.primary.caption, 'richtext')}
+              />
+            );
+
+          default:
+            return null;
       }
     })}
   </div>
