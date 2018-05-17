@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { getField } from 'utils/prismic';
 
+import Image from 'components/image';
+import Contact from 'components/contact';
 import Gallery from 'components/gallery';
 import Profiles, { Profile } from 'components/profiles';
 
@@ -36,8 +38,17 @@ const Slices = ({ data }) => (
                 ))}
               </Profiles>
             );
-      default:
-        return null;
+          case 'contact_form':
+            return (
+              <Contact
+                key={key}
+                responseTitle={getField(s.primary.response_message_title, 'text')}
+                responseText={getField(s.primary.response_message_text, 'text')}
+                target={getField(s.primary.target_url, 'text')}
+              />
+            );
+        default:
+          return null;
       }
     })}
   </div>

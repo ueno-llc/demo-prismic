@@ -54,7 +54,7 @@ class App extends Component {
       ...customPages,
       <Link key="about" to="/about">About</Link>,
       <Link key="products" to="/products">Products</Link>,
-      <Link key="contact" to="/contact-us">Contact us</Link>,
+      <Link key="contact" to="/contact">Contact</Link>,
     ];
   }
 
@@ -78,7 +78,7 @@ class App extends Component {
               <Route exact path="/about" component={About} />
               <Route exact path="/images" component={Images} />
               <Route path="/articles" component={Articles} />
-              <Route path="/contact-us" component={Contact} />
+              <Route path="/contact" component={Contact} />
               <Route path="/products" component={Products} />
               <Route path="/search/:q" component={Search} />
               <Route exact path="/:id" component={CustomPage} />

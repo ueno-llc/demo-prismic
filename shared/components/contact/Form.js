@@ -1,38 +1,32 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { observable } from 'mobx';
-import { observer } from 'mobx-react';
-import { autobind } from 'core-decorators';
 
 import Button from 'components/button';
 
 import Input from './Input';
 import s from './Form.scss';
 
-@observer
-export default class ContactForm extends Component {
+export default class ContactForm extends PureComponent {
+
   static propTypes = {
     onSend: PropTypes.func,
   }
 
-  @observable
-  name = '';
+  state = {
+    name: '',
+    email: '',
+    message: '',
+  }
 
-  @observable
-  email = '';
-
-  @observable
-  message = '';
-
-  @autobind
-  onSend(e) {
+  onSend = (e) => {
     e.preventDefault();
+    const { name, email, message } = this.state;
 
     const form = new FormData();
 
-    form.append('name', this.name);
-    form.append('email', this.email);
-    form.append('message', this.message);
+    form.append('name', name);
+    form.append('email', email);
+    form.append('message', message);
 
     this.props.onSend(form);
   }
