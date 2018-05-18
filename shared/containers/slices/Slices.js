@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getField } from 'utils/prismic';
+import _get from 'lodash/get';
 
 import Image from 'components/image';
 import Contact from 'components/contact';
 import Gallery from 'components/gallery';
 import Text from 'components/text';
 import Quote from 'components/quote';
+import Picture from 'components/picture';
 import Video from 'components/video';
 import Profiles, { Profile } from 'components/profiles';
 
@@ -88,6 +90,19 @@ const Slices = ({ data }) => (
                 key={key}
                 url={s.primary.video.url}
                 caption={getField(s.primary.caption, 'richtext')}
+              />
+            );
+
+          case 'picture':
+            return (
+              <Picture
+                key={key}
+                mobileView={_get(s.primary.image, 'mobile', {})}
+                mobileView2x={_get(s.primary.image, 'mobile_2x', {})}
+                tabletView={_get(s.primary.image, 'tablet', {})}
+                tabletView2x={_get(s.primary.image, 'tablet_2x', {})}
+                mainView={_get(s.primary.image, 'desktop', {})}
+                mainView2x={_get(s.primary.image, 'desktop_2x', {})}
               />
             );
 
