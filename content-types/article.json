@@ -130,18 +130,29 @@
     }
   },
   "SEO" : {
-    "title_seo" : {
-      "config" : {
-        "single" : "heading1",
-        "label" : "Title (SEO)"
-      },
-      "type" : "StructuredText"
-    },
-    "description_seo" : {
+    "meta_title" : {
       "type" : "StructuredText",
       "config" : {
-        "single" : "paragraph",
-        "label" : "Description (SEO)"
+        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label" : "Meta title"
+      }
+    },
+    "meta_description" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label" : "Meta description"
+      }
+    },
+    "meta_image" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 1200,
+          "height" : 630
+        },
+        "thumbnails" : [ ],
+        "label" : "Meta image"
       }
     }
   }
