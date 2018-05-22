@@ -11,7 +11,7 @@ import NotFound from 'routes/not-found';
 import Heading from 'components/heading';
 import Article from 'components/article';
 import Author from 'components/author';
-import Slices from 'components/slices';
+import Slices from 'containers/slices';
 
 import { getField } from 'utils/prismic';
 
