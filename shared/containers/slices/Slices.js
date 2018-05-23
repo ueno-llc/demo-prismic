@@ -11,6 +11,7 @@ import Text from 'components/text';
 import Quote from 'components/quote';
 import Picture from 'components/picture';
 import Video from 'components/video';
+import Tweet from 'components/tweet';
 import Profiles, { Profile } from 'components/profiles';
 
 const Slices = ({ data }) => (
@@ -83,6 +84,18 @@ const Slices = ({ data }) => (
                 text={s.primary.quote}
               />
             );
+
+        case 'tweets':
+          return (
+            s.items.map(t => t.tweet).map(item => (
+              <Tweet
+                key={item.url}
+                url={item.url}
+                authorName={item.author_name}
+                title={item.title}
+              />
+            ))
+          );
 
           case 'video':
             return (
