@@ -1,11 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import s from './Tweet.scss';
+import TweetBlock from './TweetBlock';
 
-function tweetFromTitle(name, title) {
-  return title.replace(`${name} on Twitter: "`, '').slice(0, -1);
-}
+import s from './Tweet.scss';
 
 export default class Tweet extends PureComponent {
 
@@ -23,10 +21,7 @@ export default class Tweet extends PureComponent {
         <div className={s.tweet__container}>
           <div className={s.tweet__row}>
             <div className={s.tweet__col}>
-              <blockquote className={s(s.tweet__block, 'twitter-tweet')}>
-                <p className={s.tweet__text} lang="en" dir="ltr">{tweetFromTitle(authorName, title)}</p>
-                &mdash; <a className={s.tweet__url} href={url}>{authorName}</a>
-              </blockquote>
+              <TweetBlock authorName={authorName} url={url} title={title} />
             </div>
           </div>
         </div>

@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ImageBlock from './ImageBlock';
-
 import s from './Image.scss';
 
 const Image = ({ width, height, alt, src, caption }) => (
-  <div className={s.image}>
-    <div className={s.image__container}>
-      <ImageBlock width={width} height={height} alt={alt} src={src} caption={caption} />
-    </div>
-  </div>
+  <figure className={s.image__figure}>
+    <img className={s.image__img} src={src} alt={alt} width={width} height={height} />
+    {caption && (
+      <figcaption className={s.image__caption}>{caption}</figcaption>
+    )}
+  </figure>
 );
 
 Image.propTypes = {
