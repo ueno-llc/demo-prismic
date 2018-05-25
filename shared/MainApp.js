@@ -5,12 +5,13 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { inject } from 'mobx-react';
 import { withJob } from 'react-jobs';
 import config from 'utils/config';
-import { getField } from 'utils/prismic';
+import { getField, linkResolver } from 'utils/prismic';
 
 // Layout
 import AppLayout, { Content } from 'components/app-layout';
 import Header from 'components/header';
 import Footer from 'components/footer';
+import Smartlink from 'components/smartlink';
 import Navigation from 'components/navigation';
 import DevTools from 'components/dev-tools';
 import Analytics from 'components/analytics';
@@ -56,6 +57,21 @@ class App extends Component {
     ];
   }
 
+  get footerLinks() {
+    const { jobResult } = this.props;
+
+    const footerPages = jobResult.data.footer_navigation
+      .map((item, i) => (
+        <Smartlink key={`footernav_${i}`} to={linkResolver(item.footer_link)}>
+          {getField(item.link_title, 'text')}
+        </Smartlink>
+      ));
+
+    return [
+      ...footerPages,
+    ];
+  }
+
   render() {
     return (
       <ScrollToTop>
@@ -85,7 +101,7 @@ class App extends Component {
           </Content>
 
           <Footer>
-            {this.pages}
+            {this.footerLinks}
           </Footer>
         </AppLayout>
       </ScrollToTop>
