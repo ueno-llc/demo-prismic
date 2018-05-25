@@ -8,10 +8,8 @@ export default class Smartlink extends PureComponent {
 
   static propTypes = {
     to: PropTypes.string,
-    disabled: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
-    stroke: PropTypes.bool,
   };
 
   render() {
@@ -19,8 +17,6 @@ export default class Smartlink extends PureComponent {
       to,
       children,
       className,
-      disabled,
-      stroke,
       ...rest
     } = this.props;
 
