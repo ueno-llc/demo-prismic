@@ -42,7 +42,7 @@ class App extends Component {
   get pages() {
     const { jobResult } = this.props;
 
-    const customPages = jobResult.data.custom_pages
+    const customPages = jobResult.data.navigation
       .map(({ custom_page: { uid, data: { title } } }) => (
         <Link key={uid} to={`/${uid}`}>{getField(title, 'text')}</Link>
       ));

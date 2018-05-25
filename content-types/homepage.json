@@ -1,132 +1,148 @@
 {
-  "Main" : {
-    "carousel" : {
-      "type" : "Group",
-      "config" : {
-        "fields" : {
-          "title" : {
-            "type" : "StructuredText",
-            "config" : {
-              "single" : "heading1",
-              "label" : "Title"
+  "Main": {
+    "carousel": {
+      "type": "Group",
+      "config": {
+        "fields": {
+          "title": {
+            "type": "StructuredText",
+            "config": {
+              "single": "heading1",
+              "label": "Title"
             }
           },
-          "text" : {
-            "type" : "StructuredText",
-            "config" : {
-              "multi" : "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
-              "label" : "Text"
+          "text": {
+            "type": "StructuredText",
+            "config": {
+              "multi": "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
+              "allowTargetBlank": true,
+              "label": "Text"
             }
           },
-          "color" : {
-            "type" : "Color",
-            "config" : {
-              "label" : "color"
+          "color": {
+            "type": "Color",
+            "config": {
+              "label": "color"
             }
           }
         },
-        "label" : "Carousel"
+        "label": "Carousel"
       }
     },
-    "column_title" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
-        "label" : "Column title"
+    "column_title": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label": "Column title"
       }
     },
-    "column_subheading" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
-        "label" : "Column subheading"
+    "column_subheading": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label": "Column subheading"
       }
     },
-    "content_columns" : {
-      "type" : "Group",
-      "config" : {
-        "fields" : {
-          "title" : {
-            "type" : "StructuredText",
-            "config" : {
-              "single" : "heading2",
-              "label" : "Title"
+    "content_columns": {
+      "type": "Group",
+      "config": {
+        "fields": {
+          "title": {
+            "type": "StructuredText",
+            "config": {
+              "single": "heading2",
+              "label": "Title"
             }
           },
-          "text" : {
-            "type" : "StructuredText",
-            "config" : {
-              "multi" : "paragraph, strong, em, hyperlink",
-              "label" : "Text"
+          "text": {
+            "type": "StructuredText",
+            "config": {
+              "multi": "paragraph, strong, em, hyperlink",
+              "label": "Text"
             }
           }
         },
-        "label" : "Content Columns"
+        "label": "Content Columns"
       }
     },
-    "articles_title" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
-        "label" : "Articles title"
+    "articles_title": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label": "Articles title"
       }
     },
-    "articles_subheading" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
-        "label" : "Articles subheading"
+    "articles_subheading": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label": "Articles subheading"
       }
     },
-    "featured_articles" : {
-      "config" : {
-        "fields" : {
-          "article" : {
-            "type" : "Link",
-            "config" : {
-              "select" : "document",
-              "customtypes" : [ "article" ],
-              "label" : "Article"
+    "featured_articles": {
+      "config": {
+        "fields": {
+          "article": {
+            "type": "Link",
+            "config": {
+              "select": "document",
+              "customtypes": [
+                "article"
+              ],
+              "label": "Article"
             }
           }
         },
-        "label" : "Featured articles"
+        "label": "Featured articles"
       },
-      "type" : "Group"
+      "type": "Group"
     }
   },
-  "SEO" : {
-    "title_seo" : {
-      "config" : {
-        "single" : "heading1",
-        "label" : "Title (SEO)"
-      },
-      "type" : "StructuredText"
+  "SEO": {
+    "meta_title": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label": "Meta title"
+      }
     },
-    "description_seo" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "paragraph",
-        "label" : "Description (SEO)"
+    "meta_description": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label": "Meta description"
+      }
+    },
+    "meta_image": {
+      "type": "Image",
+      "config": {
+        "constraint": {
+          "width": 1200,
+          "height": 630
+        },
+        "thumbnails": [],
+        "label": "Meta image"
       }
     }
   },
-  "Navigation" : {
-    "custom_pages" : {
-      "config" : {
-        "fields" : {
-          "custom_page" : {
-            "type" : "Link",
-            "config" : {
-              "select" : "document",
-              "customtypes" : [ "custom_page" ],
-              "label" : "Custom Page"
+  "Navigation": {
+    "navigation": {
+      "config": {
+        "fields": {
+          "custom_page": {
+            "type": "Link",
+            "config": {
+              "select": "document",
+              "customtypes": [
+                "custom_page"
+              ],
+              "label": "Custom Page"
             }
           }
         },
-        "label" : "Custom Pages"
+        "label": "Navigation"
       },
-      "type" : "Group"
+      "type": "Group"
     }
   }
 }
