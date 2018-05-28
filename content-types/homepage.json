@@ -127,6 +127,48 @@
         "label" : "Custom Pages"
       },
       "type" : "Group"
+    },
+    "header_navigation" : {
+      "type" : "Group",
+      "config" : {
+        "fields" : {
+          "header_link" : {
+            "type" : "Link",
+            "config" : {
+              "label" : "Header Link"
+            }
+          },
+          "headerlink_title" : {
+            "type" : "StructuredText",
+            "config" : {
+              "multi" : "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
+              "label" : "Link title"
+            }
+          }
+        },
+        "label" : "Header navigation"
+      }
+    },
+    "footer_navigation" : {
+      "type" : "Group",
+      "config" : {
+        "fields" : {
+          "footer_link" : {
+            "type" : "Link",
+            "config" : {
+              "label" : "Footer Link"
+            }
+          },
+          "link_title" : {
+            "type" : "StructuredText",
+            "config" : {
+              "multi" : "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
+              "label" : "Link title"
+            }
+          }
+        },
+        "label" : "Footer navigation"
+      }
     }
   }
 }
