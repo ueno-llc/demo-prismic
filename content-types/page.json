@@ -1,101 +1,237 @@
 {
-  "Main" : {
-    "uid" : {
-      "type" : "UID",
-      "config" : {
-        "label" : "Slug"
+  "Main": {
+    "uid": {
+      "type": "UID",
+      "config": {
+        "label": "Slug"
       }
     },
-    "title" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "heading1",
-        "label" : "Title"
+    "title": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading1",
+        "label": "Title"
       }
     },
-    "subheading" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "heading2",
-        "label" : "Subheading"
+    "subheading": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading2",
+        "label": "Subheading"
       }
     },
-    "text" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "paragraph",
-        "label" : "Text"
+    "text": {
+      "type": "StructuredText",
+      "config": {
+        "single": "paragraph",
+        "label": "Text"
       }
     },
-    "body" : {
-      "type" : "Slices",
-      "fieldset" : "Slice zone",
-      "config" : {
-        "choices" : {
-          "text" : {
-            "type" : "Slice",
-            "fieldset" : "Text",
-            "description" : "A standard text block",
-            "icon" : "short_text",
-            "non-repeat" : {
-              "text" : {
-                "type" : "StructuredText",
-                "config" : {
-                  "multi" : "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
-                  "label" : "Text"
+    "body": {
+      "type": "Slices",
+      "fieldset": "Slice zone",
+      "config": {
+        "choices": {
+          "text": {
+            "type": "Slice",
+            "fieldset": "Text",
+            "description": "A standard text block",
+            "icon": "short_text",
+            "non-repeat": {
+              "text": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
+                  "label": "Text"
                 }
               }
             },
-            "repeat" : { }
+            "repeat": {}
           },
-          "image" : {
-            "type" : "Slice",
-            "fieldset" : "Image",
-            "description" : "Single Image block with optional text",
-            "icon" : "image",
-            "non-repeat" : {
-              "image" : {
-                "type" : "Image",
-                "config" : {
-                  "constraint" : { },
-                  "thumbnails" : [ ],
-                  "label" : "Image"
+          "image": {
+            "type": "Slice",
+            "fieldset": "Image",
+            "description": "Single Image block with optional text",
+            "icon": "image",
+            "non-repeat": {
+              "image": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "Image"
                 }
               },
-              "caption" : {
-                "type" : "StructuredText",
-                "config" : {
-                  "multi" : "paragraph, strong, em, hyperlink",
-                  "label" : "Caption"
+              "caption": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, strong, em, hyperlink",
+                  "label": "Caption"
                 }
               }
             },
-            "repeat" : { }
+            "repeat": {}
           },
-          "video" : {
-            "type" : "Slice",
-            "fieldset" : "Video",
-            "description" : "Video with optional caption",
-            "icon" : "ondemand_video",
-            "non-repeat" : {
-              "video" : {
-                "type" : "Link",
-                "config" : {
-                  "select" : "media",
-                  "label" : "Video"
+          "video": {
+            "type": "Slice",
+            "fieldset": "Video",
+            "description": "Video with optional caption",
+            "icon": "ondemand_video",
+            "non-repeat": {
+              "video": {
+                "type": "Link",
+                "config": {
+                  "select": "media",
+                  "label": "Video"
                 }
               },
-              "caption" : {
-                "type" : "StructuredText",
-                "config" : {
-                  "multi" : "paragraph, strong, em, hyperlink",
-                  "label" : "Caption"
+              "caption": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, strong, em, hyperlink",
+                  "label": "Caption"
                 }
               }
             },
-            "repeat" : { }
+            "repeat": {}
+          },
+          "profiles": {
+            "type": "Slice",
+            "fieldset": "Profiles",
+            "description": "Profiles, i.e. listing of staff",
+            "icon": "people",
+            "display": "list",
+            "non-repeat": {
+              "profiles_title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading1, heading2, heading3, heading4, heading5, heading6",
+                  "label": "Profiles Title"
+                }
+              }
+            },
+            "repeat": {
+              "profile_link": {
+                "type": "Link",
+                "config": {
+                  "select": "document",
+                  "customtypes": [
+                    "author"
+                  ],
+                  "label": "person"
+                }
+              }
+            }
+          },
+          "contact_form": {
+            "type": "Slice",
+            "fieldset": "Contact Form",
+            "description": "A standard contact form",
+            "icon": "contact_mail",
+            "display": "list",
+            "non-repeat": {
+              "target_url": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "hyperlink",
+                  "label": "Target Url",
+                  "placeholder": "Target for the form action"
+                }
+              },
+              "response_message_title": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
+                  "label": "Response Message Title"
+                }
+              },
+              "response_message_text": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
+                  "label": "Response Message Text"
+                }
+              }
+            },
+            "repeat": {}
+          },
+          "picture": {
+            "type": "Slice",
+            "fieldset": "Picture",
+            "description": "Image using picture tag",
+            "icon": "broken_image",
+            "display": "list",
+            "non-repeat": {
+              "image": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [
+                    {
+                      "name": "tablet",
+                      "width": 1080,
+                      "height": null
+                    },
+                    {
+                      "name": "mobile",
+                      "width": 720,
+                      "height": null
+                    },
+                    {
+                      "name": "desktop_2x",
+                      "width": 2580,
+                      "height": null
+                    },
+                    {
+                      "name": "tablet_2x",
+                      "width": 2160,
+                      "height": null
+                    },
+                    {
+                      "name": "mobile_2x",
+                      "width": 1440,
+                      "height": null
+                    },
+                    {
+                      "name": "desktop",
+                      "width": 1290,
+                      "height": null
+                    }
+                  ],
+                  "label": "Image"
+                }
+              }
+            },
+            "repeat": {}
           }
         }
+      }
+    }
+  },
+    "SEO" : {
+    "meta_title" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label" : "Meta title"
+      }
+    },
+    "meta_description" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1, heading2, heading3, heading4, heading5, heading6",
+        "label" : "Meta description"
+      }
+    },
+    "meta_image" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 1200,
+          "height" : 630
+        },
+        "thumbnails" : [ ],
+        "label" : "Meta image"
       }
     }
   }

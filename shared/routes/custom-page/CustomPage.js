@@ -9,8 +9,8 @@ import isEmpty from 'lodash/isEmpty';
 import NotFound from 'routes/not-found';
 import { getField } from 'utils/prismic';
 
+import Slices from 'containers/slices';
 import Intro from 'components/intro';
-import Slices from 'components/slices';
 import Article from 'components/article';
 
 class CustomPage extends PureComponent {

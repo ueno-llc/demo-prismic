@@ -1,7 +1,10 @@
 @import '~styles/config';
 
 .picture {
-  &__container {
-    @include container;
+  display: block;
+  margin: 0 auto;
+
+  > img { // stylelint-disable-line
+    margin: auto;
   }
 }
