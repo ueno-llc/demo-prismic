@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import ContactForm from './Form';
+import ContactBlock from './Block';
 
 import s from './Contact.scss';
 
@@ -13,37 +13,22 @@ export default class Contact extends PureComponent {
     responseTitle: PropTypes.string,
   }
 
-  state = {
-    success: false,
-  }
-
-  onSend = (form) => {
-    const { target } = this.props;
-
-    fetch(target, {
-      method: 'POST',
-      body: form,
-    }).then((res) => {
-      if (res.status === 200) { // success
-        this.setState({ success: true });
-      }
-    });
-  }
-
   render() {
-    const { responseText, responseTitle } = this.props;
-    const { success } = this.state;
+    const { target, responseText, responseTitle } = this.props;
 
     return (
       <div className={s.contact}>
-        {success ? (
-          <div className={s.contact__response}>
-            <h2 className={s.contact__responseTitle}>{responseTitle}</h2>
-            <p className={s.contact__responseText}>{responseText}</p>
+        <div className={s.contact__container}>
+          <div className={s.contact__row}>
+            <div className={s.contact__col}>
+              <ContactBlock
+                target={target}
+                responseText={responseText}
+                responseTitle={responseTitle}
+              />
+            </div>
           </div>
-        ) : (
-          <ContactForm onSend={this.onSend} />
-        )}
+        </div>
       </div>
     );
   }

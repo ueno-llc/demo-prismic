@@ -1,16 +1,6 @@
 @import '~styles/config';
 
 .form {
-  &__row {
-    @include grid-row;
-  }
-
-  &__col {
-    @include grid-offset-left;
-
-    width: 100%;
-  }
-
   &__form {
     display: flex;
     flex-wrap: wrap;

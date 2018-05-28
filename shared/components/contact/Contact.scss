@@ -1,7 +1,26 @@
 @import '~styles/config';
 
 .contact {
-  @include segment;
+  &__container {
+    @include container;
+  }
+
+  &__row {
+    @include grid-row;
+  }
+
+  &__col {
+    @include grid-col;
+
+    @media (min-width: $min-tablet) {
+      @include grid-col(8);
+      @include grid-offset-left(2);
+    }
+  }
+
+  &__block {
+    @include segment;
+  }
 
   &__response {
     text-align: center;
