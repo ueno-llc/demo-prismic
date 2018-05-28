@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getField } from 'utils/prismic';
+import TextBlock from './TextBlock';
 
 import s from './Text.scss';
 
@@ -10,7 +10,7 @@ const Text = ({ text }) => (
     <div className={s.text__container}>
       <div className={s.text__row}>
         <div className={s.text__col}>
-          {getField(text, 'richtext')}
+          <TextBlock text={text} />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { cloneElement, Children } from 'react';
 import PropTypes from 'prop-types';
 
-import Slices from 'components/slices';
+import Slices from 'containers/slices';
 import s from './Article.scss';
 
 const slicesType = (<Slices />).type;

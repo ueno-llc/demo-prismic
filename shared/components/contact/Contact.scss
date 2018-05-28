@@ -1,0 +1,19 @@
+@import '~styles/config';
+
+.contact {
+  @include segment;
+
+  &__response {
+    text-align: center;
+
+    &Title {
+      @include heading(20, 52);
+
+      color: $color-success;
+    }
+
+    &Text {
+      @include copy(16, 20);
+    }
+  }
+}

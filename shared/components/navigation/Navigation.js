@@ -87,7 +87,7 @@ export default class Navigation extends PureComponent {
             if (c.key === 'contact') {
               return (
                 <div className={s.navigation__cta}>
-                  <Button to="/contact-us" stroke>Contact</Button>
+                  <Button to="/contact" stroke>Contact</Button>
                 </div>
               );
             }
