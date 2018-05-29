@@ -30,7 +30,10 @@ class CustomPage extends PureComponent {
 
     return (
       <div>
-        <Helmet title={getField(page.data.title, 'text')} />
+        <Helmet
+          title={getField(page.data.meta_title, 'text').trim()}
+          meta={[{ name: 'description', content: getField(page.data.meta_description, 'text').trim() }]}
+        />
 
         <Intro>
           <h1>{getField(page.data.title, 'text')}</h1>

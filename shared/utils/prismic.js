@@ -2,12 +2,13 @@ import { RichText } from 'prismic-reactjs';
 import { asText } from 'prismic-richtext';
 
 function linkResolver(doc) {
-  console.log('doc', doc)
   if (!doc) {
     return '/';
   }
 
-  switch (doc.type) {
+  const type = doc.type || doc.link_type;
+
+  switch (type) {
     case 'homepage':
       return '/';
     case 'about':
@@ -18,6 +19,10 @@ function linkResolver(doc) {
       return `/articles/${doc.uid}`;
     case 'custom_page':
       return `/${doc.uid}`;
+    case 'Web':
+      return `${doc.url}`;
+    case 'Media':
+      return `${doc.url}`;
     default:
       return '/';
   }
