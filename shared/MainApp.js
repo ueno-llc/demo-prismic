@@ -62,15 +62,15 @@ class App extends Component {
   get headerLinks() {
     const { jobResult } = this.props;
 
-    const headerPage = jobResult.data.header_navigation
+    const headerPages = jobResult.data.header_navigation
       .map((item, i) => (
         <Smartlink key={`headernav_${i}`} to={linkResolver(item.header_link)}>
-          {getField(item.headerlink_title, 'text')}
+          {getField(item.link_title, 'text')}
         </Smartlink>
       ));
 
     return [
-      ...headerPage,
+      ...headerPages,
       <Link key="contact" to="/contact-us">Contact us</Link>,
     ];
   }

@@ -32,8 +32,8 @@ class Home extends PureComponent {
     return (
       <div>
         <Helmet
-          title={getField(homepage.data.title_seo, 'text').trim()}
-          meta={[{ name: 'description', content: getField(homepage.data.description_seo, 'text').trim() }]}
+          title={getField(homepage.data.meta_title, 'text').trim()}
+          meta={[{ name: 'description', content: getField(homepage.data.meta_description, 'text').trim() }]}
         />
 
         <Hero carousel={getField(homepage.data.carousel)} />
